@@ -1,89 +1,94 @@
 ---
-title: 安装
+title: Installation
 icon: material-symbols-light:download-rounded
 createTime: 2025/06/09 10:29:31
 permalink: /en/kg_guide/install/
 ---
-# 安装
-本节介绍如何安装DataFlow，如果你仅想快速使用DataFlow中提供的Pipeline和算子，请参考[普通用户安装](#普通用户安装)安装稳定正式版，如果你想作为开发者向DataFlow仓库贡献代码，提出Pull Request，请参考[开发者安装](#开发者安装)安装仓库中的dev版。
+# Installation
 
-## 普通用户安装
+This section introduces how to install DataFlow-KG. If you simply want to quickly use the pipelines and operators provided in DataFlow-KG, please refer to [General User Installation](#general-user-installation) to install the stable release version. If you want to contribute code to the DataFlow repository as a developer and submit Pull Requests, please refer to [Developer Installation](#developer-installation) to install the dev version from the repository.
 
-如果你没有GPU做本地推理环境，仅需使用API和CPU功能，则配置Python环境并安装DataFlow正式版👇
+> **Note:** For Knowledge Graph (KG) tasks, the current dependencies have been significantly streamlined and optimized. Core graph structure processing and visualization rely on `networkx` and `pyvis`, making the overall installation process more lightweight and faster. To speed up the installation, we highly recommend using `uv`.
+
+## General User Installation
+
+If you don't have a GPU for a local inference environment and only need to use APIs and CPU functions, configure your Python environment and install the DataFlow-KG official release👇
 
 ```shell
-conda create -n dataflow python=3.10 
-conda activate dataflow
+conda create -n dfkg python=3.10 
+conda activate dfkg
 
-pip install open-dataflow
+pip install uv
+uv pip install dataflow-kg
 ```
 
 
-如果想用本地GPU实现推理则需要使用如下命令：
+If you want to use a local GPU for inference, you need to use the following command:
 ```shell
-conda create -n dataflow python=3.10 
-conda activate dataflow
+conda create -n dfkg python=3.10 
+conda activate dfkg
 
-pip install open-dataflow[vllm]
+pip install uv
+uv pip install dataflow-kg[vllm]
 ```
 
-> Dataflow 支持Python>=3.10的环境。
+> DataFlow-KG supports Python >= 3.10 environments.
 
-你可以用如下指令检查安装是否正确：
+You can use the following command to verify if the installation is correct:
 ```shell
-dataflow -v
+dfkg -v
 ```
 
-如果安装正常，且DataFlow是最新的Release版，则会看到:
+If the installation is successful and DataFlow is the latest Release version, you will see:
 ```log
-open-dataflow codebase version: 0.0.2
+open-dataflow-kg codebase version: 0.0.2
         Checking for updates...
         Local version:  0.0.2
         PyPI newest version:  0.0.2
 You are using the latest version: 0.0.2.
 ```
 
-此外还有`dataflow env`指令用于查看当前硬件软件环境，用于报告Bug使用。
+Additionally, there is the `dfkg env` command to view the current hardware and software environment, which is useful for bug reporting.
 
-## 开发者安装
+## Developer Installation
 
-DataFlow开发者可以通过以下指令安装:
+DataFlow-KG developers can install via the following commands:
 
-如果不需要本地GPU推理
+If local GPU inference is not required:
 ```shell
-conda create -n dataflow python=3.10
-conda activate dataflow
+conda create -n dfkg python=3.10
+conda activate dfkg
 
-git clone https://github.com/OpenDCAI/DataFlow
-cd DataFlow
+git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+cd DataFlow-KG
 pip install -e .
 ```
 
-如果需要本地GPU推理：
+If local GPU inference is required:
 ```shell
-conda create -n dataflow python=3.10
-conda activate dataflow
+conda create -n dfkg python=3.10
+conda activate dfkg
 
-git clone https://github.com/OpenDCAI/DataFlow
-cd DataFlow
+git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+cd DataFlow-KG
 pip install -e .[vllm]
 ```
 
-你可以用如下指令检查安装是否正确：
+You can use the following command to verify if the installation is correct:
 ```shell
-dataflow -v
+dfkg -v
 ```
 
-如果安装正常，且DataFlow是最新的Release版，则会看到:
+If the installation is successful and DataFlow-KG is the latest Release version, you will see:
 ```log
-open-dataflow codebase version: 0.0.2
+open-dataflow-kg codebase version: 0.0.2
         Checking for updates...
         Local version:  0.0.2
         PyPI newest version:  0.0.2
 You are using the latest version: 0.0.2.
 ```
 
-此外还有`dataflow env`指令用于查看当前硬件软件环境，用于报告Bug使用。
+Additionally, there is the `dfkg env` command to view the current hardware and software environment, which is useful for bug reporting.
 
-这样，你在本地对DataFlow包进行的修改都可以实时更新到你的python环境中，方便开发。当开发完成后，也可以提PR向主仓库贡献你的新算子和新流水线。
+This way, any modifications you make locally to the DataFlow-KG package will be updated in your Python environment in real-time, making development easier. Once development is complete, you can also submit a PR to contribute your new operators and pipelines to the main repository.
 
