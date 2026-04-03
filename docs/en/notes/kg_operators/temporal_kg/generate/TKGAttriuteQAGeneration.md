@@ -1,8 +1,8 @@
 ---
 title: TKGAttriuteQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:bolt
-permalink: /en/api/operators/temporal_kg/generate/tkgattriuteqageneration/
+icon: material-symbols:bolt
+permalink: /en/kg_operators/temporal_kg/generate/tkgattriuteqageneration/
 ---
 
 ## 📚 Overview
@@ -144,10 +144,10 @@ generator.run(
 ```json
 {
   "subgraph": [
-    "&lt;entity&gt; Elon Musk &lt;attribute&gt; university graduation &lt;value&gt; Stanford University &lt;time&gt; 2004",
-    "&lt;entity&gt; Elon Musk &lt;attribute&gt; CEO position &lt;value&gt; Tesla Motors &lt;time&gt; 2008",
-    "&lt;entity&gt; Elon Musk &lt;attribute&gt; company founded &lt;value&gt; SpaceX &lt;time&gt; 2002",
-    "&lt;entity&gt; Elon Musk &lt;attribute&gt; company founded &lt;value&gt; Neuralink &lt;time&gt; 2016"
+    "⟨entity⟩ Elon Musk ⟨attribute⟩ university graduation ⟨value⟩ Stanford University ⟨time⟩ 2004",
+    "⟨entity⟩ Elon Musk ⟨attribute⟩ CEO position ⟨value⟩ Tesla Motors ⟨time⟩ 2008",
+    "⟨entity⟩ Elon Musk ⟨attribute⟩ company founded ⟨value⟩ SpaceX ⟨time⟩ 2002",
+    "⟨entity⟩ Elon Musk ⟨attribute⟩ company founded ⟨value⟩ Neuralink ⟨time⟩ 2016"
   ]
 }
 ```

@@ -2,7 +2,7 @@
 title: TKGTupleTimeFilter
 createTime: 2026/03/18 00:00:00
 icon: material-symbols-light:filter-alt-outline
-permalink: /en/api/operators/temporal_kg/filter/tkgtupletimefilter/
+permalink: /en/kg_operators/temporal_kg/filter/tkgtupletimefilter/
 ---
 
 ## 📚 Overview
@@ -72,10 +72,10 @@ filter_op.run(
 ```json
 {
   "tuple": [
-    "<subj> Elon Musk <obj> Stanford University <rel> graduated from &lt;time&gt; 2004",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008",
-    "<subj> Tesla <obj> Powerwall home battery system <rel> introduced &lt;time&gt; 2015",
-    "<subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
+    "⟨subj⟩ Tesla ⟨obj⟩ Powerwall home battery system ⟨rel⟩ introduced ⟨time⟩ 2015",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002"
   ]
 }
 ```
@@ -86,8 +86,8 @@ filter_op.run(
 {
   "tuple": ["...(same as above)"],
   "filtered_tuple": [
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008",
-    "<subj> Tesla <obj> Powerwall home battery system <rel> introduced &lt;time&gt; 2015"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
+    "⟨subj⟩ Tesla ⟨obj⟩ Powerwall home battery system ⟨rel⟩ introduced ⟨time⟩ 2015"
   ]
 }
 ```

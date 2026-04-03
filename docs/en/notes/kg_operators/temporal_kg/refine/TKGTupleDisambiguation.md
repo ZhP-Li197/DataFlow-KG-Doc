@@ -2,7 +2,7 @@
 title: TKGTupleDisambiguation
 createTime: 2026/03/18 00:00:00
 icon: material-symbols-light:tune
-permalink: /en/api/operators/temporal_kg/refine/tkgtupledisambiguation/
+permalink: /en/kg_operators/temporal_kg/refine/tkgtupledisambiguation/
 ---
 
 ## 📚 Overview
@@ -56,12 +56,12 @@ def build_system_prompt(self):
 
         Example:
         Input:
-        "<subj> E2 <obj> E3 <rel> relC &lt;time&gt; 2026-03-02 ｜ 2026-03-05"
+        "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-02 ｜ 2026-03-05"
 
         Output:
         {
           "resolved_quadruple": [
-            "<subj> E2 <obj> E3 <rel> relC &lt;time&gt; 2026-03-05"
+            "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-05"
           ]
         }
     """)
@@ -155,12 +155,12 @@ operator.run(
 {
   "merged_tuples": {
     "unambiguous": [
-      "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with &lt;time&gt; 2012",
-      "<subj> Elon Musk <obj> Neuralink <rel> founded &lt;time&gt; 2016"
+      "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
+      "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
     ],
     "ambiguous": [
-      "<subj> Elon Musk <obj> SpaceX <rel> established &lt;time&gt; 2002 ｜ <subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002",
-      "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2006 ｜ <subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008"
+      "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ established ⟨time⟩ 2002 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
+      "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2006 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
     ]
   }
 }
@@ -172,8 +172,8 @@ operator.run(
 {
   "merged_tuples": {"...（同上）"},
   "resolved": [
-    "<subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
   ]
 }
 ```

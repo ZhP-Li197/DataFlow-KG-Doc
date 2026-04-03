@@ -215,33 +215,33 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     items: [
                         {
                             text: 'TKGTupleExtraction',
-                            link: '/en/api/operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtupleextraction/',
+                            icon: 'material-symbols:bolt',
                         },
                         {
                             text: 'TKGTupleMerger',
-                            link: '/en/api/operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplemerger/',
+                            icon: 'material-symbols:bolt',
                         },
                         {
                             text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/en/api/operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
+                            icon: 'material-symbols:bolt',
                         },
                         {
                             text: 'TKGTuplePathQAGeneration',
-                            link: '/en/api/operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
+                            icon: 'material-symbols:bolt',
                         },
                         {
                             text: 'TKGAttriuteQAGeneration',
-                            link: '/en/api/operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
+                            icon: 'material-symbols:bolt',
                         },
                         {
                             text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/en/api/operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols-light:bolt',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
+                            icon: 'material-symbols:bolt',
                         },
                     ]
                 },

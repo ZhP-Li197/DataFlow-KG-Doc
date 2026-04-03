@@ -1,8 +1,8 @@
 ---
 title: TKGRelationTripletDialogueQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:bolt
-permalink: /zh/api/operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/
+icon: material-symbols:bolt
+permalink: /zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/
 ---
 
 ## 📚 概述
@@ -80,8 +80,8 @@ def build_prompt(self, paths: str):
         {{
           "dialogue": {{
             "constructed_path": [
-              "&lt;quadruple&gt; ...",
-              "&lt;quadruple&gt; ..."
+              "⟨quadruple⟩ ...",
+              "⟨quadruple⟩ ..."
             ],
             "turns": [
               {{
@@ -153,7 +153,7 @@ generator.run(
 
 ```json
 {
-  "2_hop_paths": "<subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002 || <subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with &lt;time&gt; 2012"
+  "2_hop_paths": "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002 || ⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
 }
 ```
 

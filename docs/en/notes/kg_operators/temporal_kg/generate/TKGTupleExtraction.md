@@ -1,8 +1,8 @@
 ---
 title: TKGTupleExtraction
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:bolt
-permalink: /en/api/operators/temporal_kg/generate/tkgtupleextraction/
+icon: material-symbols:bolt
+permalink: /en/kg_operators/temporal_kg/generate/tkgtupleextraction/
 ---
 
 ## 📚 Overview
@@ -42,7 +42,7 @@ def build_system_prompt(self):
         You are an expert in extracting temporal entity-attribute quadruples from natural language text.
 
         Each quadruple MUST follow this exact format:
-        &lt;entity&gt; Entity &lt;attribute&gt; AttributeName &lt;value&gt; AttributeValue &lt;time&gt; TimeValue
+        ⟨entity⟩ Entity ⟨attribute⟩ AttributeName ⟨value⟩ AttributeValue ⟨time⟩ TimeValue
 
         === TIME STANDARDIZATION ===
         1. Specific date: YYYY-MM-DD, e.g., 2025-03-03
@@ -50,7 +50,7 @@ def build_system_prompt(self):
         3. Year: YYYY, e.g., 2025
         4. Quarter: QX YYYY, e.g., Q1 2025
         5. Time span / interval: start_date|end_date, e.g., 2025-01-01|2025-01-03
-        6. If no time is explicitly mentioned in the text, set &lt;time&gt; to 'NA'.
+        6. If no time is explicitly mentioned in the text, set ⟨time⟩ to 'NA'.
 
         === CORE RULES ===
         - ENTITY: clear noun/noun phrase, no pronouns
@@ -76,7 +76,7 @@ def build_prompt(self, text: str):
         Output ONLY JSON:
         {{
           "tuple": [
-            "&lt;entity&gt; Entity &lt;attribute&gt; AttributeName &lt;value&gt; AttributeValue &lt;time&gt; TimeValue"
+            "⟨entity⟩ Entity ⟨attribute⟩ AttributeName ⟨value⟩ AttributeValue ⟨time⟩ TimeValue"
           ]
         }}
     """)
@@ -143,9 +143,9 @@ extractor.run(
 {
   "raw_chunk": "After graduating from Stanford University in 2004...",
   "tuple": [
-    "<subj> Elon Musk <obj> Stanford University <rel> graduated from &lt;time&gt; 2004",
-    "<subj> Elon Musk <obj> multiple technology companies <rel> co-founded &lt;time&gt; NA",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ multiple technology companies ⟨rel⟩ co-founded ⟨time⟩ NA",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
   ]
 }
 ```

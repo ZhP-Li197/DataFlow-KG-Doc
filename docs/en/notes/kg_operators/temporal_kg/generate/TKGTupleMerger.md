@@ -1,8 +1,8 @@
 ---
 title: TKGTupleMerger
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:bolt
-permalink: /en/api/operators/temporal_kg/generate/tkgtuplemerger/
+icon: material-symbols:bolt
+permalink: /en/kg_operators/temporal_kg/generate/tkgtuplemerger/
 ---
 
 ## 📚 Overview
@@ -19,10 +19,7 @@ def __init__(self):
 
 This operator has no initialization parameters.
 
-### Prompt Template
 
-| Prompt Template Name | Primary Use | Applicable Scenario | Feature Description |
-| --- | --- | --- | --- |
 
 ## 💡 `run` function
 
@@ -71,14 +68,14 @@ merger.run(
 ```json
 {
   "triples_kg1": [
-    "<subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008",
-    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with &lt;time&gt; 2012"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
+    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
   ],
   "triples_kg2": [
-    "<subj> Elon Musk <obj> SpaceX <rel> established &lt;time&gt; 2002",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2006",
-    "<subj> Elon Musk <obj> Neuralink <rel> founded &lt;time&gt; 2016"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ established ⟨time⟩ 2002",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2006",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
   ],
   "entity_alignment": [
     {"entity_kg1": "Elon Musk", "entity_kg2": "Elon Musk", "similarity": 100},
@@ -94,12 +91,12 @@ merger.run(
 {
   "merged_quads": {
     "unambiguous": [
-      "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with &lt;time&gt; 2012",
-      "<subj> Elon Musk <obj> Neuralink <rel> founded &lt;time&gt; 2016"
+      "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
+      "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
     ],
     "ambiguous": [
-      "<subj> Elon Musk <obj> SpaceX <rel> established &lt;time&gt; 2002 ｜ <subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002",
-      "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2006 ｜ <subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008"
+      "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ established ⟨time⟩ 2002 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
+      "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2006 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
     ]
   }
 }

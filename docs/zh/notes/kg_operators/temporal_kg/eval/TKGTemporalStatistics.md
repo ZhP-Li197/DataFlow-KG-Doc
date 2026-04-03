@@ -2,7 +2,7 @@
 title: TKGTemporalStatistics
 createTime: 2026/03/18 00:00:00
 icon: material-symbols-light:analytics-outline
-permalink: /zh/api/operators/temporal_kg/eval/tkgtemporalstatistics/
+permalink: /zh/kg_operators/temporal_kg/eval/tkgtemporalstatistics/
 ---
 
 ## 📚 概述
@@ -19,10 +19,6 @@ def __init__(self):
 
 该算子无初始化参数。
 
-### Prompt模板说明
-
-| Prompt 模板名称 | 主要用途 | 适用场景 | 特点说明 |
-| --- | --- | --- | --- |
 
 ## 💡 `run`函数
 
@@ -70,11 +66,11 @@ operator.run(
 ```json
 {
   "tuple": [
-    "<subj> Elon Musk <obj> Stanford University <rel> graduated from &lt;time&gt; 2004",
-    "<subj> Elon Musk <obj> multiple technology companies <rel> co-founded &lt;time&gt; NA",
-    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO &lt;time&gt; 2008",
-    "<subj> Elon Musk <obj> SpaceX <rel> founded &lt;time&gt; 2002",
-    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with &lt;time&gt; 2012"
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ multiple technology companies ⟨rel⟩ co-founded ⟨time⟩ NA",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
+    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
+    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
   ]
 }
 ```
