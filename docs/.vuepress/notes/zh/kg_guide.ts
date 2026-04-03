@@ -12,8 +12,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             prefix: 'basicinfo',
             items: [
                 'intro',
-                'framework',
                 'install',
+                'quickstart'
             ],
         },
         {

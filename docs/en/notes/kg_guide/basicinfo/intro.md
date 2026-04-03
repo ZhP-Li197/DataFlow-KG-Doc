@@ -1,22 +1,22 @@
 ---
-title: 简介
+title: Introduction
 icon: mdi:tooltip-text-outline
 createTime: 2025/06/13 14:51:34
 permalink: /en/kg_guide/intro/basicinfo/intro/
 ---
-# 简介
-近年来，大模型的发展在很大程度上依赖于大规模、高质量的训练数据。然而，目前主流的训练数据及其处理流程多未公开，公开数据资源的规模和质量仍有限，给社区在构建和优化大模型训练数据的过程中带来不小挑战。
 
-尽管已有如 Open-DataLab 等组织推动数据集的开源，数据准备仍然是一个高度依赖手工和分散实现的过程。现阶段，不同团队往往需要各自构建清洗与构造流程，缺乏统一、系统化的工具支持。已有数据处理工具（如Hadoop和Spark）大多以传统方法为核心，尚未有效集成基于大语言模型（LLMs）的智能算子，对于高效构建适用于大模型训练的数据支持仍显不足。
+# Introduction
 
-为此，我们提出了 **DataFlow**——一个由先进算子（Operators）与多阶段数据处理 Pipeline 组成的高效数据准备系统。DataFlow 充分结合了规则方法、深度学习模型和大语言模型的能力，提供了可扩展、可重组的模块化设计，旨在提升数据清洗、增强与构建的质量与效率，助力下一代大模型的发展。
+Graph data, as an important carrier of structured knowledge, is playing an increasingly significant role in knowledge-enhanced retrieval, question answering systems, recommendation systems, reasoning and analysis, as well as domain-specific intelligent applications. Compared with plain text data, graph data can explicitly represent entities, relations, attributes, and their complex structures, which not only improves the precision of knowledge organization and representation, but also provides stronger structured knowledge support for large language models. In the era of rapidly advancing large language models, how to efficiently construct, clean, enhance, and utilize graph data has become one of the key challenges in promoting the development of knowledge-enhanced intelligent systems.
 
-## DataFlow：一个高质量数据准备系统
+However, the current workflow for graph data processing still faces substantial challenges. On the one hand, graph data comes from diverse sources and heterogeneous formats, often involving multiple stages such as extraction from raw text, schema alignment, entity disambiguation, relation completion, and quality evaluation. On the other hand, existing graph processing workflows still largely rely on scattered scripts and manual implementation, lacking unified, systematic, and scalable tool support. Although some existing tools can support graph database management, graph algorithm analysis, or partial knowledge extraction tasks, there is still a lack of a unified framework for full-process graph data processing, especially one that effectively integrates large language models for intelligent graph construction and processing.
 
-**DataFlow** 是一个用于数据评估与处理的系统，旨在对嘈杂的数据源（如 PDF 文档、纯文本、低质量问答数据）进行 **清洗、增强与评估** 以得到高质量的训练数据。得到高质量数据我们可以通过有针对性的训练（包括预训练、有监督微调、强化学习训练）提升大语言模型在通用领域（推理能力和检索能力）与特定领域（如医疗、金融、法律等）的性能。
+To address this issue, we propose **DataFlow-KG**, a systematic framework for graph data processing. **DataFlow-KG** inherits the core design philosophy of **DataFlow**, and is built upon modular, extensible, and composable operators and multi-stage pipelines. Tailored to the characteristics of graph data, it provides a complete processing system that supports key stages including graph construction, cleaning, enhancement, reasoning, and evaluation. By combining rule-based methods, deep learning models, and large language models, DataFlow-KG offers a unified and efficient solution for the construction and utilization of high-quality graph data.
 
-具体而言，我们构建了一系列多样化的算子（Operator），这些算子基于规则方法、深度学习模型、大语言模型（LLMs）以及 LLM API 开发而成。我们将这些算子系统性地整合进六条独立的数据处理流水线（Pipeline）中，构成了完整的 **DataFlow 系统**。
+## DataFlow-KG: A Complete System for Graph Data Processing
 
-此外，我们还开发了一个智能的Dataflow-Agent，能够根据需求动态组合已有的算子，自动构建新的数据处理流程，从而实现更灵活、高效的数据构建与处理能力。
+**DataFlow-KG** is a system dedicated to graph data processing and construction. It is designed to perform **extraction, cleaning, enhancement, reasoning, and evaluation** on multi-source heterogeneous graph data and their related raw data, in order to obtain high-quality graph resources that can be used for downstream tasks and model training. With the support of high-quality graph data, we can further improve the capabilities of large language models in tasks such as knowledge-enhanced question answering, graph reasoning, domain modeling, and complex decision-making.
 
+Specifically, to address the core requirements in graph data processing, we have developed a diverse set of operators. These operators cover multiple aspects, including graph schema construction, entity and relation extraction, knowledge fusion, graph completion, graph reasoning, and graph evaluation. They are implemented based on rule-based methods, deep learning models, large language models (LLMs), and LLM APIs. We further systematically integrate these operators into multiple graph processing pipelines, forming the complete **DataFlow-KG system** to support efficient processing and flexible construction of graph data in different scenarios.
 
+In addition, DataFlow-KG inherits DataFlow’s design philosophy in automation and intelligent processing, supporting the flexible combination of existing operators according to task requirements, so that customized data processing workflows can be constructed for different graph-related tasks. This makes the system not only unified and reusable, but also better suited to the evolving demands of graph applications.

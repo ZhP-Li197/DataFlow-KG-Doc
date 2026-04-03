@@ -12,7 +12,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             prefix: 'basicinfo',
             items: [
                 'intro',
-                'framework',
+                // 'design'
             ],
         },
         {

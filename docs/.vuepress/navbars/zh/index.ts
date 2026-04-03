@@ -12,7 +12,7 @@ export const zhNavbar = defineNavbarConfig([
     // { text: '标签', link: '/zh/blog/tags/' },
     // { text: '归档', link: '/zh/blog/archives/' },
     {
-        text: '使用案例',
+        text: '指南',
         // link: '/zh/guide/',
         icon: 'icon-park-outline:guide-board',
         items: [
@@ -26,17 +26,23 @@ export const zhNavbar = defineNavbarConfig([
                                 activeMatch: '^/guide/'
                             },
                             {
-                                text: '框架设计',
-                                link: '/zh/notes/kg_guide/basicinfo/framework.md',
+                                text: '安装',
+                                link: '/zh/notes/kg_guide/basicinfo/install.md',
                                 icon: 'material-symbols:auto-transmission-sharp',
                                 activeMatch: '^/guide/'
                             },
+                            {
+                                text: '快速开始',
+                                link: '/zh/notes/kg_guide/basicinfo/quickstart.md',
+                                icon: 'mdi:bullseye-arrow',
+                                activeMatch: '^/guide/'
+                            }
                 ]
             },
         ]
     },
     {
-        text: '知识图谱算子文档',
+        text: '算子文档',
         icon: "material-symbols:build-outline-sharp",
         // items: [
         //     { text: "PR规范", link: '/zh/notes/dev_guide/pull_request.md' },
@@ -53,12 +59,24 @@ export const zhNavbar = defineNavbarConfig([
                                 icon: 'mdi:tooltip-text-outline',
                                 activeMatch: '^/guide/'
                             },
-                            {
-                                text: '框架设计',
-                                link: '/zh/notes/kg_operators/basicinfo/framework.md',
-                                icon: 'material-symbols:auto-transmission-sharp',
-                                activeMatch: '^/guide/'
-                            }
+                            // {
+                            //     text: '框架设计',
+                            //     link: '/zh/notes/kg_operators/basicinfo/framework.md',
+                            //     icon: 'material-symbols:auto-transmission-sharp',
+                            //     activeMatch: '^/guide/'
+                            // },
+                            // {
+                            //     text: '安装',
+                            //     link: '/en/notes/kg_operators/basicinfo/install.md',
+                            //     icon: 'mdi:bullseye-arrow',
+                            //     activeMatch: '^/guide/'
+                            // },
+                            // {
+                            //     text: '快速开始',
+                            //     link: '/en/notes/kg_operators/basicinfo/quickstart.md',
+                            //     icon: 'mdi:robot-excited-outline',
+                            //     activeMatch: '^/guide/'
+                            // }
                 ]
             },
         ]
