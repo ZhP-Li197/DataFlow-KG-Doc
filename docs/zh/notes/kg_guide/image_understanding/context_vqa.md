@@ -2,7 +2,7 @@
 title: ContextVQA 多模态问答数据生成流水线
 icon: mdi:image-text
 createTime: 2025/06/16 14:30:00
-permalink: /zh/mm_guide/contextvqa_pipeline/
+permalink: /zh/kg_guide/contextvqa_pipeline/
 ---
 ## 1. 概述
 

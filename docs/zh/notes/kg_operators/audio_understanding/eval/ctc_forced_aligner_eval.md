@@ -2,7 +2,7 @@
 title: CTCForcedAlignmentSampleEvaluator
 createTime: 2025/10/14 17:01:41
 # icon: material-symbols:add-notes-outline
-permalink: /zh/mm_operators/ggd0pjat/
+permalink: /zh/kg_operators/ggd0pjat/
 ---
 
 ## 📘-概述
