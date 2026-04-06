@@ -8,3 +8,5 @@ docs/.vuepress/client.js
 .DS_Store
 *.log
 ./yarn.lock
+
+OPERATOR_DOC_GUIDE.md

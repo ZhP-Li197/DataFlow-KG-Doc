@@ -196,6 +196,124 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'Dataflow常识图谱',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'commonsense_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'cskg_triple_extractor',
+                        'cskg_rel_triple_qa_generator',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'cskg_triple_adapbility_eval',
+                        'cskg_triple_rationale_eval',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'cskg_rel_triple_set_sampling',
+                        'cskg_triple_adapbility_filtering',
+                        'cskg_triple_rationale_filtering',
+                    ]
+                },
+                {
+                    text: 'refine',
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                        'cskg_triple_concept_generalization',
+                    ]
+                }
+            ],
+        },
+        {
+            text: 'Dataflow图谱RAG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'graph_rag',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'graphrag_query_extractor',
+                        'graphrag_prompt_generator',
+                        'graphrag_get_answer',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'graphrag_answer_plausibility_eval',
+                        'graphrag_answer_token_eval',
+                        'graphrag_question_difficulty_eval',
+                        'graphrag_truth_eval',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'graphrag_answer_plausibility_filtering',
+                        'graphrag_answer_token_filtering',
+                    ]
+                }
+            ],
+        },
+        {
+            text: 'Dataflow知识图谱推理',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'graph_reasoning',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'reasoning_path_search',
+                        'reasoning_constrained_path_search',
+                        'reasoning_rel_generator',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'reasoning_path_length_eval',
+                        'reasoning_path_redundancy_eval',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'reasoning_path_length_filtering',
+                        'reasoning_path_redundancy_filtering',
+                    ]
+                }
+            ],
+        },
+        {
             text: 'Dataflow图像/视频生成',
             collapsed: false,
             icon: 'carbon:idea',
