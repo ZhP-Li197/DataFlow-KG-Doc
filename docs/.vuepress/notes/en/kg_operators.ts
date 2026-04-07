@@ -15,6 +15,235 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                 // 'design'
             ],
         },
+    {
+      text: 'Multimodal KG',
+      collapsed: false,
+      icon: 'carbon:idea',
+      prefix: 'mmkg',
+      items: [
+        {
+          text: 'Install',
+          collapsed: false,
+          prefix: '',
+          items: ['install_mmkg'],
+        },
+        {
+          text: 'generate',
+          collapsed: false,
+          prefix: 'generate/',
+          items: [
+            'mmkg_visual_triple_extractor',
+            'mmkg_visual_triple_path_qa_generator',
+            'mmkg_visual_triple_subgraph_qa_generator',
+          ],
+        },
+        {
+          text: 'filter',
+          collapsed: false,
+          prefix: 'filter/',
+          items: [
+            'mmkg_visual_triple_path_sampling',
+            'mmkg_visual_triple_subgraph_sampling',
+          ],
+        },
+        {
+          text: 'refine',
+          collapsed: false,
+          prefix: 'refine/',
+          items: [
+            'mmkg_entity_link2database',
+            'mmkg_entity_link2img',
+          ],
+        },
+      ],
+    },
+        {
+            text: 'Dataflow Commonsense Graph',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'commonsense_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'cskg_triple_extractor_en',
+                        'cskg_rel_triple_qa_generator_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'cskg_triple_adapbility_eval_en',
+                        'cskg_triple_rationale_eval_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'cskg_rel_triple_set_sampling_en',
+                        'cskg_triple_adapbility_filtering_en',
+                        'cskg_triple_rationale_filtering_en',
+                    ]
+                },
+                {
+                    text: 'refine',
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                        'cskg_triple_concept_generalization_en',
+                    ]
+                }
+            ],
+        },
+        {
+            text: 'Dataflow Graph RAG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'graph_rag',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'graphrag_query_extractor_en',
+                        'graphrag_prompt_generator_en',
+                        'graphrag_get_answer_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'graphrag_answer_plausibility_eval_en',
+                        'graphrag_answer_token_eval_en',
+                        'graphrag_question_difficulty_eval_en',
+                        'graphrag_truth_eval_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'graphrag_answer_plausibility_filtering_en',
+                        'graphrag_answer_token_filtering_en',
+                    ]
+                }
+            ],
+        },
+        {
+            text: 'Dataflow Knowledge Graph Reasoning',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'graph_reasoning',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'reasoning_path_search_en',
+                        'reasoning_constrained_path_search_en',
+                        'reasoning_rel_generator_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'reasoning_path_length_eval_en',
+                        'reasoning_path_redundancy_eval_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'reasoning_path_length_filtering_en',
+                        'reasoning_path_redundancy_filtering_en',
+                    ]
+                }
+            ],
+        },
+        {
+            text: 'Dataflow Temporal KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'temporal_kg',
+            items: [
+                {
+                    text: "generate",
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        {
+                            text: 'TKGTupleExtraction',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtupleextraction/',
+                            icon: 'material-symbols:bolt',
+                        },
+                        {
+                            text: 'TKGTupleMerger',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplemerger/',
+                            icon: 'material-symbols:bolt',
+                        },
+                        {
+                            text: 'TKGTupleSubgraphQAGeneration',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
+                            icon: 'material-symbols:bolt',
+                        },
+                        {
+                            text: 'TKGTuplePathQAGeneration',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
+                            icon: 'material-symbols:bolt',
+                        },
+                        {
+                            text: 'TKGAttriuteQAGeneration',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
+                            icon: 'material-symbols:bolt',
+                        },
+                        {
+                            text: 'TKGRelationTripletDialogueQAGeneration',
+                            link: '/en/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
+                            icon: 'material-symbols:bolt',
+                        },
+                    ]
+                },
+                {
+                    text: "filter",
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'TKGTupleTimeFilter',
+                    ]
+                },
+                {
+                    text: "eval",
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'TKGTemporalStatistics',
+                    ]
+                },
+                {
+                    text: "refine",
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                        'TKGTupleDisambiguation',
+                    ]
+                },
+            ],
+        },
         {
             text: 'Dataflow Image',
             collapsed: false,
