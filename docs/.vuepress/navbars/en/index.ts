@@ -27,11 +27,17 @@ export const enNavbar = defineNavbarConfig([
                         activeMatch: '^/guide/'
                     },
                     {
-                        text: 'Framework Design',
-                        link: '/en/notes/kg_guide/basicinfo/framework.md',
+                        text: 'Installation',
+                        link: '/en/notes/kg_guide/basicinfo/install.md',
                         icon: 'material-symbols:auto-transmission-sharp',
                         activeMatch: '^/guide/'
                     },
+                    {
+                        text: 'Quickstart',
+                        link: '/en/notes/kg_guide/basicinfo/quickstart.md',
+                        icon: 'mdi:bullseye-arrow',
+                        activeMatch: '^/guide/'
+                    }
                 ]
             },
         ]
@@ -54,12 +60,24 @@ export const enNavbar = defineNavbarConfig([
                         icon: 'mdi:tooltip-text-outline',
                         activeMatch: '^/guide/'
                     },
-                    {
-                        text: 'Framework Design',
-                        link: '/en/notes/kg_operators/basicinfo/framework.md',
-                        icon: 'material-symbols:auto-transmission-sharp',
-                        activeMatch: '^/guide/'
-                    }
+                    // {
+                    //     text: 'Framework Design',
+                    //     link: '/en/notes/kg_operators/basicinfo/framework.md',
+                    //     icon: 'material-symbols:auto-transmission-sharp',
+                    //     activeMatch: '^/guide/'
+                    // },
+                    // {
+                    //     text: 'Install',
+                    //     link: '/en/notes/kg_operators/basicinfo/install.md',
+                    //     icon: 'mdi:bullseye-arrow',
+                    //     activeMatch: '^/guide/'
+                    // },
+                    // {
+                    //     text: 'Quick Start',
+                    //     link: '/en/notes/kg_operators/basicinfo/quickstart.md',
+                    //     icon: 'mdi:robot-excited-outline',
+                    //     activeMatch: '^/guide/'
+                    // }
                 ]
             },
         ]

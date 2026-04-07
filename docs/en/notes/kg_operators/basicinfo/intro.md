@@ -1,22 +1,108 @@
 ---
-title: 简介
+title: Introduction
 icon: mdi:tooltip-text-outline
 createTime: 2025/06/13 14:51:34
 permalink: /en/kg_operators/intro/basicinfo/intro/
+
 ---
-# 简介
-近年来，大模型的发展在很大程度上依赖于大规模、高质量的训练数据。然而，目前主流的训练数据及其处理流程多未公开，公开数据资源的规模和质量仍有限，给社区在构建和优化大模型训练数据的过程中带来不小挑战。
 
-尽管已有如 Open-DataLab 等组织推动数据集的开源，数据准备仍然是一个高度依赖手工和分散实现的过程。现阶段，不同团队往往需要各自构建清洗与构造流程，缺乏统一、系统化的工具支持。已有数据处理工具（如Hadoop和Spark）大多以传统方法为核心，尚未有效集成基于大语言模型（LLMs）的智能算子，对于高效构建适用于大模型训练的数据支持仍显不足。
+## Operator System in DataFlow-KG
 
-为此，我们提出了 **DataFlow**——一个由先进算子（Operators）与多阶段数据处理 Pipeline 组成的高效数据准备系统。DataFlow 充分结合了规则方法、深度学习模型和大语言模型的能力，提供了可扩展、可重组的模块化设计，旨在提升数据清洗、增强与构建的质量与效率，助力下一代大模型的发展。
+`DataFlow-KG` provides a structured, extensible, and reusable operator system for knowledge graph construction, processing, refinement, and evaluation across different graph types. The overall organization, design principles, and naming conventions of the operators are described below.
 
-## DataFlow：一个高质量数据准备系统
+### 1. Organization by Knowledge Graph Type
 
-**DataFlow** 是一个用于数据评估与处理的系统，旨在对嘈杂的数据源（如 PDF 文档、纯文本、低质量问答数据）进行 **清洗、增强与评估** 以得到高质量的训练数据。得到高质量数据我们可以通过有针对性的训练（包括预训练、有监督微调、强化学习训练）提升大语言模型在通用领域（推理能力和检索能力）与特定领域（如医疗、金融、法律等）的性能。
+In `DataFlow-KG`, operators are organized according to different knowledge graph types. Each graph type corresponds to an independent folder, and the operators inside each folder are further divided into four functional categories:
 
-具体而言，我们构建了一系列多样化的算子（Operator），这些算子基于规则方法、深度学习模型、大语言模型（LLMs）以及 LLM API 开发而成。我们将这些算子系统性地整合进六条独立的数据处理流水线（Pipeline）中，构成了完整的 **DataFlow 系统**。
+* `generate`: for graph construction and data generation
+* `filter`: for data screening and quality filtering
+* `refine`: for graph refinement, completion, and normalization
+* `eval`: for quality evaluation and performance assessment
 
-此外，我们还开发了一个智能的Dataflow-Agent，能够根据需求动态组合已有的算子，自动构建新的数据处理流程，从而实现更灵活、高效的数据构建与处理能力。
+This organization keeps the operator structure consistent across different graph types, making the framework easier to develop, maintain, and extend.
 
+Currently, `DataFlow-KG` supports, but is not limited to, the following graph types:
+
+* General Knowledge Graphs
+* Commonsense Knowledge Graphs
+* Temporal Knowledge Graphs
+* Multimodal Knowledge Graphs
+* Hyper-relational Knowledge Graphs
+
+### 2. Design Principle: High Reusability, Low Redundancy
+
+The operator design in `DataFlow-KG` follows the principle of **high reusability with low redundancy**.
+
+Among all graph types, the **general knowledge graph (`general_kg / kg`)** represents the most common knowledge graph structures, such as:
+
+* entity–relation–entity triples
+* entity–attribute–attribute-value triples
+
+The operator set for general knowledge graphs serves as the **foundational capability layer** of the entire `DataFlow-KG` framework. In particular, many `filter` and `refine` operators are sufficiently general to be reused across most other graph types. Therefore, when designing operators for commonsense, temporal, multimodal, and hyper-relational knowledge graphs, we reuse the existing operators in `general_kg` whenever possible. This reduces duplicated development effort while improving consistency and maintainability across the framework.
+
+### 3. Operator Naming Convention
+
+All operator files in `DataFlow-KG` follow the naming format below:
+
+```text
+[graph_type]_[object]_[specific_function]
+```
+
+Examples:
+
+```text
+kg_entity_extract
+tkg_tuple_filter
+mmkg_qa_generate
+hrkg_subgraph_refine
+```
+
+This naming convention clearly reflects the applicable graph type, the target object, and the core functionality of each operator, making the codebase easier to understand and navigate.
+
+#### 3.1 Graph Type Abbreviations
+
+| Graph Type          | Abbreviation | Description                                                                                  |
+| ------------------- | ------------ | -------------------------------------------------------------------------------------------- |
+| General KG          | `kg`         | The foundational graph type for generic entity-relation and entity-attribute representations |
+| Commonsense KG      | `ckg`        | Knowledge graphs for commonsense representation and reasoning                                |
+| Temporal KG         | `tkg`        | Knowledge graphs with temporal or dynamic information                                        |
+| Multimodal KG       | `mmkg`       | Knowledge graphs that integrate text, images, and other modalities                           |
+| Hyper-relational KG | `hrkg`       | Knowledge graphs for higher-order relations and complex semantic structures                  |
+
+#### 3.2 Object Types
+
+| Object     | Meaning            | Description                                                     |
+| ---------- | ------------------ | --------------------------------------------------------------- |
+| `entity`   | Entity             | Operators that directly process entities                        |
+| `rel`      | Relation tuple     | Data in the entity–relation–entity format                       |
+| `attri`    | Attribute tuple    | Data in the entity–attribute–attribute-value format             |
+| `triple`   | Triple             | Generic three-element structured data                           |
+| `tuple`    | Tuple              | Four-element or higher-order structured data                    |
+| `qa`       | Question answering | Operators for KG-based QA generation, processing, or evaluation |
+| `subgraph` | Subgraph           | Operators for local graph structures                            |
+| `path`     | Path               | Operators for graph path mining, reasoning, or analysis         |
+
+
+### 4. Domain-specific Knowledge Graph Operators
+
+In addition to graph-type-oriented operators, `DataFlow-KG` also provides operators for **domain-specific knowledge graphs (`domain_kg`)**.
+
+Similar to other graph types, operators in each domain are also organized into the following four categories:
+
+* `generate`
+* `filter`
+* `refine`
+* `eval`
+
+Domain-specific knowledge graphs focus more on practical applications in particular scenarios, with greater emphasis on task-oriented design and application adaptability. At the same time, we recognize that real-world domain applications are highly diverse, and the current operator ecosystem still has significant room for expansion. Therefore, we warmly welcome contributions from the community to enrich the repository with more domain-oriented operators and application-specific modules.
+
+### 5. Summary of the Design Philosophy
+
+Overall, the operator system in `DataFlow-KG` has the following characteristics:
+
+* **Well-structured**: organized by graph type and functional stage
+* **Consistent**: unified naming conventions and directory design
+* **Highly reusable**: built upon the foundational operators in general knowledge graphs
+* **Extensible**: easy to expand for new graph types and new domain applications
+* **Application-oriented**: designed to support both general capabilities and practical deployment needs
 
