@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/filter/mmkg_visual_triple_path_sampling/
 ---
 
-#### 📚 Overview
+## 📚 Overview
 
-`MMKGRelationTuplePathGenerator` enumerates `k`-hop paths from relation triples and attaches related visual triples and image URLs to each path. The output dataframe typically contains `2_hop_paths`, `vis_triple`, and `vis_url`.
+`MMKGRelationTuplePathGenerator` enumerates `k`-hop paths from relation triples and attaches the related visual triples and image URLs. It expects the actual triple format used by the parser in code: `<subj> ... <obj> ... <rel> ...`.
 
-#### 📚 `__init__` Function
+The current implementation works best when the whole graph is stored in a single row. If the input `DataFrame` has multiple rows, it merges all `triple` or `tuple` values, but it only uses the first row's `vis_triple` and `img_dict` when attaching visual information.
+
+## ✒️ `__init__` Function
 
 ```python
 def __init__(
@@ -24,13 +26,13 @@ def __init__(
 
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | `None` | Unused in the current implementation; reserved for future extensions |
-| `seed` | `int` | `0` | Random seed |
-| `lang` | `str` | `"en"` | Reserved language parameter; not directly used in the current logic |
-| `k` | `int` | `2` | Path hop count |
-| `max_paths_per_group` | `int` | `100` | Maximum number of paths retained per group |
+| `llm_serving` | `LLMServingABC \| None` | `None` | Reserved parameter; not used directly in the current implementation |
+| `seed` | `int` | `0` | Reserved random seed; path enumeration is currently deterministic |
+| `lang` | `str` | `"en"` | Reserved language parameter; not used directly in the current implementation |
+| `k` | `int` | `2` | Hop count of the paths to enumerate |
+| `max_paths_per_group` | `int` | `100` | Maximum number of paths kept for one group |
 
-#### 💡 `run` Function
+## 💡 `run` Function
 
 ```python
 def run(
@@ -45,10 +47,12 @@ def run(
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
-| `input_key` | `str` | `"triple"` | Source relation triple column; if missing, the operator falls back to `tuple` |
-| `output_key_meta` | `str` | `"hop_paths"` | Output meta name; the real column written to the dataframe is `f"{k}_{output_key_meta}"` |
+| `input_key` | `str` | `"triple"` | Column containing raw relation triples; if missing, the code falls back to checking `triple` or `tuple` |
+| `output_key_meta` | `str` | `"hop_paths"` | Base name of the output path column; the actual written column is `f"{k}_{output_key_meta}"` |
 
-#### 🤖 Example Usage
+The operator writes one row per sampled path, so the output is typically a path table. The return value is `[output_key_meta, "vis_triple", "vis_url"]`, but the real path column stored in the dataframe is still dynamic, such as `2_hop_paths`.
+
+## 🤖 Example Usage
 
 ```python
 from dataflow.utils.storage import FileStorage

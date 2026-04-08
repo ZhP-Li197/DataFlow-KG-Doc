@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /zh/kg_operators/mmkg/filter/mmkg_visual_triple_path_sampling/
 ---
 
-#### 📚 概述
+## 📚 概述
 
-`MMKGRelationTuplePathGenerator` 从关系三元组中枚举 `k` 跳路径，并为每条路径补齐相关视觉三元组和图片 URL。输出 DataFrame 通常包含 `2_hop_paths`、`vis_triple` 和 `vis_url` 三列。
+`MMKGRelationTuplePathGenerator` 从关系三元组中枚举 `k` 跳路径，并把与路径中实体相关的视觉三元组和图片 URL 一起补齐。它要求输入三元组采用代码中实际解析的格式：`<subj> ... <obj> ... <rel> ...`。
 
-#### 📚 `__init__` 函数
+当前实现最适合处理“整张图谱集中存放在一行”的输入。如果 `DataFrame` 有多行，算子会合并所有行里的 `triple` 或 `tuple`，但只读取第一行的 `vis_triple` 和 `img_dict` 来补视觉信息。
+
+## ✒️ `__init__` 函数
 
 ```python
 def __init__(
@@ -24,13 +26,13 @@ def __init__(
 
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | `None` | 当前实现中未使用，保留给后续扩展 |
-| `seed` | `int` | `0` | 随机种子 |
-| `lang` | `str` | `"en"` | 预留语言参数，当前实现中未直接参与逻辑 |
-| `k` | `int` | `2` | 路径跳数 |
-| `max_paths_per_group` | `int` | `100` | 每组最多保留的路径数 |
+| `llm_serving` | `LLMServingABC \| None` | `None` | 预留参数，当前实现未直接使用 |
+| `seed` | `int` | `0` | 预留随机种子，当前实现未直接参与路径枚举 |
+| `lang` | `str` | `"en"` | 预留语言参数，当前实现未直接使用 |
+| `k` | `int` | `2` | 需要枚举的路径跳数 |
+| `max_paths_per_group` | `int` | `100` | 每组最多保留的路径数量 |
 
-#### 💡 `run` 函数
+## 💡 `run` 函数
 
 ```python
 def run(
@@ -45,10 +47,12 @@ def run(
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | 输入输出存储对象 |
-| `input_key` | `str` | `"triple"` | 原始关系三元组列；若不存在，算子会回退到 `tuple` |
-| `output_key_meta` | `str` | `"hop_paths"` | 输出元名称；实际写入列名为 `f"{k}_{output_key_meta}"` |
+| `input_key` | `str` | `"triple"` | 原始关系三元组列；如果该列不存在，代码会退回检查 `triple` 或 `tuple` |
+| `output_key_meta` | `str` | `"hop_paths"` | 输出列基名，实际写入列名为 `f"{k}_{output_key_meta}"` |
 
-#### 🤖 示例用法
+算子会为每条路径单独生成一行结果，因此输出通常是“多行路径表”。函数返回值是 `[output_key_meta, "vis_triple", "vis_url"]`，但真正写入到表里的路径列名仍然是动态列，例如 `2_hop_paths`。
+
+## 🤖 示例用法
 
 ```python
 from dataflow.utils.storage import FileStorage

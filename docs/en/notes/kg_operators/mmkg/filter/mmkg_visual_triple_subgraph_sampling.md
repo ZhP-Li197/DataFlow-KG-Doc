@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/filter/mmkg_visual_triple_subgraph_sampling/
 ---
 
-#### 📚 Overview
+## 📚 Overview
 
-`MMKGEntityBasedSubgraphSampling` samples multimodal subgraphs around entities and enriches each sampled subgraph with related visual triples and image URLs. It supports both `hop` and `bfs` sampling strategies, and the output typically contains `subgraph`, `vis_triple`, and `vis_url`.
+`MMKGEntityBasedSubgraphSampling` samples subgraphs around entities and carries over the related `vis_triple` and `vis_url` fields. It collects all entities from the input graph, then writes one output row for each entity.
 
-#### 📚 `__init__` Function
+The current implementation only reads the first row's `triple` list as the graph to sample from. Although `run` exposes a `start_entity` parameter, the code still iterates over all entities and samples for each of them, so the operator behaves more like a full-graph entity subgraph sampler.
+
+## ✒️ `__init__` Function
 
 ```python
 def __init__(
@@ -23,12 +25,12 @@ def __init__(
 
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | - | Not directly used in the current implementation |
-| `seed` | `int` | `0` | Random seed |
-| `lang` | `str` | `"en"` | Reserved language parameter; not directly used in the current logic |
-| `num_q` | `int` | `5` | Reserved parameter; not directly used in the current logic |
+| `llm_serving` | `LLMServingABC` | - | Reserved parameter; not used directly in the current implementation |
+| `seed` | `int` | `0` | Random seed used when a start entity is not explicitly provided |
+| `lang` | `str` | `"en"` | Reserved language parameter; not used directly in the current implementation |
+| `num_q` | `int` | `5` | Reserved parameter; not used directly in the current implementation |
 
-#### 💡 `run` Function
+## 💡 `run` Function
 
 ```python
 def run(
@@ -48,35 +50,31 @@ def run(
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
-| `input_key` | `str` | `"triple"` | Source relation triple column |
-| `output_key` | `str` | `"subgraph"` | Output subgraph column |
-| `vis_triple_key` | `str` | `"vis_triple"` | Visual triple column |
-| `sampling_type` | `str` | `"hop"` | Use `"hop"` for hop-based expansion or `"bfs"` for edge-budget sampling |
-| `start_entity` | `Optional[str]` | `None` | In the current implementation, the operator still samples around all entities, so this argument does not directly restrict the final output |
-| `M` | `int` | `5` | Maximum edge count for `bfs` sampling |
-| `hop` | `int` | `2` | Maximum hop depth for `hop` sampling |
+| `input_key` | `str` | `"triple"` | Column containing relation triples |
+| `output_key` | `str` | `"subgraph"` | Output subgraph column name |
+| `vis_triple_key` | `str` | `"vis_triple"` | Visual triple column name; filtered visual triples are written back using this name |
+| `sampling_type` | `str` | `"hop"` | Sampling mode; `"hop"` expands by hop distance, `"bfs"` keeps at most `M` edges in BFS order |
+| `start_entity` | `Optional[str]` | `None` | Reserved starting entity parameter; the current implementation does not restrict output to this entity |
+| `M` | `int` | `5` | Maximum number of sampled edges when `sampling_type="bfs"` |
+| `hop` | `int` | `2` | Hop depth when `sampling_type="hop"` |
 
-#### 🤖 Example Usage
+Each output row contains a `subgraph`, the filtered `vis_triple`, and a deduplicated `vis_url` list.
+
+## 🤖 Example Usage
 
 ```python
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.multi_model_kg.filter.mmkg_visual_triple_subgraph_sampling import MMKGEntityBasedSubgraphSampling
 
 storage = FileStorage(
-    first_entry_file_name="mmkg_graph_input.json",
+    first_entry_file_name="mmkg_subgraph_input.json",
     cache_path="./cache",
     file_name_prefix="mmkg_subgraph_sampling",
     cache_type="json",
 ).step()
 
 op = MMKGEntityBasedSubgraphSampling(llm_serving=llm_serving, seed=0)
-op.run(
-    storage=storage,
-    input_key="triple",
-    output_key="subgraph",
-    sampling_type="hop",
-    hop=2
-)
+op.run(storage=storage, sampling_type="hop", hop=1)
 ```
 
 Example input:
@@ -84,8 +82,9 @@ Example input:
 ```json
 {
   "triple": [
-    "<subj> Albert Einstein <obj> Princeton University <rel> worked_at",
-    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won"
+    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won",
+    "<subj> Albert Einstein <obj> Ulm <rel> born_in",
+    "<subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in"
   ],
   "vis_triple": [
     "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
@@ -96,13 +95,13 @@ Example input:
 }
 ```
 
-Example output:
+Example output (one row):
 
 ```json
 {
   "subgraph": [
-    "<subj> Albert Einstein <obj> Princeton University <rel> worked_at",
-    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won"
+    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won",
+    "<subj> Albert Einstein <obj> Ulm <rel> born_in"
   ],
   "vis_triple": [
     "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"

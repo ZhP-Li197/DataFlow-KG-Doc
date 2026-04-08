@@ -1,13 +1,17 @@
 ---
-title: Multimodal KG Environment Installation
+title: DataFlow-KG Multimodal KG Installation
 createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/install/
 ---
 
-# Installation
+## 📚 Overview
+
+The `mmkg` module contains visual triple extraction, path sampling, subgraph sampling, multimodal QA generation, and encyclopedia/Wikidata linking operators. The visual extraction and QA operators require a VLM backend with multi-image input support, while the two linking operators require online access to Wikipedia, Wikidata, and Wikimedia Commons.
+
+## 🤖 Installation Example
 
 ```bash
 pip install dataflow-kg[vllm]
 ```
 
-The operators under `mmkg` require a VLM backend that supports multi-image input for visual triple extraction and multimodal QA generation. The two linking operators also require access to external encyclopedia or Wikidata endpoints.
+If you plan to run the linking operators, make sure the runtime environment can reach `wikipedia.org`, `wikidata.org`, and `commons.wikimedia.org`.

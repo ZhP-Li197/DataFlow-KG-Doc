@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 ---
 
-#### 📚 Overview
+## 📚 Overview
 
-`MMKGVisualTripleExtraction` extracts visual triples from images and candidate entity lists. The output follows the format `<subj> entity <rel> depicted_in <obj> image_id`. It invokes a multimodal model image by image and filters low-confidence results with `quality_threshold`.
+`MMKGVisualTripleExtraction` extracts visual triples from `img_dict` and the candidate entity column `entity`. The operator calls a multi-image VLM once per image, keeps only entities that are both returned by the model and present in the candidate list, and writes triples in the normalized format `<subj> entity <rel> depicted_in <obj> image_id`.
 
-#### 📚 `__init__` Function
+If the model response cannot be parsed as JSON, or if `quality_score` is lower than `quality_threshold`, that image produces no triple.
+
+## ✒️ `__init__` Function
 
 ```python
 def __init__(
@@ -22,11 +24,11 @@ def __init__(
 
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | - | Vision-language serving backend that supports multimodal input |
-| `quality_threshold` | `int` | `3` | Results with a score lower than this threshold are discarded |
-| `lang` | `str` | `"en"` | Prompt language |
+| `llm_serving` | `LLMServingABC` | - | Vision-language serving backend that must implement `generate_from_input_multi_images` |
+| `quality_threshold` | `int` | `3` | Minimum quality score required for keeping a visual extraction result |
+| `lang` | `str` | `"en"` | Prompt language passed to `MMKGVisualTripleExtractionPrompt` |
 
-#### 💡 `run` Function
+## 💡 `run` Function
 
 ```python
 def run(
@@ -42,13 +44,13 @@ def run(
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
-| `input_key` | `str` | `"img_dict"` | Column containing image dictionaries, usually `{image_id: image_url_or_path}` |
-| `input_key_meta` | `str` | `"entity"` | Column containing candidate entities |
-| `output_key` | `str` | `"vis_triple"` | Output column for extracted visual triples |
+| `input_key` | `str` | `"img_dict"` | Column containing the image dictionary, usually `{image_id: image_path_or_url}` |
+| `input_key_meta` | `str` | `"entity"` | Candidate entity column; supports `list[str]` or a comma-separated string |
+| `output_key` | `str` | `"vis_triple"` | Output column name; each row stores a `list[str]` |
 
-If the entity column is a string, the operator splits it by commas. If the image dictionary is stored as a string, the operator first attempts to parse it as JSON.
+If `img_dict` is a string, the operator first tries to parse it as JSON. If `entity` is a string, it is split by commas. The function returns `[output_key]`.
 
-#### 🤖 Example Usage
+## 🤖 Example Usage
 
 ```python
 from dataflow.utils.storage import FileStorage
@@ -64,9 +66,14 @@ storage = FileStorage(
 op = MMKGVisualTripleExtraction(
     llm_serving=llm_serving,
     quality_threshold=5,
-    lang="en"
+    lang="en",
 )
-op.run(storage=storage, input_key="img_dict", input_key_meta="entity", output_key="vis_triple")
+op.run(
+    storage=storage,
+    input_key="img_dict",
+    input_key_meta="entity",
+    output_key="vis_triple",
+)
 ```
 
 Example input:
