@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /zh/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 ---
 
-#### 📚 概述
+## 📚 概述
 
-`MMKGVisualTripleExtraction` 根据图片和候选实体列表抽取视觉三元组，输出统一采用 `<subj> 实体 <rel> depicted_in <obj> 图片ID` 的格式。它会逐张图片调用支持多模态输入的模型，并用 `quality_threshold` 过滤低质量识别结果。
+`MMKGVisualTripleExtraction` 根据 `img_dict` 和候选实体列 `entity` 抽取视觉三元组。算子会逐张图片调用支持多图输入的 VLM，只保留模型返回且确实存在于候选实体列表中的实体，并统一写成 `<subj> 实体 <rel> depicted_in <obj> 图片ID`。
 
-#### 📚 `__init__` 函数
+当模型返回的 JSON 解析失败，或者 `quality_score` 小于 `quality_threshold` 时，该图片不会产出三元组。
+
+## ✒️ `__init__` 函数
 
 ```python
 def __init__(
@@ -22,11 +24,11 @@ def __init__(
 
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | - | 需要支持多图输入的视觉语言模型服务 |
-| `quality_threshold` | `int` | `3` | 小于该分数的识别结果会被丢弃 |
-| `lang` | `str` | `"en"` | 提示词语言 |
+| `llm_serving` | `LLMServingABC` | - | 视觉语言模型服务，必须实现 `generate_from_input_multi_images` |
+| `quality_threshold` | `int` | `3` | 视觉识别质量阈值；低于该分数的结果会被过滤 |
+| `lang` | `str` | `"en"` | 提示词语言，传给 `MMKGVisualTripleExtractionPrompt` |
 
-#### 💡 `run` 函数
+## 💡 `run` 函数
 
 ```python
 def run(
@@ -42,13 +44,13 @@ def run(
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | 输入输出存储对象 |
-| `input_key` | `str` | `"img_dict"` | 图片字典列，格式通常为 `{图片ID: 图片URL或路径}` |
-| `input_key_meta` | `str` | `"entity"` | 候选实体列 |
-| `output_key` | `str` | `"vis_triple"` | 写回视觉三元组的列名 |
+| `input_key` | `str` | `"img_dict"` | 图片字典列，格式通常为 `{图片ID: 图片路径或 URL}` |
+| `input_key_meta` | `str` | `"entity"` | 候选实体列，支持 `list[str]` 或逗号分隔字符串 |
+| `output_key` | `str` | `"vis_triple"` | 输出列名，每行写入 `list[str]` |
 
-如果实体列是字符串，算子会按逗号切分；如果图片字典是字符串，算子会尝试先解析为 JSON。
+如果 `img_dict` 是字符串，算子会先尝试按 JSON 解析；如果 `entity` 是字符串，算子会按英文逗号切分。函数返回值为 `[output_key]`。
 
-#### 🤖 示例用法
+## 🤖 示例用法
 
 ```python
 from dataflow.utils.storage import FileStorage
@@ -64,9 +66,14 @@ storage = FileStorage(
 op = MMKGVisualTripleExtraction(
     llm_serving=llm_serving,
     quality_threshold=5,
-    lang="en"
+    lang="en",
 )
-op.run(storage=storage, input_key="img_dict", input_key_meta="entity", output_key="vis_triple")
+op.run(
+    storage=storage,
+    input_key="img_dict",
+    input_key_meta="entity",
+    output_key="vis_triple",
+)
 ```
 
 输入示例：

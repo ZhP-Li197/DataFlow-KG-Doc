@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /zh/kg_operators/mmkg/filter/mmkg_visual_triple_subgraph_sampling/
 ---
 
-#### 📚 概述
+## 📚 概述
 
-`MMKGEntityBasedSubgraphSampling` 围绕实体采样多模态子图，并为采样结果补齐关联的视觉三元组和图片 URL。支持 `hop` 和 `bfs` 两种采样方式，输出通常包含 `subgraph`、`vis_triple` 和 `vis_url`。
+`MMKGEntityBasedSubgraphSampling` 以实体为中心采样子图，并同步筛出相关的 `vis_triple` 和 `vis_url`。它会从输入图谱中收集全部实体，然后为每个实体各生成一行输出结果。
 
-#### 📚 `__init__` 函数
+当前实现只读取第一行的 `triple` 作为待采样图谱。虽然 `run` 提供了 `start_entity` 参数，但代码实际仍会遍历图中的全部实体并逐个采样，因此更适合作为“全图实体子图采样器”使用。
+
+## ✒️ `__init__` 函数
 
 ```python
 def __init__(
@@ -23,12 +25,12 @@ def __init__(
 
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
-| `llm_serving` | `LLMServingABC` | - | 当前实现中未直接使用 |
-| `seed` | `int` | `0` | 随机种子 |
-| `lang` | `str` | `"en"` | 预留语言参数，当前实现中未直接参与逻辑 |
-| `num_q` | `int` | `5` | 预留参数，当前实现中未直接参与逻辑 |
+| `llm_serving` | `LLMServingABC` | - | 预留参数，当前实现未直接使用 |
+| `seed` | `int` | `0` | 随机种子，用于在未显式指定起点时随机选一个起始实体 |
+| `lang` | `str` | `"en"` | 预留语言参数，当前实现未直接使用 |
+| `num_q` | `int` | `5` | 预留参数，当前实现未直接参与采样 |
 
-#### 💡 `run` 函数
+## 💡 `run` 函数
 
 ```python
 def run(
@@ -48,35 +50,31 @@ def run(
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | 输入输出存储对象 |
-| `input_key` | `str` | `"triple"` | 原始关系三元组列 |
-| `output_key` | `str` | `"subgraph"` | 输出子图列 |
-| `vis_triple_key` | `str` | `"vis_triple"` | 视觉三元组列 |
-| `sampling_type` | `str` | `"hop"` | 取 `"hop"` 时按跳数扩展，取 `"bfs"` 时按边数上限采样 |
-| `start_entity` | `Optional[str]` | `None` | 当前实现最终仍会围绕图中全部实体分别采样，此参数不会直接限定输出范围 |
-| `M` | `int` | `5` | `bfs` 采样时的最大边数 |
-| `hop` | `int` | `2` | `hop` 采样时的最大跳数 |
+| `input_key` | `str` | `"triple"` | 存放关系三元组列表的列名 |
+| `output_key` | `str` | `"subgraph"` | 输出子图列名 |
+| `vis_triple_key` | `str` | `"vis_triple"` | 视觉三元组列名；相关三元组会按该列名回写 |
+| `sampling_type` | `str` | `"hop"` | 采样方式；`"hop"` 为按跳数扩展，`"bfs"` 为按 BFS 最多取 `M` 条边 |
+| `start_entity` | `Optional[str]` | `None` | 预留起点参数；当前实现不会把输出限制在这个实体上 |
+| `M` | `int` | `5` | `sampling_type="bfs"` 时最多采样的边数 |
+| `hop` | `int` | `2` | `sampling_type="hop"` 时的扩展跳数 |
 
-#### 🤖 示例用法
+输出结果里每一行都包含一个 `subgraph`、过滤后的 `vis_triple`，以及去重后的 `vis_url` 列表。
+
+## 🤖 示例用法
 
 ```python
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.multi_model_kg.filter.mmkg_visual_triple_subgraph_sampling import MMKGEntityBasedSubgraphSampling
 
 storage = FileStorage(
-    first_entry_file_name="mmkg_graph_input.json",
+    first_entry_file_name="mmkg_subgraph_input.json",
     cache_path="./cache",
     file_name_prefix="mmkg_subgraph_sampling",
     cache_type="json",
 ).step()
 
 op = MMKGEntityBasedSubgraphSampling(llm_serving=llm_serving, seed=0)
-op.run(
-    storage=storage,
-    input_key="triple",
-    output_key="subgraph",
-    sampling_type="hop",
-    hop=2
-)
+op.run(storage=storage, sampling_type="hop", hop=1)
 ```
 
 输入示例：
@@ -84,8 +82,9 @@ op.run(
 ```json
 {
   "triple": [
-    "<subj> Albert Einstein <obj> Princeton University <rel> worked_at",
-    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won"
+    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won",
+    "<subj> Albert Einstein <obj> Ulm <rel> born_in",
+    "<subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in"
   ],
   "vis_triple": [
     "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
@@ -96,13 +95,13 @@ op.run(
 }
 ```
 
-输出示例：
+输出示例（其中一行）：
 
 ```json
 {
   "subgraph": [
-    "<subj> Albert Einstein <obj> Princeton University <rel> worked_at",
-    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won"
+    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won",
+    "<subj> Albert Einstein <obj> Ulm <rel> born_in"
   ],
   "vis_triple": [
     "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"

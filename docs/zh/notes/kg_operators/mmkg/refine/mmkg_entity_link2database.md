@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /zh/kg_operators/mmkg/refine/mmkg_entity_link2database/
 ---
 
-#### 📚 概述
+## 📚 概述
 
-`MMKGImgDictLink2WikiSimple` 把 `img_dict` 中的图片映射到 Wikidata 实体链接。它可以直接使用 `img_entity_mapping` 指定“图片ID -> 实体名”的映射；如果没有提供映射，就会根据图片 ID 自动生成实体名再检索 Wikidata。
+`MMKGImgDictLink2WikiSimple` 直接把 `img_dict` 中的图片 ID 映射到 Wikidata 实体 URL。输出列 `linked_result` 中的每个元素都是一个字典，形如 `{"img": 图片ID, "wikidata_url": "https://www.wikidata.org/wiki/Q..."}`。
 
-#### 📚 `__init__` 函数
+如果调用 `run` 时传入了 `img_entity_mapping`，算子会优先使用这份映射；否则它会把图片键名按 `img_` 前缀去掉、下划线转空格、首字母大写的规则，自动猜测实体名。该算子依赖外网访问 Wikidata。
+
+## ✒️ `__init__` 函数
 
 ```python
 def __init__(
@@ -22,11 +24,11 @@ def __init__(
 
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
-| `user_agent` | `str` | `"DataFlow/1.0"` | 请求 Wikidata 时使用的 User-Agent |
-| `max_retries` | `int` | `3` | 检索失败后的最大重试次数 |
-| `retry_delay` | `float` | `1.0` | 每次重试之间的等待时间 |
+| `user_agent` | `str` | `"DataFlow/1.0"` | 访问 Wikidata 时使用的请求头 |
+| `max_retries` | `int` | `3` | 请求失败后的最大重试次数 |
+| `retry_delay` | `float` | `1.0` | 重试间隔，单位为秒 |
 
-#### 💡 `run` 函数
+## 💡 `run` 函数
 
 ```python
 def run(
@@ -42,22 +44,22 @@ def run(
 | 参数 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | 输入输出存储对象 |
-| `input_key_img` | `str` | `"img_dict"` | 图片字典列 |
-| `output_key` | `str` | `"linked_result"` | 输出列名 |
-| `img_entity_mapping` | `Dict[str, str]` | `None` | 手动指定图片 ID 对应的实体名 |
+| `input_key_img` | `str` | `"img_dict"` | 图片字典列，格式为 `{图片ID: 图片路径或 URL}` |
+| `output_key` | `str` | `"linked_result"` | 输出列名，每行写入 `list[dict]` |
+| `img_entity_mapping` | `Dict[str, str] \| None` | `None` | 可选的图片 ID 到实体名映射；提供后会覆盖默认猜测逻辑 |
 
-输出列中的每一项通常是列表，列表元素形如 `{"img": 图片ID, "wikidata_url": 链接}`。
+若实体搜索失败，算子仍会保留该图片 ID，但把 `wikidata_url` 写成 `None`。
 
-#### 🤖 示例用法
+## 🤖 示例用法
 
 ```python
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.multi_model_kg.refine.mmkg_entity_link2database import MMKGImgDictLink2WikiSimple
 
 storage = FileStorage(
-    first_entry_file_name="mmkg_link_input.json",
+    first_entry_file_name="mmkg_img_input.json",
     cache_path="./cache",
-    file_name_prefix="mmkg_link_wiki",
+    file_name_prefix="mmkg_img_link",
     cache_type="json",
 ).step()
 
@@ -66,7 +68,10 @@ op.run(
     storage=storage,
     input_key_img="img_dict",
     output_key="linked_result",
-    img_entity_mapping={"img_einstein": "Albert Einstein", "img_paris": "Paris"}
+    img_entity_mapping={
+        "img_einstein": "Albert Einstein",
+        "img_paris": "Paris"
+    },
 )
 ```
 
@@ -86,8 +91,14 @@ op.run(
 ```json
 {
   "linked_result": [
-    {"img": "img_einstein", "wikidata_url": "https://www.wikidata.org/wiki/Q937"},
-    {"img": "img_paris", "wikidata_url": "https://www.wikidata.org/wiki/Q90"}
+    {
+      "img": "img_einstein",
+      "wikidata_url": "https://www.wikidata.org/wiki/Q937"
+    },
+    {
+      "img": "img_paris",
+      "wikidata_url": "https://www.wikidata.org/wiki/Q90"
+    }
   ]
 }
 ```
