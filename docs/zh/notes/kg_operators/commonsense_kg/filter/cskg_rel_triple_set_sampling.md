@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGRelationTripleSetSampling
 createTime: 2026/04/01 17:45:00
-icon: material-symbols:filter-alt-outline
 permalink: /zh/kg_operators/commonsense_kg/filter/cskg_rel_triple_set_sampling/
 ---
 
@@ -32,8 +31,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 预留的大模型服务参数。当前实现没有在采样逻辑中使用该参数。 |
@@ -61,8 +59,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，检查输入列是否存在以及输出列是否冲突。随后，算子会把所有输入行中的三元组整体汇总，去重并解析为 `(subj, rel, obj, raw_triple)` 结构，再根据 `match_rule` 构建相关三元组集合：规则 1 按主体相似聚合，规则 2 按客体相似聚合，规则 3 按相同关系聚合。整个过程支持索引预构建、多进程分块处理和全局去重。最终结果不会附加回原表，而是写成一个仅包含 `output_key` 一列的新 DataFrame。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并写出一个新的集合结果 DataFrame。 |
@@ -100,16 +97,14 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `set_triple` | `List[List[str]]` | 相关三元组集合列表。每个元素是一组相关三元组，而不是原始逐行结果。 |
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -126,8 +121,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -142,8 +136,8 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/commonsense_kg/filter/cskg_rel_triple_set_sampling.py`
 - 下游 QA 生成算子：`DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_rel_triple_qa_generator.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+

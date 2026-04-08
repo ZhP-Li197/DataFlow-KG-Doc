@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathLengthEvaluator
 createTime: 2026/04/01 16:25:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_reasoning/eval/reasoning_path_length_eval/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self):
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | - | - | - | This operator does not require extra initialization parameters. |
@@ -46,8 +44,7 @@ def run(
 
 `run` first reads a DataFrame from `storage` and checks whether the path column specified by `input_key` exists. It then processes `mpath` row by row. For each entity-pair group in a row, the operator iterates through the paths in that group and uses the number of triples in each path as its length value. The final result keeps exactly the same nested structure as the original path data and is written into `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes path-length results back. |
@@ -75,8 +72,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `mpath` | `List[List[List[str]]]` | Input multi-hop path result grouped by entity pair. |
@@ -84,8 +80,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -99,8 +94,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -118,8 +112,8 @@ operator.run(
 ```
 
 ---
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

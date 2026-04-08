@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningConstrainedPathSearch
 createTime: 2026/04/01 15:15:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_reasoning/generate/reasoning_constrained_path_search/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | `None` | Reserved LLM serving parameter. The current implementation does not use it during path search. |
@@ -62,8 +60,7 @@ def run(
 
 Constraint checking happens after a candidate path is found. If `must_pass_entities` is configured, the path must cover all of them. If `required_entity_types` is configured, the set of entity types appearing on the path must intersect with the required type set.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes constrained path-search results back. |
@@ -96,8 +93,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triplet` | `List[str]` | Input KG triplet list. |
@@ -106,8 +102,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -120,8 +115,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -144,8 +138,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_constrained_path_search.py`
 - Related base path-search operator: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

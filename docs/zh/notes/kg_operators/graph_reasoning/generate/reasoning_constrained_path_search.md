@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningConstrainedPathSearch
 createTime: 2026/04/01 15:10:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_constrained_path_search/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | `None` | 预留的大模型服务参数。当前实现没有使用该参数参与路径搜索。 |
@@ -62,8 +60,7 @@ def run(
 
 约束检查发生在找到一条候选路径之后：如果设置了 `must_pass_entities`，则路径必须覆盖这些实体；如果设置了 `required_entity_types`，则路径上的实体类型集合必须与要求的类型集合有交集。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将带约束的路径搜索结果写回。 |
@@ -96,8 +93,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `triplet` | `List[str]` | 输入知识图谱三元组列表。 |
@@ -106,8 +102,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -120,8 +115,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -144,8 +138,8 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_constrained_path_search.py`
 - 相关基础路径搜索算子：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+

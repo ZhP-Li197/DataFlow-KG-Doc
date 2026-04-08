@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleRationaleFilter
 createTime: 2026/04/01 18:10:00
-icon: material-symbols:filter-alt-outline
 permalink: /en/kg_operators/commonsense_kg/filter/cskg_triple_rationale_filtering/
 ---
 
@@ -22,11 +21,10 @@ Key characteristics of this operator:
 ## ✒️ __init__ Function
 ```python
 def __init__(self, merge_to_input: bool = False):
-    ...
+    self.merge_to_input = merge_to_input
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `merge_to_input` | `bool` | `False` | Whether to write the filtered result back into the original column specified by `input_key`. If `False`, the result is written to `output_key`. |
@@ -49,8 +47,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates that the input and score columns exist, and then processes each row. For every row, it zips the triple list with the score list positionally and keeps only those triples whose scores are not `None` and fall inside `[min_score, max_score]`. After filtering, the result is written either to the original input column or to the output column depending on `merge_to_input`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes filtered results back. |
@@ -84,8 +81,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triple` | `List[str]` | Input triple list. |
@@ -94,8 +90,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -108,8 +103,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -127,8 +121,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/filter/cskg_triple_rationale_filtering.py`
 - Related evaluation operator: `DataFlow-KG/dataflow/operators/commonsense_kg/eval/cskg_triple_rationale_eval.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGRelationTripleQAGeneration
 createTime: 2026/04/01 17:05:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/commonsense_kg/generate/cskg_rel_triple_qa_generator/
 ---
 
@@ -31,8 +30,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 基于三元组生成 QA 对。 |
@@ -55,8 +53,7 @@ def run(
 
 `run` 会先根据 `qa_type` 决定实际读取的输入列，然后从 `storage` 中读取 DataFrame 并检查输入列与输出列状态。随后算子会把输入三元组列表交给内部批处理逻辑：对每一行，算子通过对应 Prompt 构造输入，让大模型返回 QA 对，并从模型响应中解析出 `QA_pairs` 字段，最终结果写回到 `output_key` 指定的列中。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将生成的 QA 对写回。 |
@@ -74,7 +71,6 @@ from dataflow.operators.commonsense_kg.generate.cskg_rel_triple_qa_generator imp
     CSKGRelationTripleQAGeneration,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = CSKGRelationTripleQAGeneration(
     llm_serving=llm_serving,
@@ -90,8 +86,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `triple` / `set_triple` | `list` | 输入三元组或三元组集合。实际使用哪一列取决于 `qa_type`。 |
@@ -99,8 +94,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -111,8 +105,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -131,8 +124,8 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_rel_triple_qa_generator.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - 上游三元组抽取算子：`DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_triple_extractor.py`
+

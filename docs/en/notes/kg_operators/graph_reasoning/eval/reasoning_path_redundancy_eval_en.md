@@ -1,7 +1,6 @@
----
+﻿---
 title: KGPathRedundancyEvaluator
 createTime: 2026/04/01 16:35:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_reasoning/eval/reasoning_path_redundancy_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to score path redundancy. |
@@ -52,8 +50,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, then converts each row into a record list and passes the records into the internal `process_batch` method. For each row, the operator iterates over the path groups for each entity pair, extracts the subject and object from `target_entity`, constructs a prompt through `KGReasoningPathRedundancyPrompt`, and asks the LLM to return continuous redundancy scores for the paths. The model response is parsed as JSON and the `redundancy_scores` field is extracted. If parsing fails, the score list falls back to an empty list.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes redundancy-score results back. |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_reasoning.eval.reasoning_path_redundancy_eval impo
     KGPathRedundancyEvaluator,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGPathRedundancyEvaluator(
     llm_serving=llm_serving,
@@ -88,8 +84,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `target_entity` | `List[List[str]]` | Target entity-pair list. Each pair is usually wrapped as a one-string list. |
@@ -98,8 +93,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -120,8 +114,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -146,8 +139,9 @@ operator.run(
 ```
 
 ---
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_reasoning.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
+
+

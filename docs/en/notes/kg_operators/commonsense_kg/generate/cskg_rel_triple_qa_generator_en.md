@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGRelationTripleQAGeneration
 createTime: 2026/04/01 17:10:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/commonsense_kg/generate/cskg_rel_triple_qa_generator/
 ---
 
@@ -31,8 +30,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to generate QA pairs from triples. |
@@ -55,8 +53,7 @@ def run(
 
 `run` first decides which input column will actually be used according to `qa_type`, then reads a DataFrame from `storage` and validates the effective input column together with the output column. It then passes the input triple list into the internal batch-processing logic. For each row, the operator uses the selected prompt to ask the LLM to generate QA pairs, parses the model response, and extracts the `QA_pairs` field before writing the final result into `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes generated QA pairs back. |
@@ -74,7 +71,6 @@ from dataflow.operators.commonsense_kg.generate.cskg_rel_triple_qa_generator imp
     CSKGRelationTripleQAGeneration,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = CSKGRelationTripleQAGeneration(
     llm_serving=llm_serving,
@@ -90,8 +86,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triple` / `set_triple` | `list` | Input triple list or triple-set list. Which one is actually used depends on `qa_type`. |
@@ -99,8 +94,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -111,8 +105,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -131,8 +124,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_rel_triple_qa_generator.py`
 - Default prompts: `DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - Upstream triple-extraction operator: `DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_triple_extractor.py`
+
+
