@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGGetAnswer
 createTime: 2026/04/01 12:45:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_rag/generate/graphrag_get_answer/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to generate answers from subgraph prompts. |
@@ -53,8 +51,7 @@ def run(
 
 In the answer generation stage, the content actually sent to the LLM is `subgraph_prompt`, together with a fixed system prompt instructing the model to answer only from the provided facts. After generation, the operator removes Markdown code blocks with a regex and trims leading and trailing whitespace. If an LLM call fails, it falls back to an empty string.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes answers back to it. |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_rag.generate.graphrag_get_answer import (
     KGGraphRAGGetAnswer,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGGraphRAGGetAnswer(
     llm_serving=llm_serving,
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | Input question column. It can be a single question or multiple questions in one row. |
@@ -97,8 +92,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -108,8 +102,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -122,8 +115,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_get_answer.py`
 - Upstream subgraph prompt operator: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_prompt_generator.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+
+

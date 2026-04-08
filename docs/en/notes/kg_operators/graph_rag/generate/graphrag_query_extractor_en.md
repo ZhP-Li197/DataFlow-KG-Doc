@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGQueryExtraction
 createTime: 2026/04/01 12:10:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_rag/generate/graphrag_query_extractor/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` on it to extract entities and relations. |
@@ -59,8 +57,7 @@ def run(
 
 When parsing the LLM result, the operator tries to clean the response into JSON and read the `entities` and `relations` fields. If parsing fails, it logs a warning and falls back to empty lists.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes the processed result back. |
@@ -79,8 +76,6 @@ from dataflow.operators.graph_rag.generate.graphrag_query_extractor import (
     KGGraphRAGQueryExtraction,
 )
 
-llm_serving = YourLLMServing(...)
-
 operator = KGGraphRAGQueryExtraction(
     llm_serving=llm_serving,
     lang="en",
@@ -95,8 +90,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | Input question column. It supports either a single question or multiple questions in one row. |
@@ -105,8 +99,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -115,8 +108,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -128,8 +120,9 @@ operator.run(
 ```
 
 ---
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_query_extractor.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+
+

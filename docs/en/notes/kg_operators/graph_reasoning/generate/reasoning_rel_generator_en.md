@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningRelationGeneration
 createTime: 2026/04/01 15:25:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_reasoning/generate/reasoning_rel_generator/
 ---
 
@@ -30,8 +29,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to produce candidate relation triples between entity pairs. |
@@ -56,8 +54,7 @@ def run(
 
 After the LLM returns, the operator attempts to parse the response directly as a JSON array. If parsing fails or the LLM call itself fails, the inference result for that entity pair falls back to an empty list.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes inferred relation triples back. |
@@ -91,8 +88,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `target_entity` | `List[List[str]]` | Target entity-pair list. Each pair is usually wrapped as a one-string list. |
@@ -101,8 +97,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -119,8 +114,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -144,8 +138,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_rel_generator.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_reasoning.py`
 - Upstream path-search operator: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
+

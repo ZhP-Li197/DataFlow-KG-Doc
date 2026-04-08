@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGSubgraphRetrieval
 createTime: 2026/04/01 12:30:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_rag/generate/graphrag_prompt_generator/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, hop: int = 1):
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `hop` | `int` | `1` | 子图检索的跳数。算子会围绕种子实体做 `k` 跳 BFS，收集命中的三元组并写入 Prompt。 |
@@ -47,8 +45,7 @@ def run(
 
 在内部流程上，算子会先把三元组解析为 `<subj> ... <obj> ... <rel> ...` 结构，再构建实体目录与邻接表。种子实体优先来自抽取结果中与知识图谱实体目录相交的部分；若完全没有匹配实体，但图中存在实体，则会退化为取目录中的第一个实体继续构造 Prompt。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将生成的 Prompt 写回。 |
@@ -74,8 +71,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `question` | `List[str]` | 一行内的多个问题。当前实现主要按这种格式处理。 |
@@ -85,8 +81,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -99,8 +94,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -117,8 +111,7 @@ operator.run(
 ```
 
 ---
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_prompt_generator.py`
 - 上游实体抽取算子：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_query_extractor.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`

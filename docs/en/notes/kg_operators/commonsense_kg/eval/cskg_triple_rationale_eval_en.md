@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleRationaleEvaluator
 createTime: 2026/04/01 18:35:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/commonsense_kg/eval/cskg_triple_rationale_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM service object. The operator uses `generate_from_input` to score triple rationale. |
@@ -51,8 +49,7 @@ def run(
 
 `run` first reads a DataFrame from `storage` and, for each row, maps the column specified by `input_key` into the internal structure `{"triple": ...}`. It then calls `process_batch()` to evaluate each row. If a cell contains a string, the operator first attempts `json.loads()`; if parsing fails or the content is empty, that row produces an empty score list. For valid triple lists, the operator builds system and user prompts and expects the model to return JSON containing `rationale_scores`. The resulting list is then written into the column specified by `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes evaluation results back. |
@@ -70,7 +67,6 @@ from dataflow.operators.commonsense_kg.eval.cskg_triple_rationale_eval import (
     CSKGTripleRationaleEvaluator,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = CSKGTripleRationaleEvaluator(
     llm_serving=llm_serving,
@@ -85,8 +81,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triple` | `List[str]` / `str` | Input triple list, or a JSON string that can be parsed into a list. |
@@ -94,8 +89,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -107,8 +101,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -123,8 +116,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/eval/cskg_triple_rationale_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/commonsense_kg/filter/cskg_triple_rationale_filtering.py`
+
+

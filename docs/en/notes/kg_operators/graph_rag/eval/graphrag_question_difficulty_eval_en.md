@@ -1,7 +1,6 @@
----
+﻿---
 title: KGRAGQuestionDifficultyEvaluation
 createTime: 2026/04/01 14:25:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_rag/eval/graphrag_question_difficulty_eval/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to classify question difficulty. |
@@ -57,8 +55,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates the input and output columns, and then processes `question_key` row by row. If a cell is a string, the operator directly calls the LLM to assess difficulty. If a cell is `List[str]`, it evaluates each question one by one and writes back a list of difficulty labels. After each model response, the operator attempts to clean it into JSON and extract the `question_difficulty` field. If parsing fails, it falls back to `medium`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes difficulty results back. |
@@ -77,7 +74,6 @@ from dataflow.operators.graph_rag.eval.graphrag_question_difficulty_eval import 
     KGRAGQuestionDifficultyEvaluation,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGRAGQuestionDifficultyEvaluation(
     llm_serving=llm_serving,
@@ -93,8 +89,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | Input question column. It can contain a single question or multiple questions in one row. |
@@ -102,8 +97,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -112,8 +106,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -125,8 +118,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_question_difficulty_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+
+

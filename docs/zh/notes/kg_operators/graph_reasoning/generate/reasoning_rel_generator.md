@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningRelationGeneration
 createTime: 2026/04/01 15:20:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_rel_generator/
 ---
 
@@ -30,8 +29,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 生成实体对之间的候选关系三元组。 |
@@ -56,8 +54,7 @@ def run(
 
 LLM 返回结果后，算子会尝试直接将响应解析为 JSON 数组；如果解析失败或模型调用失败，则该实体对的推理结果回退为空列表。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将关系推理结果写回。 |
@@ -76,7 +73,6 @@ from dataflow.operators.graph_reasoning.generate.reasoning_rel_generator import 
     KGReasoningRelationGeneration,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGReasoningRelationGeneration(
     llm_serving=llm_serving,
@@ -93,8 +89,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `target_entity` | `List[List[str]]` | 目标实体对列表。每个元素通常包装为一个仅含单字符串的列表。 |
@@ -103,8 +98,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -121,8 +115,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -146,8 +139,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_rel_generator.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/application_kg/graph_reasoning.py`
 - 上游路径搜索算子：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
+
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleExtraction
 createTime: 2026/04/01 17:00:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/commonsense_kg/generate/cskg_triple_extractor/
 ---
 
@@ -32,8 +31,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to perform triple extraction. |
@@ -57,8 +55,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates that the input column exists, and checks that the output column will not overwrite existing data. It then passes the input text list into the internal batch-processing logic. Each text is first cleaned and quality-checked. Valid text is sent to the selected prompt and LLM for extraction, while invalid text directly produces an empty triple result. The model response is parsed as JSON and the `triple` field is extracted before the final result is written into `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes extraction results back. |
@@ -76,7 +73,6 @@ from dataflow.operators.commonsense_kg.generate.cskg_triple_extractor import (
     CSKGTripleExtraction,
 )
 
-llm_serving = YourLLMServing(...)
 
 dataframe = pd.DataFrame(
     [
@@ -103,8 +99,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `raw_chunk` | `str` | Input raw text. |
@@ -112,8 +107,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -122,8 +116,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -137,8 +130,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_triple_extractor.py`
 - Default prompts: `DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+
+

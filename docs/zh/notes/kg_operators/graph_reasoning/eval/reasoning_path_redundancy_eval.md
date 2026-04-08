@@ -1,7 +1,6 @@
----
+﻿---
 title: KGPathRedundancyEvaluator
 createTime: 2026/04/01 16:30:00
-icon: material-symbols:check-circle-outline
 permalink: /zh/kg_operators/graph_reasoning/eval/reasoning_path_redundancy_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 对每组路径进行冗余度评分。 |
@@ -52,8 +50,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，然后把每一行组织成记录列表，交给内部 `process_batch` 逐行处理。对于每一行，算子会遍历实体对对应的路径集合，从 `target_entity` 中提取实体对主语和宾语，再通过 `KGReasoningPathRedundancyPrompt` 生成 Prompt，请大模型返回每条路径的连续冗余分数。模型响应会被解析为 JSON，并提取 `redundancy_scores` 字段；若解析失败，则回退为空列表。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将冗余度评分结果写回。 |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_reasoning.eval.reasoning_path_redundancy_eval impo
     KGPathRedundancyEvaluator,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGPathRedundancyEvaluator(
     llm_serving=llm_serving,
@@ -88,8 +84,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `target_entity` | `List[List[str]]` | 目标实体对列表。每个实体对通常包装为一个仅含单字符串的列表。 |
@@ -98,8 +93,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -120,8 +114,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -147,8 +140,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/application_kg/graph_reasoning.py`
 - 下游过滤算子：`DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
+
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleExtraction
 createTime: 2026/04/01 16:55:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/commonsense_kg/generate/cskg_triple_extractor/
 ---
 
@@ -32,8 +31,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 执行三元组抽取。 |
@@ -57,8 +55,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，检查输入列是否存在以及输出列是否会产生覆盖冲突。随后算子会把输入文本列表交给内部批处理逻辑：每段文本先经过清洗与质量检查，合格文本会被送入对应 Prompt 和 LLM 做抽取，不合格文本则直接返回空三元组结果。模型响应会被解析为 JSON，并提取其中的 `triple` 字段，最终结果写回到 `output_key` 指定的列中。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将抽取结果写回。 |
@@ -76,19 +73,6 @@ from dataflow.operators.commonsense_kg.generate.cskg_triple_extractor import (
     CSKGTripleExtraction,
 )
 
-llm_serving = YourLLMServing(...)
-
-dataframe = pd.DataFrame(
-    [
-        {
-            "raw_chunk": "Tom uses an umbrella when it rains because he wants to stay dry. The umbrella protects him from the rain."
-        }
-    ]
-)
-
-storage = DummyStorage()
-storage.set_data(dataframe)
-
 operator = CSKGTripleExtraction(
     llm_serving=llm_serving,
     triple_type="relation",
@@ -103,8 +87,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `raw_chunk` | `str` | 输入原始文本。 |
@@ -112,8 +95,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -122,8 +104,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -138,8 +119,8 @@ operator.run(
 ---
 
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_triple_extractor.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+

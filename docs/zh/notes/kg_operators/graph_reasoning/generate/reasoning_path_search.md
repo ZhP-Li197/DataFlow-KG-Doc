@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathSearch
 createTime: 2026/04/01 15:00:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_path_search/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, max_hop: int = 10):
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `max_hop` | `int` | `10` | 路径搜索的最大跳数。超过该跳数的路径不会继续扩展。 |
@@ -48,8 +46,7 @@ def run(
 
 内部搜索逻辑采用 BFS，枚举 `src` 到 `tgt` 的所有简单路径，每条路径保存为三元组字符串列表。只要一条路径到达目标节点且非空，就会被加入结果集。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将路径搜索结果写回。 |
@@ -77,8 +74,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `triplet` | `List[str]` | 输入知识图谱三元组列表。 |
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -101,8 +96,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -125,8 +119,8 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
 - 下游关系生成算子：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_rel_generator.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleAdapbilityEvaluator
 createTime: 2026/04/01 18:20:00
-icon: material-symbols:check-circle-outline
 permalink: /zh/kg_operators/commonsense_kg/eval/cskg_triple_adapbility_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 对三元组适应性进行评分。 |
@@ -51,8 +49,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，并逐行取出 `input_key` 指定的列，重新组织成内部统一使用的 `{"triple": ...}` 结构。随后算子调用 `process_batch()` 对每一行进行评估：若单元格内容是字符串，会先尝试按 JSON 解析；若为空或解析失败，则该行输出空列表。对于有效三元组列表，算子会构造系统提示词和用户提示词，要求模型仅返回包含 `adaptability_scores` 的 JSON。最终结果会写回 `output_key` 指定的列。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将评估结果写回。 |
@@ -70,7 +67,6 @@ from dataflow.operators.commonsense_kg.eval.cskg_triple_adapbility_eval import (
     CSKGTripleAdapbilityEvaluator,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = CSKGTripleAdapbilityEvaluator(
     llm_serving=llm_serving,
@@ -85,8 +81,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `triple` | `List[str]` / `str` | 输入三元组列表，或可被解析为列表的 JSON 字符串。 |
@@ -94,8 +89,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -107,8 +101,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -124,8 +117,9 @@ operator.run(
 ---
 
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/commonsense_kg/eval/cskg_triple_adapbility_eval.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - 下游过滤算子：`DataFlow-KG/dataflow/operators/commonsense_kg/filter/cskg_triple_adapbility_filtering.py`
+
+

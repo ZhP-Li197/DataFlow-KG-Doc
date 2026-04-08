@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGAnswerLLMEvaluation
 createTime: 2026/04/01 14:30:00
-icon: material-symbols:check-circle-outline
 permalink: /zh/kg_operators/graph_rag/eval/graphrag_truth_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 对模型答案与标准答案的一致性做判定。 |
@@ -53,8 +51,7 @@ def run(
 
 在内部判定时，算子会构造固定英文 Prompt，要求模型判断生成答案是否包含标准答案中的关键信息。模型返回后，算子会用简单的字符串规则解析：结果文本中只要包含 `true` 就判为 `True`，否则如果包含 `false` 判为 `False`；若输出含义不明确或 LLM 调用失败，则回退为 `False`。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将正确性判定结果写回。 |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_rag.eval.graphrag_truth_eval import (
     KGGraphRAGAnswerLLMEvaluation,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGGraphRAGAnswerLLMEvaluation(
     llm_serving=llm_serving,
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `answer` | `str` / `List[str]` | 模型生成答案列。 |
@@ -97,8 +92,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -108,8 +102,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -122,8 +115,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_truth_eval.py`
 - 上游答案生成算子：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_get_answer.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+
+

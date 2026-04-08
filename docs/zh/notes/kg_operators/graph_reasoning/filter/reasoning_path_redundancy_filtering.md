@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathRedundancyFilter
 createTime: 2026/04/01 15:55:00
-icon: material-symbols:filter-alt-outline
 permalink: /zh/kg_operators/graph_reasoning/filter/reasoning_path_redundancy_filtering/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, merge_to_input: bool = False):
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `merge_to_input` | `bool` | `False` | 是否将过滤结果直接写回 `input_key` 指定的原始路径列。若为 `False`，则写入 `output_key` 指定的新列。 |
@@ -49,8 +47,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，并检查输入路径列和评分列是否存在。随后逐行读取 `mpath` 和 `redundancy_scores`，在当前实现中直接对这两个顶层列表做 `zip` 配对，并保留分数位于 `[min_score, max_score]` 区间内的元素。处理完成后，结果会根据 `merge_to_input` 的设置写回原列或输出列。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将过滤结果写回。 |
@@ -84,8 +81,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `mpath` | `list` | 输入路径列。当前实现把它当作顶层可与评分逐项配对的列表处理。 |
@@ -94,8 +90,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -108,8 +103,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -126,8 +120,8 @@ operator.run(
 ```
 
 ---
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
 - 上游评估算子：`DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+
