@@ -1,6 +1,6 @@
 ---
 title: 安装
-icon: material-symbols-light:download-rounded
+icon: material-symbols:auto-transmission-sharp
 createTime: 2025/06/09 10:29:31
 permalink: /zh/kg_guide/install/
 ---
