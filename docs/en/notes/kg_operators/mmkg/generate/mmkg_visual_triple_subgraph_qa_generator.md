@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/generate/mmkg_visual_triple_subgraph_qa_generator/
 ---
 
-#### 📚 Overview
+## 📚 Overview
 
-`MMKGSubgraphBaseQAGeneration` generates multimodal QA pairs from subgraphs and their corresponding images. Unlike the path-based version, it directly consumes the `subgraph` column and is better suited for local reasoning tasks around visual anchors.
+`MMKGSubgraphBaseQAGeneration` generates multimodal QA pairs from a subgraph and visual evidence. It always reads the `vis_triple` column, pairs `vis_triple` with `vis_url`, and builds an image dictionary before generating QA for each image and merging everything into `QA_pairs`.
 
-#### 📚 `__init__` Function
+`subgraph` can be either a `list[str]` or a newline-separated string. If the input is a string, the code splits it by `\n` first.
+
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, lang: str = "en"):
@@ -20,7 +22,7 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en"):
 | `llm_serving` | `LLMServingABC` | - | Vision-language serving backend that supports multi-image input |
 | `lang` | `str` | `"en"` | Prompt language |
 
-#### 💡 `run` Function
+## 💡 `run` Function
 
 ```python
 def run(
@@ -37,10 +39,12 @@ def run(
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
 | `input_key` | `str` | `"vis_url"` | Column containing image URLs or image paths |
-| `input_key_meta` | `str` | `"subgraph"` | Column containing the subgraph |
-| `output_key` | `str` | `"QA_pairs"` | Output column for generated QA pairs |
+| `input_key_meta` | `str` | `"subgraph"` | Subgraph column; supports either a list or a newline-separated string |
+| `output_key` | `str` | `"QA_pairs"` | Output QA pair column |
 
-#### 🤖 Example Usage
+The operator always reads the column named `vis_triple`. If `vis_triple` and `vis_url` have different lengths, only the paired items participate in generation.
+
+## 🤖 Example Usage
 
 ```python
 from dataflow.utils.storage import FileStorage
@@ -62,8 +66,8 @@ Example input:
 ```json
 {
   "subgraph": [
-    "<subj> Albert Einstein <obj> Princeton University <rel> worked_at",
-    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won"
+    "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won",
+    "<subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in"
   ],
   "vis_triple": [
     "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
@@ -80,8 +84,8 @@ Example output:
 {
   "QA_pairs": [
     {
-      "question": "Based on the person shown in the image, what major prize did he win?",
-      "answer": "He won the Nobel Prize in Physics."
+      "question": "Based on the image, in which year was the prize won by this person awarded?",
+      "answer": "It was awarded in 1921."
     }
   ]
 }

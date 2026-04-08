@@ -4,11 +4,13 @@ createTime: 2026/04/07 09:00:00
 permalink: /en/kg_operators/mmkg/generate/mmkg_visual_triple_path_qa_generator/
 ---
 
-#### 📚 Overview
+## 📚 Overview
 
-`MMKGPathBaseQAGeneration` generates multimodal QA pairs from path facts and their corresponding images. It resolves image IDs from `vis_triple`, combines them with `vis_url` and path columns such as `2_hop_paths`, and produces QA pairs that depend on both graph structure and visual evidence.
+`MMKGPathBaseQAGeneration` generates multimodal QA pairs from path facts and visual evidence. The operator always reads the `vis_triple` column, zips `vis_triple` with `vis_url`, and rebuilds an `img_dict` by taking the image ID from the last token of each visual triple.
 
-#### 📚 `__init__` Function
+When `hop=1`, the input column becomes `triple` and the output column becomes `1_QA_pairs`. When `hop>1`, the input column is `f"{hop}_{input_key_meta}"` and the output column is `f"{hop}_{output_key_meta}"`.
+
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, lang: str = "en", hop=2):
@@ -19,9 +21,9 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en", hop=2):
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | Vision-language serving backend that supports multi-image input |
 | `lang` | `str` | `"en"` | Prompt language |
-| `hop` | `int` | `2` | Path hop count; controls dynamic column names such as `2_hop_paths` and `2_QA_pairs` |
+| `hop` | `int` | `2` | Hop count that determines the real input and output column names |
 
-#### 💡 `run` Function
+## 💡 `run` Function
 
 ```python
 def run(
@@ -38,10 +40,12 @@ def run(
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
 | `input_key` | `str` | `"vis_url"` | Column containing image URLs or image paths |
-| `input_key_meta` | `str` | `"hop_paths"` | Combined with `hop` to form the real input column, such as `2_hop_paths` |
-| `output_key_meta` | `str` | `"QA_pairs"` | Combined with `hop` to form the real output column, such as `2_QA_pairs` |
+| `input_key_meta` | `str` | `"hop_paths"` | Base name of the path column; combined with `hop` to form the real input column |
+| `output_key_meta` | `str` | `"QA_pairs"` | Base name of the output column; combined with `hop` to form the real output column |
 
-#### 🤖 Example Usage
+The operator always reads `vis_triple` and rebuilds the image mapping with `zip(vis_triple, vis_url)`, so if the two columns have different lengths, only the paired prefix is used.
+
+## 🤖 Example Usage
 
 ```python
 from dataflow.utils.storage import FileStorage
@@ -55,7 +59,12 @@ storage = FileStorage(
 ).step()
 
 op = MMKGPathBaseQAGeneration(llm_serving=llm_serving, hop=2, lang="en")
-op.run(storage=storage, input_key="vis_url", input_key_meta="hop_paths", output_key_meta="QA_pairs")
+op.run(
+    storage=storage,
+    input_key="vis_url",
+    input_key_meta="hop_paths",
+    output_key_meta="QA_pairs",
+)
 ```
 
 Example input:
