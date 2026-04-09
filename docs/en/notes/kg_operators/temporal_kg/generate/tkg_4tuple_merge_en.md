@@ -1,7 +1,7 @@
 ---
 title: TKGTupleMerger
 createTime: 2026/03/18 00:00:00
-permalink: /en/kg_operators/temporal_kg/generate/tkg_4tuple_merge_en/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_4tuple_merge/
 ---
 
 ## 📚 Overview

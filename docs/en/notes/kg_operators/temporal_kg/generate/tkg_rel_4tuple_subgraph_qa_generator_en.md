@@ -1,7 +1,7 @@
 ---
 title: TKGTupleSubgraphQAGeneration
 createTime: 2026/03/18 00:00:00
-permalink: /en/kg_operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator_en/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator/
 ---
 
 ## 📚 Overview
