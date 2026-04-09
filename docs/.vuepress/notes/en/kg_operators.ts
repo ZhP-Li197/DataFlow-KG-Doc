@@ -176,7 +176,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'DataFlow-KG Temporal KG',
+            text: 'Temporal KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'temporal_kg',
