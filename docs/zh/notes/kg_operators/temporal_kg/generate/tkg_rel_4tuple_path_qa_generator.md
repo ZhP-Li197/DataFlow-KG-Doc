@@ -1,8 +1,7 @@
 ---
 title: TKGTuplePathQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/
+permalink: /zh/kg_operators/temporal_kg/generate/tkg_rel_4tuple_path_qa_generator/
 ---
 
 ## 📚 概述
@@ -15,7 +14,7 @@ permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", hop: int = 2, qa_type: str = "time_point", num_q: int = 5):
 ```
 
-### 参数
+#### 参数
 
 | 参数名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -26,7 +25,7 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 | **qa_type** | str | "time_point" | QA 类型，可选值：`"time_point"`、`"event_order"`、`"time_order"`、`"time_interval"`。 |
 | **num_q** | int | 5 | 预期生成的 QA 对数量。 |
 
-### Prompt 模板说明
+#### Prompt 模板说明
 
 根据 `qa_type` 自动选择 prompt 模板（与 TKGTupleSubgraphQAGeneration 共用同一组关系四元组 prompt）：
 
@@ -40,6 +39,8 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 默认 prompt（qa_type="time_point"）与 TKGTupleSubgraphQAGeneration 相同，详见该算子文档。
 
 ## 💡 `run` 函数
+
+`run` 从 `storage` 中读取 DataFrame。处理前会依据 `hop` 参数确定实际的输入输出列名：当 `hop > 1` 时输入列为 `{hop}_{input_key_meta}`（如 `2_hop_paths`），当 `hop == 1` 时输入列为 `"tuple"`。输出列始终为 `{hop}_{output_key_meta}`（如 `2_QA_pairs`）。随后验证 DataFrame，遍历每一行，调用 `process_batch()` 对每条路径文本通过 LLM 生成问答对，将结果列表写入输出列。若 LLM 返回无法解析则该行写入空列表。函数返回包含 `output_key` 字符串的列表。
 
 ```python
 def run(self, storage: DataFlowStorage = None, input_key_meta: str = "hop_paths", output_key_meta: str = "QA_pairs"):
@@ -93,7 +94,7 @@ generator.run(
 
 ```json
 {
-  "2_hop_paths": "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002 || ⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
+  "2_hop_paths": "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002 || <subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012"
 }
 ```
 
@@ -114,3 +115,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_path_qa_generator.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

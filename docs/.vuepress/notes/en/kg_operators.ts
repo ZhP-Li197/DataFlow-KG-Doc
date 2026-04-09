@@ -176,70 +176,46 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Temporal KG',
+            text: 'DataFlow-KG Temporal KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'temporal_kg',
             items: [
                 {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        {
-                            text: 'TKGTupleExtraction',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleMerger',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTuplePathQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGAttriuteQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
+                        'tkg_4tuple_extractor_en',
+                        'tkg_4tuple_merge_en',
+                        'tkg_rel_4tuple_subgraph_qa_generator_en',
+                        'tkg_rel_4tuple_path_qa_generator_en',
+                        'tkg_attri_4tuple_qa_generator_en',
+                        'tkg_rel_4tuple_conversation_generator_en',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'TKGTupleTimeFilter',
+                        'tkg_4tuple_time_sampling_en',
                     ]
                 },
                 {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'TKGTemporalStatistics',
-                    ]
-                },
-                {
-                    text: "refine",
+                    text: 'refine',
                     collapsed: false,
                     prefix: 'refine/',
                     items: [
-                        'TKGTupleDisambiguation',
+                        'tkg_4tuple_disambiguation_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'tkg_4tuple_time_summary_en',
                     ]
                 },
             ],
@@ -381,7 +357,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             // ],
             items: [
                 {
-                    text: '安装',
+                    text: 'Install',
                     collapsed: false,
                     prefix: '',
                     items: ['install_audio_understanding'],

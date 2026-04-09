@@ -1,13 +1,12 @@
 ---
 title: TKGTupleDisambiguation
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:tune
-permalink: /zh/kg_operators/temporal_kg/refine/tkgtupledisambiguation/
+permalink: /zh/kg_operators/temporal_kg/refine/tkg_4tuple_disambiguation/
 ---
 
 ## 📚 概述
 
-[TKGTupleDisambiguation](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/refinement/tkg_4tuple_disambiguation.py) 是一个基于大语言模型（LLM）的时序知识图谱四元组消歧算子。它用于对知识图谱合并过程中产生的歧义四元组进行自动消歧处理。该算子能够自动检测四元组的类型（属性四元组或关系四元组），并调用对应的 Prompt 模板请求 LLM 进行推理，从多个冲突候选中选出最合理的一条四元组作为消歧结果。
+[TKGTupleDisambiguation](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/refine/tkg_4tuple_disambiguation.py) 是一个基于大语言模型（LLM）的时序知识图谱四元组消歧算子。它用于对知识图谱合并过程中产生的歧义四元组进行自动消歧处理。该算子能够自动检测四元组的类型（属性四元组或关系四元组），并调用对应的 Prompt 模板请求 LLM 进行推理，从多个冲突候选中选出最合理的一条四元组作为消歧结果。
 
 ## ✒️ `__init__`函数
 
@@ -15,22 +14,22 @@ permalink: /zh/kg_operators/temporal_kg/refine/tkgtupledisambiguation/
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", attribute_prompt: Union[KGAttributeTripleDisambiguationPrompt, DIYPromptABC] = None, relation_prompt: Union[TKGRelationDisambiguationPrompt, DIYPromptABC] = None):
 ```
 
-### `init`参数说明
+#### `init`参数说明
 
 | 参数名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **llm_serving** | LLMServingABC | 必需 | 大语言模型服务实例，用于执行消歧推理。 |
 | **seed** | int | 0 | 随机种子，用于可复现性。 |
 | **lang** | str | "en" | 语言设置，支持 "en" 或 "zh"，影响 prompt 模板语言。 |
 | **attribute_prompt** | Union[KGAttributeTripleDisambiguationPrompt, DIYPromptABC] | None | 属性四元组消歧的 prompt 模板。为 None 时自动使用默认模板。 |
 | **relation_prompt** | Union[TKGRelationDisambiguationPrompt, DIYPromptABC] | None | 关系四元组消歧的 prompt 模板。为 None 时自动使用默认模板。 |
 
-### Prompt模板说明
+#### Prompt模板说明
 
 该算子使用两个 prompt 模板，根据四元组类型自动选择：
 
 | 四元组类型 | Prompt 类 | 主要用途 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | relation | TKGRelationDisambiguationPrompt | 关系四元组消歧 |
 | attribute | KGAttributeTripleDisambiguationPrompt | 属性四元组消歧 |
 
@@ -56,12 +55,12 @@ def build_system_prompt(self):
 
         Example:
         Input:
-        "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-02 ｜ 2026-03-05"
+        "<subj> E2 <obj> E3 <rel> relC <time> 2026-03-02 ｜ 2026-03-05"
 
         Output:
         {
           "resolved_quadruple": [
-            "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-05"
+            "<subj> E2 <obj> E3 <rel> relC <time> 2026-03-05"
           ]
         }
     """)
@@ -101,6 +100,8 @@ def build_system_prompt(self):
 
 ## 💡 `run`函数
 
+`run` 从 `storage` 中读取 DataFrame，验证其包含 `input_key` 指定的列且 `output_key` 指定的列不存在。对每一行，从 `input_key_dict[input_key_meta]`（如 `merged_tuples` 中的 `ambiguous` 列表）中提取待消歧的四元组列表，遍历每条歧义四元组，自动判断其类型（属性或关系），调用对应 LLM Prompt 进行消歧，并收集解析后的结果。若某行无歧义候选或解析失败，则保留原始输入或返回空列表。最终将消歧结果列表写入 `output_key` 列。函数返回包含 `output_key` 字符串的列表。
+
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "merged_tuples", input_key_meta: str = "ambiguous", output_key: str = "resolved"):
 ```
@@ -108,7 +109,7 @@ def run(self, storage: DataFlowStorage = None, input_key: str = "merged_tuples",
 #### `参数`
 
 | 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **storage** | DataFlowStorage | None | 数据流存储实例，负责读取与写入数据。 |
 | **input_key** | str | "merged_tuples" | 输入列名，对应合并后的四元组字典字段。 |
 | **input_key_meta** | str | "ambiguous" | 从 input_key 字典中读取的子键名，对应待消歧的四元组列表。 |
@@ -145,7 +146,7 @@ operator.run(
 #### 🧾 默认输出格式（Output Format）
 
 | 字段 | 类型 | 说明 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | merged_tuples | Dict | 输入的合并四元组字典（保留原始字段）。 |
 | resolved | List[str] | 消歧后的四元组列表，每条为从歧义候选中选出的唯一结果。 |
 
@@ -155,12 +156,12 @@ operator.run(
 {
   "merged_tuples": {
     "unambiguous": [
-      "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
-      "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
+      "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012",
+      "<subj> Elon Musk <obj> Neuralink <rel> founded <time> 2016"
     ],
     "ambiguous": [
-      "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ established ⟨time⟩ 2002 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-      "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2006 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+      "<subj> Elon Musk <obj> SpaceX <rel> established <time> 2002 ｜ <subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+      "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2006 ｜ <subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
     ]
   }
 }
@@ -172,8 +173,16 @@ operator.run(
 {
   "merged_tuples": {"...（同上）"},
   "resolved": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/refine/tkg_4tuple_disambiguation.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`、`DataFlow-KG/dataflow/prompts/core_kg/rel_triple_refinement.py`、`DataFlow-KG/dataflow/prompts/core_kg/attri_triple.py`
+- 上游算子：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_4tuple_merge.py`

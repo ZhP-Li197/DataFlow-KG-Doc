@@ -1,21 +1,20 @@
 ---
 title: TKGTupleSubgraphQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /en/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator_en/
 ---
 
 ## 📚 Overview
 
 [TKGTupleSubgraphQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator.py) is a temporal KG relation-quadruple subgraph QA generation operator based on large language models (LLM). It takes relation-quadruple subgraphs as input and generates structured temporal QA pairs. The operator supports four QA modes: time-point, event-order, time-order, and time-interval questions, each suited to different temporal reasoning scenarios.
 
-## ✒️ `__init__` function
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", qa_type: str = "time_point", num_q: int = 5):
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -25,7 +24,7 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 | **qa_type** | str | "time_point" | QA type, options: `"time_point"`, `"event_order"`, `"time_order"`, `"time_interval"`. |
 | **num_q** | int | 5 | Expected number of QA pairs to generate. |
 
-### Prompt Template
+#### Prompt Template
 
 The prompt template is automatically selected based on `qa_type`:
 
@@ -83,7 +82,9 @@ def build_prompt(self, temporal_quadruples: str):
     """)
 ```
 
-## 💡 `run` function
+## 💡 `run` Function
+
+`run` reads a DataFrame from `storage`, validates that it contains the column specified by `input_key` and that the column specified by `output_key` does not yet exist. It then iterates over each row, calls `process_batch()` to generate QA pairs via the LLM for every subgraph text, and writes the resulting list into the `output_key` column. If the LLM response cannot be parsed, an empty list is written for that row. The function returns a list containing the `output_key` string.
 
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "subgraph", output_key: str = "QA_pairs"):
@@ -135,11 +136,11 @@ generator.run(
 ```json
 {
   "subgraph": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008",
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012",
+    "<subj> Elon Musk <obj> Neuralink <rel> founded <time> 2016"
   ]
 }
 ```
@@ -165,3 +166,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### Related Links
+
+- Operator implementation: `DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator.py`
+- Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

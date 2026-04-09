@@ -1,8 +1,7 @@
 ---
 title: TKGTupleSubgraphQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/
+permalink: /zh/kg_operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator/
 ---
 
 ## 📚 概述
@@ -15,7 +14,7 @@ permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", qa_type: str = "time_point", num_q: int = 5):
 ```
 
-### 参数
+#### 参数
 
 | 参数名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -25,7 +24,7 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 | **qa_type** | str | "time_point" | QA 类型，可选值：`"time_point"`、`"event_order"`、`"time_order"`、`"time_interval"`。 |
 | **num_q** | int | 5 | 预期生成的 QA 对数量。 |
 
-### Prompt 模板说明
+#### Prompt 模板说明
 
 根据 `qa_type` 自动选择 prompt 模板：
 
@@ -85,6 +84,8 @@ def build_prompt(self, temporal_quadruples: str):
 
 ## 💡 `run` 函数
 
+`run` 从 `storage` 中读取 DataFrame，验证其包含 `input_key` 指定的列且 `output_key` 指定的列不存在。随后遍历每一行，调用 `process_batch()` 对每条子图文本通过 LLM 生成问答对，将结果列表写入 `output_key` 列。若 LLM 返回无法解析则该行写入空列表。函数返回包含 `output_key` 字符串的列表。
+
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "subgraph", output_key: str = "QA_pairs"):
 ```
@@ -135,11 +136,11 @@ generator.run(
 ```json
 {
   "subgraph": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008",
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012",
+    "<subj> Elon Musk <obj> Neuralink <rel> founded <time> 2016"
   ]
 }
 ```
@@ -165,3 +166,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

@@ -1,8 +1,7 @@
 ---
 title: TKGTemporalStatistics
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:analytics-outline
-permalink: /zh/kg_operators/temporal_kg/eval/tkgtemporalstatistics/
+permalink: /zh/kg_operators/temporal_kg/eval/tkg_4tuple_time_summary/
 ---
 
 ## 📚 概述
@@ -15,12 +14,13 @@ permalink: /zh/kg_operators/temporal_kg/eval/tkgtemporalstatistics/
 def __init__(self):
 ```
 
-### `init`参数说明
+#### `init`参数说明
 
 该算子无初始化参数。
 
-
 ## 💡 `run`函数
+
+`run` 从 `storage` 中读取 DataFrame，验证其包含 `input_key` 指定的列。遍历每一行，对每个四元组提取 `<time>` 字段，统计总四元组数、含有效时间（非 NA）的四元组数，并解析年份信息进行统计。随后计算非 NA 时间和年份归一化分布，将结果作为字典写入 `output_key` 列。若某行不是列表或无统计信息则写入空字典。函数返回包含 `output_key` 字符串的列表。
 
 ```python
 def run(self, storage: DataFlowStorage, input_key: str = "tuple", output_key: str = "temporal_statistics"):
@@ -29,7 +29,7 @@ def run(self, storage: DataFlowStorage, input_key: str = "tuple", output_key: st
 #### `参数`
 
 | 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **storage** | DataFlowStorage | 必需 | 数据流存储实例，负责读取与写入数据。 |
 | **input_key** | str | "tuple" | 输入列名，对应四元组列表字段。每行应为 `List[str]`。 |
 | **output_key** | str | "temporal_statistics" | 输出列名，对应生成的时间统计结果字段。 |
@@ -53,24 +53,20 @@ operator.run(
 #### 🧾 默认输出格式（Output Format）
 
 | 字段 | 类型 | 说明 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | tuple | List[str] | 输入的四元组列表（保留原始字段）。 |
-| temporal_statistics | Dict | 时间统计结果，包含以下子字段。 |
-| temporal_statistics.total_tuples | int | 四元组总数。 |
-| temporal_statistics.valid_time_tuples | int | 含有效时间（非 NA）的四元组数量。 |
-| temporal_statistics.non_na_ratio | float | 有效时间比例（valid_time_tuples / total_tuples）。 |
-| temporal_statistics.year_distribution | Dict[int, float] | 按年份的时间分布比例。 |
+| temporal_statistics | Dict | 时间统计结果。包含：total_tuples（int，总数）、valid_time_tuples（int，有效时间数）、non_na_ratio（float，比例）、year_distribution（Dict[int, float]，年份归一化分布）。 |
 
 **示例输入：**
 
 ```json
 {
   "tuple": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ multiple technology companies ⟨rel⟩ co-founded ⟨time⟩ NA",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> multiple technology companies <rel> co-founded <time> NA",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008",
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012"
   ]
 }
 ```
@@ -93,3 +89,9 @@ operator.run(
   }
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/eval/tkg_4tuple_time_summary.py`
