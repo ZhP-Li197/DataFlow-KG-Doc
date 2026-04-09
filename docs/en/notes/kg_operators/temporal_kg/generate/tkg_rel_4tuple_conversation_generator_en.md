@@ -1,21 +1,20 @@
 ---
-title: TKGRelationTripletDialogueQAGeneration
+title: TKGRelationTupleDialogueQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /en/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator_en/
 ---
 
 ## 📚 Overview
 
-[TKGRelationTripletDialogueQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py) is a temporal KG multi-turn dialogue QA generation operator based on large language models (LLM). It takes multi-hop paths of relation quadruples as input and generates step-wise multi-turn dialogues. Each quadruple corresponds to exactly one turn, and each turn must include temporal information. The generation process has two stages: first construct a valid reasoning path (reordering or swapping head/tail to keep connectivity if needed), then unroll the path into temporal QA turns.
+[TKGRelationTupleDialogueQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py) is a temporal KG multi-turn dialogue QA generation operator based on large language models (LLM). It takes multi-hop paths of relation quadruples as input and generates step-wise multi-turn dialogues. Each quadruple corresponds to exactly one turn, and each turn must include temporal information. The generation process has two stages: first construct a valid reasoning path (reordering or swapping head/tail to keep connectivity if needed), then unroll the path into temporal QA turns.
 
-## ✒️ `__init__` function
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, lang: str = "en", k: int = 2, min_turns: int = 4):
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -24,7 +23,7 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en", k: int = 2, min
 | **k** | int | 2 | Hop count, used to determine the input column name (`{k}_hop_paths`). |
 | **min_turns** | int | 4 | Minimum number of dialogue turns; the actual value is `min(min_turns, k)`. |
 
-### Prompt Template
+#### Prompt Template
 
 The default prompt uses TKGTupleTimePathDialogueQAGenerationPrompt, as shown below:
 
@@ -99,7 +98,9 @@ def build_prompt(self, paths: str):
     """)
 ```
 
-## 💡 `run` function
+## 💡 `run` Function
+
+`run` reads a DataFrame from `storage`, validates that it contains the input column `{k}_{input_key_meta}` (e.g., `2_hop_paths`) and that the `output_key` column does not yet exist. It then iterates over each row, calls `_generate_dialogue_for_path()` for each path to generate a multi-turn dialogue via the LLM, collects the results as a list of `{"path": ..., "dialogue": ...}` dictionaries, and writes this list into the `output_key` column. If dialogue generation or parsing fails for a path, that path is skipped and not included in the output list for that row. The function returns a list containing the `output_key` string.
 
 ```python
 def run(self, storage: DataFlowStorage, input_key_meta: str = "hop_paths", output_key: str = "multi_turn_dialogues") -> List[str]:
@@ -118,7 +119,7 @@ The actual input column name is `{k}_{input_key_meta}` (e.g., `2_hop_paths`).
 ## 🤖 Example Usage
 
 ```python
-from dataflow.operators.temporal_kg.generate import TKGRelationTripletDialogueQAGeneration
+from dataflow.operators.temporal_kg.generate import TKGRelationTupleDialogueQAGeneration
 from dataflow.utils.storage import FileStorage
 from dataflow.utils.llm_serving import APILLMServing_request
 
@@ -129,7 +130,7 @@ llm_serving = APILLMServing_request(
     model_name="<your_model_name>",
 )
 
-generator = TKGRelationTripletDialogueQAGeneration(
+generator = TKGRelationTupleDialogueQAGeneration(
     llm_serving=llm_serving,
     lang="en",
     k=2,
@@ -153,7 +154,7 @@ generator.run(
 
 ```json
 {
-  "2_hop_paths": "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002 || ⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
+  "2_hop_paths": "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002 || <subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012"
 }
 ```
 
@@ -181,3 +182,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### Related Links
+
+- Operator implementation: `DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py`
+- Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

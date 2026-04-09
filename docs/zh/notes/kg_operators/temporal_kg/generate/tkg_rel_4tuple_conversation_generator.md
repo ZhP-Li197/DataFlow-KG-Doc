@@ -1,13 +1,12 @@
 ---
-title: TKGRelationTripletDialogueQAGeneration
+title: TKGRelationTupleDialogueQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/
+permalink: /zh/kg_operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator/
 ---
 
 ## 📚 概述
 
-[TKGRelationTripletDialogueQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py) 是一个基于大语言模型（LLM）从时序知识图谱多跳路径生成多轮对话式问答的算子。它接收由关系四元组组成的多跳路径数据，通过 LLM 生成逐跳展开的多轮对话。每条四元组严格对应一轮问答，且每轮问答必须涉及时间信息。该算子的生成过程分为两个阶段：首先构造有效的推理路径（必要时交换头尾或重排序以保证连通），然后沿路径逐跳生成带时间信息的问答对。
+[TKGRelationTupleDialogueQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py) 是一个基于大语言模型（LLM）从时序知识图谱多跳路径生成多轮对话式问答的算子。它接收由关系四元组组成的多跳路径数据，通过 LLM 生成逐跳展开的多轮对话。每条四元组严格对应一轮问答，且每轮问答必须涉及时间信息。该算子的生成过程分为两个阶段：首先构造有效的推理路径（必要时交换头尾或重排序以保证连通），然后沿路径逐跳生成带时间信息的问答对。
 
 ## ✒️ `__init__` 函数
 
@@ -15,7 +14,7 @@ permalink: /zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqagen
 def __init__(self, llm_serving: LLMServingABC, lang: str = "en", k: int = 2, min_turns: int = 4):
 ```
 
-### 参数
+#### 参数
 
 | 参数名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -24,7 +23,7 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en", k: int = 2, min
 | **k** | int | 2 | 跳数，用于确定输入列名（`{k}_hop_paths`）。 |
 | **min_turns** | int | 4 | 最小对话轮数，实际取 `min(min_turns, k)`。 |
 
-### Prompt 模板说明
+#### Prompt 模板说明
 
 默认使用 TKGTupleTimePathDialogueQAGenerationPrompt，prompt 如下：
 
@@ -101,6 +100,8 @@ def build_prompt(self, paths: str):
 
 ## 💡 `run` 函数
 
+`run` 从 `storage` 中读取 DataFrame，验证其包含输入列 `{k}_{input_key_meta}`（如 `2_hop_paths`）且 `output_key` 列不存在。随后遍历每一行，对每条路径调用 `_generate_dialogue_for_path()` 通过 LLM 生成多轮对话，将 `{"path": ..., "dialogue": ...}` 字典列表收集后写入 `output_key` 列。若某条路径生成或解析失败，则该路径不会被加入输出列表。函数返回包含 `output_key` 字符串的列表。
+
 ```python
 def run(self, storage: DataFlowStorage, input_key_meta: str = "hop_paths", output_key: str = "multi_turn_dialogues") -> List[str]:
 ```
@@ -118,7 +119,7 @@ def run(self, storage: DataFlowStorage, input_key_meta: str = "hop_paths", outpu
 ## 🤖 示例用法
 
 ```python
-from dataflow.operators.temporal_kg.generate import TKGRelationTripletDialogueQAGeneration
+from dataflow.operators.temporal_kg.generate import TKGRelationTupleDialogueQAGeneration
 from dataflow.utils.storage import FileStorage
 from dataflow.utils.llm_serving import APILLMServing_request
 
@@ -129,7 +130,7 @@ llm_serving = APILLMServing_request(
     model_name="<your_model_name>",
 )
 
-generator = TKGRelationTripletDialogueQAGeneration(
+generator = TKGRelationTupleDialogueQAGeneration(
     llm_serving=llm_serving,
     lang="en",
     k=2,
@@ -153,7 +154,7 @@ generator.run(
 
 ```json
 {
-  "2_hop_paths": "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002 || ⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
+  "2_hop_paths": "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002 || <subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012"
 }
 ```
 
@@ -181,3 +182,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_conversation_generator.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

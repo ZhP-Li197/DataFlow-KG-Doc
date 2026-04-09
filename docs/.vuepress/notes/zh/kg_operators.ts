@@ -176,70 +176,46 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow时序知识图谱',
+            text: 'DataFlow-KG 时序图谱',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'temporal_kg',
             items: [
                 {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        {
-                            text: 'TKGTupleExtraction',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleMerger',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTuplePathQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGAttriuteQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
+                        'tkg_4tuple_extractor',
+                        'tkg_4tuple_merge',
+                        'tkg_rel_4tuple_subgraph_qa_generator',
+                        'tkg_rel_4tuple_path_qa_generator',
+                        'tkg_attri_4tuple_qa_generator',
+                        'tkg_rel_4tuple_conversation_generator',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'TKGTupleTimeFilter',
+                        'tkg_4tuple_time_sampling',
                     ]
                 },
                 {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'TKGTemporalStatistics',
-                    ]
-                },
-                {
-                    text: "refine",
+                    text: 'refine',
                     collapsed: false,
                     prefix: 'refine/',
                     items: [
-                        'TKGTupleDisambiguation',
+                        'tkg_4tuple_disambiguation',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'tkg_4tuple_time_summary',
                     ]
                 },
             ],
