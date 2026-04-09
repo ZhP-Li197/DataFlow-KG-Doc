@@ -17,10 +17,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Image',
+            text: 'Start with DataFlow-KG',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_understanding',
+            prefix: 'kg_quickstart',
             items: [
                 'install_image_understanding',
                 'context_vqa',
@@ -32,10 +32,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Video',
+            text: 'KG Pipelines by Types',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'video_understanding',
+            prefix: 'kg_pipelines_by_types',
             items: [
                 'install_video_understanding',
                 'video_caption',
@@ -47,10 +47,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Audio',
+            text: 'KG Pipelines by Domains',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'audio_understanding',
+            prefix: 'kg_pipelines_by_domains',
             items: [
                 'install_audio_understanding',
                 'audio_caption',
@@ -59,10 +59,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Generation',
+            text: 'Chatbot Based on KG',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_video_generation',
+            prefix: 'chatbot_kg',
             items: [
                 'install_image_video_generation',
                 'image_generation',

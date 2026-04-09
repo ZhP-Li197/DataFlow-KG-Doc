@@ -21,12 +21,12 @@ export const KGOperators: ThemeNote = defineNoteConfig({
       icon: 'carbon:idea',
       prefix: 'mmkg',
       items: [
-        {
-          text: 'Install',
-          collapsed: false,
-          prefix: '',
-          items: ['install_mmkg'],
-        },
+        // {
+        //   text: 'Install',
+        //   collapsed: false,
+        //   prefix: '',
+        //   items: ['install_mmkg'],
+        // },
         {
           text: 'generate',
           collapsed: false,
@@ -58,7 +58,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
       ],
     },
         {
-            text: 'Dataflow Commonsense Graph',
+            text: 'Commonsense KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'commonsense_kg',
@@ -102,7 +102,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Graph RAG',
+            text: 'KG Retrieval',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_rag',
@@ -140,7 +140,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Knowledge Graph Reasoning',
+            text: 'KG Reasoning',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_reasoning',

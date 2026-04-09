@@ -17,10 +17,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow图像理解',
+            text: '上手案例',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_understanding',
+            prefix: 'kg_quickstart',
             items: [
                 'install_image_understanding',
                 'context_vqa',
@@ -32,10 +32,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow视频理解',
+            text: 'DataFlow-KG 类型图谱',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'video_understanding',
+            prefix: 'kg_pipelines_by_types',
             items: [
                 'install_video_understanding',
                 'video_caption',
@@ -47,7 +47,7 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow语音理解',
+            text: 'DataFlow-KG 领域图谱',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'audio_understanding',
@@ -59,7 +59,7 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow图像/视频生成',
+            text: '基于图谱的智能问答',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'image_video_generation',

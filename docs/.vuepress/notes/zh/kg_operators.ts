@@ -16,17 +16,17 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-        text: '多模态图谱',
+        text: 'DataFlow-KG 多模态图谱',
         collapsed: false,
         icon: 'carbon:idea',
         prefix: 'mmkg',
         items: [
-            {
-            text: '安装',
-            collapsed: false,
-            prefix: '',
-            items: ['install_mmkg'],
-            },
+            // {
+            // text: '安装',
+            // collapsed: false,
+            // prefix: '',
+            // items: ['install_mmkg'],
+            // },
             {
             text: 'generate',
             collapsed: false,
@@ -58,7 +58,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
         ],
         },
         {
-            text: 'Dataflow常识图谱',
+            text: 'DataFlow-KG 常识图谱',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'commonsense_kg',
@@ -102,7 +102,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow图谱RAG',
+            text: 'DataFlow-KG 图谱RAG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_rag',
@@ -140,7 +140,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow知识图谱推理',
+            text: 'DataFlow-KG 图谱推理',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_reasoning',
