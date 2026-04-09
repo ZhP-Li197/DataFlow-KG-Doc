@@ -1,7 +1,7 @@
 ---
 title: TKGTupleTimeFilter
 createTime: 2026/03/18 00:00:00
-permalink: /en/kg_operators/temporal_kg/filter/tkg_4tuple_time_sampling_en/
+permalink: /en/kg_operators/temporal_kg/filter/tkg_4tuple_time_sampling/
 ---
 
 ## 📚 Overview
