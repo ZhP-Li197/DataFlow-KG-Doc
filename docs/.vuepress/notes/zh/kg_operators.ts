@@ -16,235 +16,6 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-        text: '多模态图谱',
-        collapsed: false,
-        icon: 'carbon:idea',
-        prefix: 'mmkg',
-        items: [
-            {
-            text: '安装',
-            collapsed: false,
-            prefix: '',
-            items: ['install_mmkg'],
-            },
-            {
-            text: 'generate',
-            collapsed: false,
-            prefix: 'generate/',
-            items: [
-                'mmkg_visual_triple_extractor',
-                'mmkg_visual_triple_path_qa_generator',
-                'mmkg_visual_triple_subgraph_qa_generator',
-            ],
-            },
-            {
-            text: 'filter',
-            collapsed: false,
-            prefix: 'filter/',
-            items: [
-                'mmkg_visual_triple_path_sampling',
-                'mmkg_visual_triple_subgraph_sampling',
-            ],
-            },
-            {
-            text: 'refine',
-            collapsed: false,
-            prefix: 'refine/',
-            items: [
-                'mmkg_entity_link2database',
-                'mmkg_entity_link2img',
-            ],
-            },
-        ],
-        },
-        {
-            text: 'Dataflow常识图谱',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'commonsense_kg',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'cskg_triple_extractor',
-                        'cskg_rel_triple_qa_generator',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'cskg_triple_adapbility_eval',
-                        'cskg_triple_rationale_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'cskg_rel_triple_set_sampling',
-                        'cskg_triple_adapbility_filtering',
-                        'cskg_triple_rationale_filtering',
-                    ]
-                },
-                {
-                    text: 'refine',
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'cskg_triple_concept_generalization',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'Dataflow图谱RAG',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_rag',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'graphrag_query_extractor',
-                        'graphrag_prompt_generator',
-                        'graphrag_get_answer',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'graphrag_answer_plausibility_eval',
-                        'graphrag_answer_token_eval',
-                        'graphrag_question_difficulty_eval',
-                        'graphrag_truth_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'graphrag_answer_plausibility_filtering',
-                        'graphrag_answer_token_filtering',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'Dataflow知识图谱推理',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_reasoning',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'reasoning_path_search',
-                        'reasoning_constrained_path_search',
-                        'reasoning_rel_generator',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'reasoning_path_length_eval',
-                        'reasoning_path_redundancy_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'reasoning_path_length_filtering',
-                        'reasoning_path_redundancy_filtering',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'Dataflow时序知识图谱',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'temporal_kg',
-            items: [
-                {
-                    text: "generate",
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        {
-                            text: 'TKGTupleExtraction',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleMerger',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTuplePathQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGAttriuteQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'TKGTupleTimeFilter',
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'TKGTemporalStatistics',
-                    ]
-                },
-                {
-                    text: "refine",
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'TKGTupleDisambiguation',
-                    ]
-                },
-            ],
-        },
-        {
             text: 'Dataflow图像理解',
             collapsed: false,
             icon: 'carbon:idea',
@@ -434,7 +205,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow时序知识图谱',
+            text: 'Dataflow-KG时序知识图谱',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'temporal_kg',
@@ -444,36 +215,12 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        {
-                            text: 'TKGTupleExtraction',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleMerger',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTuplePathQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGAttriuteQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/zh/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
+                        'tkg_4tuple_extractor',
+                        'tkg_4tuple_merge',
+                        'tkg_rel_4tuple_subgraph_qa_generator',
+                        'tkg_rel_4tuple_path_qa_generator',
+                        'tkg_attri_4tuple_qa_generator',
+                        'tkg_rel_4tuple_conversation_generator',
                     ]
                 },
                 {
@@ -481,7 +228,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'TKGTupleTimeFilter',
+                        'tkg_4tuple_time_sampling',
                     ]
                 },
                 {
@@ -489,7 +236,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'eval/',
                     items: [
-                        'TKGTemporalStatistics',
+                        'tkg_4tuple_time_summary',
                     ]
                 },
                 {
@@ -497,7 +244,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'refine/',
                     items: [
-                        'TKGTupleDisambiguation',
+                        'tkg_4tuple_disambiguation',
                     ]
                 },
             ],

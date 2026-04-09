@@ -1,8 +1,7 @@
 ---
 title: TKGTupleExtraction
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /zh/kg_operators/temporal_kg/generate/tkgtupleextraction/
+permalink: /zh/kg_operators/temporal_kg/generate/tkg_4tuple_extractor/
 ---
 
 ## 📚 概述
@@ -15,22 +14,22 @@ permalink: /zh/kg_operators/temporal_kg/generate/tkgtupleextraction/
 def __init__(self, llm_serving: LLMServingABC, triple_type: str = "attribute", seed: int = 0, lang: str = "en", num_q: int = 5):
 ```
 
-### `init`参数说明
+#### `init`参数说明
 
 | 参数名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **llm_serving** | LLMServingABC | 必需 | 大语言模型服务实例，用于执行抽取推理。 |
 | **triple_type** | str | "attribute" | 抽取类型，`"attribute"` 为属性四元组，`"relation"` 为关系四元组。 |
 | **seed** | int | 0 | 随机种子。 |
 | **lang** | str | "en" | 语言设置，影响 prompt 模板语言，支持 "en" 或 "zh"。 |
 | **num_q** | int | 5 | 保留参数，用于未来扩展。 |
 
-### Prompt模板说明
+#### Prompt模板说明
 
 根据 `triple_type` 自动选择 prompt 模板：
 
 | triple_type | Prompt 类 | 主要用途 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | relation | TKGRelationQuadrupleExtractorPrompt | 抽取实体-关系-实体-时间四元组 |
 | attribute | TKGAttributeQuadrupleExtractorPrompt | 抽取实体-属性-属性值-时间四元组 |
 
@@ -84,6 +83,8 @@ def build_prompt(self, text: str):
 
 ## 💡 `run`函数
 
+`run` 从 `storage` 中读取 DataFrame，验证其包含 `input_key` 指定的列且 `output_key` 指定的列不存在。随后遍历每一行，调用 `process_batch()` 对每条输入文本通过 LLM 抽取四元组，将结果列表写入 `output_key` 列。若预处理失败或 LLM 返回无法解析为合法 JSON 的结果，则该行写入空列表。函数返回包含 `output_key` 字符串的列表。
+
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "raw_chunk", output_key: str = "tuple"):
 ```
@@ -91,7 +92,7 @@ def run(self, storage: DataFlowStorage = None, input_key: str = "raw_chunk", out
 #### `参数`
 
 | 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **storage** | DataFlowStorage | None | 数据流存储实例，负责读取与写入数据。 |
 | **input_key** | str | "raw_chunk" | 输入列名，对应原始文本字段。 |
 | **output_key** | str | "tuple" | 输出列名，对应抽取出的四元组列表字段。 |
@@ -125,7 +126,7 @@ extractor.run(
 #### 🧾 默认输出格式（Output Format）
 
 | 字段 | 类型 | 说明 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | raw_chunk | str | 输入的原始文本（保留）。 |
 | tuple | List[str] | 从文本中抽取的四元组列表。 |
 
@@ -143,9 +144,16 @@ extractor.run(
 {
   "raw_chunk": "After graduating from Stanford University in 2004...",
   "tuple": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ multiple technology companies ⟨rel⟩ co-founded ⟨time⟩ NA",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> multiple technology companies <rel> co-founded <time> NA",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_4tuple_extractor.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

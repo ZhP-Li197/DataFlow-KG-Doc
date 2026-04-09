@@ -1,21 +1,20 @@
 ---
 title: TKGTupleExtraction
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /en/kg_operators/temporal_kg/generate/tkgtupleextraction/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_4tuple_extractor_en/
 ---
 
 ## 📚 Overview
 
 [TKGTupleExtraction](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_4tuple_extractor.py) is a temporal KG quadruple extraction operator based on large language models (LLM). It extracts structured temporal quadruples from raw text, supporting both relation and attribute quadruples via a parameter switch. The operator standardizes time values (dates, months, years, quarters, and time intervals), and fills NA when no explicit time exists. It also performs text quality checks and filters inputs that are too short, too long, or contain excessive special characters.
 
-## ✒️ `__init__` function
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, triple_type: str = "attribute", seed: int = 0, lang: str = "en", num_q: int = 5):
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -25,7 +24,7 @@ def __init__(self, llm_serving: LLMServingABC, triple_type: str = "attribute", s
 | **lang** | str | "en" | Language setting, affects prompt template language; supports "en" or "zh". |
 | **num_q** | int | 5 | Reserved parameter for future extension. |
 
-### Prompt Template
+#### Prompt Template
 
 The prompt template is automatically selected based on `triple_type`:
 
@@ -82,7 +81,9 @@ def build_prompt(self, text: str):
     """)
 ```
 
-## 💡 `run` function
+## 💡 `run` Function
+
+`run` reads a DataFrame from `storage`, validates that it contains the column specified by `input_key` and that the column specified by `output_key` does not yet exist. It then iterates over each row, calls `process_batch()` to extract quadruples via the LLM for every input text, and writes the resulting list of quadruples into the `output_key` column. If preprocessing fails or the LLM response cannot be parsed as valid JSON, an empty list is written for that row. The function returns a list containing the `output_key` string.
 
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "raw_chunk", output_key: str = "tuple"):
@@ -126,8 +127,8 @@ extractor.run(
 
 | Field | Type | Description |
 | --- | --- | --- |
-| **raw_chunk** | str | Input raw text (preserved). |
-| **tuple** | List[str] | Extracted quadruples from the text. |
+| raw_chunk | str | Input raw text (preserved). |
+| tuple | List[str] | Extracted quadruples from the text. |
 
 **Example Input:**
 
@@ -143,9 +144,16 @@ extractor.run(
 {
   "raw_chunk": "After graduating from Stanford University in 2004...",
   "tuple": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ multiple technology companies ⟨rel⟩ co-founded ⟨time⟩ NA",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> multiple technology companies <rel> co-founded <time> NA",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
   ]
 }
 ```
+
+---
+
+#### Related Links
+
+- Operator implementation: `DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_4tuple_extractor.py`
+- Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

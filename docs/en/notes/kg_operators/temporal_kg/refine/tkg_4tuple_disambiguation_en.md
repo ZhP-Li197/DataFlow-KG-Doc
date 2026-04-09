@@ -1,21 +1,20 @@
 ---
 title: TKGTupleDisambiguation
 createTime: 2026/03/18 00:00:00
-icon: material-symbols-light:tune
-permalink: /en/kg_operators/temporal_kg/refine/tkgtupledisambiguation/
+permalink: /en/kg_operators/temporal_kg/refine/tkg_4tuple_disambiguation_en/
 ---
 
 ## 📚 Overview
 
 [TKGTupleDisambiguation](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/refinement/tkg_4tuple_disambiguation.py) is a temporal KG quadruple disambiguation operator based on large language models (LLM). It is used to resolve ambiguous quadruples produced during knowledge graph merging. The operator detects whether a quadruple is relation-based or attribute-based, and calls the corresponding prompt template to select the most reasonable candidate from multiple conflict options.
 
-## ✒️ `__init__`
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", attribute_prompt: Union[KGAttributeTripleDisambiguationPrompt, DIYPromptABC] = None, relation_prompt: Union[TKGRelationDisambiguationPrompt, DIYPromptABC] = None):
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -25,7 +24,7 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 | **attribute_prompt** | Union[KGAttributeTripleDisambiguationPrompt, DIYPromptABC] | None | Prompt template for attribute quadruple disambiguation. If None, the default template is used automatically. |
 | **relation_prompt** | Union[TKGRelationDisambiguationPrompt, DIYPromptABC] | None | Prompt template for relation quadruple disambiguation. If None, the default template is used automatically. |
 
-### Prompt Template
+#### Prompt Template
 
 This operator uses two prompt templates, automatically selected based on the quadruple type:
 
@@ -56,12 +55,12 @@ def build_system_prompt(self):
 
         Example:
         Input:
-        "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-02 ｜ 2026-03-05"
+        "<subj> E2 <obj> E3 <rel> relC <time> 2026-03-02 ｜ 2026-03-05"
 
         Output:
         {
           "resolved_quadruple": [
-            "⟨subj⟩ E2 ⟨obj⟩ E3 ⟨rel⟩ relC ⟨time⟩ 2026-03-05"
+            "<subj> E2 <obj> E3 <rel> relC <time> 2026-03-05"
           ]
         }
     """)
@@ -99,7 +98,9 @@ def build_system_prompt(self):
     """)
 ```
 
-## 💡 `run`
+## 💡 `run` Function
+
+`run` reads a DataFrame from `storage`, validates that it contains the column specified by `input_key` and that the column specified by `output_key` does not yet exist. For each row, it extracts the list from `input_key_dict[input_key_meta]` (e.g., the `ambiguous` list inside `merged_tuples`), iterates over each ambiguous quadruple, automatically detects whether it is a relation or attribute type, calls the corresponding LLM prompt for disambiguation, and collects the resolved results. If a row has no ambiguous candidates or parsing fails, the original input is kept or an empty list is returned. The resolved list is written into the `output_key` column. The function returns a list containing the `output_key` string.
 
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "merged_tuples", input_key_meta: str = "ambiguous", output_key: str = "resolved"):
@@ -155,12 +156,12 @@ operator.run(
 {
   "merged_tuples": {
     "unambiguous": [
-      "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
-      "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
+      "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012",
+      "<subj> Elon Musk <obj> Neuralink <rel> founded <time> 2016"
     ],
     "ambiguous": [
-      "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ established ⟨time⟩ 2002 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-      "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2006 ｜ ⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+      "<subj> Elon Musk <obj> SpaceX <rel> established <time> 2002 ｜ <subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+      "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2006 ｜ <subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
     ]
   }
 }
@@ -170,10 +171,18 @@ operator.run(
 
 ```json
 {
-  "merged_tuples": {"...（同上）"},
+  "merged_tuples": {"..."},
   "resolved": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008"
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008"
   ]
 }
 ```
+
+---
+
+#### Related Links
+
+- Operator implementation: `DataFlow-KG/dataflow/operators/temporal_kg/refinement/tkg_4tuple_disambiguation.py`
+- Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`, `DataFlow-KG/dataflow/prompts/core_kg/rel_triple_refinement.py`, `DataFlow-KG/dataflow/prompts/core_kg/attri_triple.py`
+- Upstream operator: `DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_4tuple_merge.py`

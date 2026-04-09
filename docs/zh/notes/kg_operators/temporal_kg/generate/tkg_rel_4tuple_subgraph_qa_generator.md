@@ -1,8 +1,7 @@
 ---
 title: TKGTupleSubgraphQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/
+permalink: /zh/kg_operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator/
 ---
 
 ## 📚 概述
@@ -15,22 +14,22 @@ permalink: /zh/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", qa_type: str = "time_point", num_q: int = 5):
 ```
 
-### 参数
+#### 参数
 
 | 参数名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **llm_serving** | LLMServingABC | 必需 | 大语言模型服务实例。 |
 | **seed** | int | 0 | 随机种子。 |
 | **lang** | str | "en" | 语言设置，支持 "en" 或 "zh"。 |
 | **qa_type** | str | "time_point" | QA 类型，可选值：`"time_point"`、`"event_order"`、`"time_order"`、`"time_interval"`。 |
 | **num_q** | int | 5 | 预期生成的 QA 对数量。 |
 
-### Prompt 模板说明
+#### Prompt 模板说明
 
 根据 `qa_type` 自动选择 prompt 模板：
 
 | qa_type | Prompt 类 | 主要用途 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | time_point | TKGTupleTimePointQAGenerationPrompt | 问具体时间，答案为四元组中的时间值 |
 | event_order | TKGTupleEventOrderQAGenerationPrompt | 问事件之后发生了什么，答案为后续事件 |
 | time_order | TKGTupleTimeOrderQAGenerationPrompt | 两两事件比较先后，答案为更早的事件 |
@@ -45,7 +44,7 @@ def build_system_prompt(self):
 
         === TASK ===
         Given:
-        - ENTITY–RELATION–ENTITY–TIME quadruples
+        - ENTITY-RELATION-ENTITY-TIME quadruples
 
         Generate QA pairs such that:
 
@@ -76,7 +75,7 @@ def build_prompt(self, temporal_quadruples: str):
     return textwrap.dedent(f"""\
         Please generate **temporal QA pairs** strictly following the rules above.
 
-        ENTITY–RELATION–ENTITY–TIME quadruples:
+        ENTITY-RELATION-ENTITY-TIME quadruples:
         {temporal_quadruples}
 
         Output QA pairs in JSON format only:
@@ -85,6 +84,8 @@ def build_prompt(self, temporal_quadruples: str):
 
 ## 💡 `run` 函数
 
+`run` 从 `storage` 中读取 DataFrame，验证其包含 `input_key` 指定的列且 `output_key` 指定的列不存在。随后遍历每一行，调用 `process_batch()` 对每条子图文本通过 LLM 生成问答对，将结果列表写入 `output_key` 列。若 LLM 返回无法解析则该行写入空列表。函数返回包含 `output_key` 字符串的列表。
+
 ```python
 def run(self, storage: DataFlowStorage = None, input_key: str = "subgraph", output_key: str = "QA_pairs"):
 ```
@@ -92,7 +93,7 @@ def run(self, storage: DataFlowStorage = None, input_key: str = "subgraph", outp
 #### 参数
 
 | 名称 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
+| :-- | :-- | :-- | :-- |
 | **storage** | DataFlowStorage | None | 数据流存储实例，负责读取与写入数据。 |
 | **input_key** | str | "subgraph" | 输入列名，对应关系四元组子图。每行为 `List[str]` 或 `str`。 |
 | **output_key** | str | "QA_pairs" | 输出列名，对应生成的 QA 对列表。 |
@@ -126,7 +127,7 @@ generator.run(
 #### 默认输出格式
 
 | 字段 | 类型 | 说明 |
-| --- | --- | --- |
+| :-- | :-- | :-- |
 | **subgraph** | List[str] / str | 输入的关系四元组子图（保留）。 |
 | **QA_pairs** | List[Dict] | 生成的 QA 对列表，每个元素包含 `question` 和 `answer`。 |
 
@@ -135,11 +136,11 @@ generator.run(
 ```json
 {
   "subgraph": [
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Stanford University ⟨rel⟩ graduated from ⟨time⟩ 2004",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Tesla Motors ⟨rel⟩ took over as CEO ⟨time⟩ 2008",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002",
-    "⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012",
-    "⟨subj⟩ Elon Musk ⟨obj⟩ Neuralink ⟨rel⟩ founded ⟨time⟩ 2016"
+    "<subj> Elon Musk <obj> Stanford University <rel> graduated from <time> 2004",
+    "<subj> Elon Musk <obj> Tesla Motors <rel> took over as CEO <time> 2008",
+    "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002",
+    "<subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012",
+    "<subj> Elon Musk <obj> Neuralink <rel> founded <time> 2016"
   ]
 }
 ```
@@ -165,3 +166,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### 相关链接
+
+- 算子实现：`DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_subgraph_qa_generator.py`
+- Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`

@@ -1,21 +1,20 @@
 ---
 title: TKGTuplePathQAGeneration
 createTime: 2026/03/18 00:00:00
-icon: material-symbols:bolt
-permalink: /en/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/
+permalink: /en/kg_operators/temporal_kg/generate/tkg_rel_4tuple_path_qa_generator_en/
 ---
 
 ## 📚 Overview
 
 [TKGTuplePathQAGeneration](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_path_qa_generator.py) is a temporal KG multi-hop path QA generation operator based on large language models (LLM). It takes multi-hop path data as input and generates structured temporal QA pairs. The operator supports four QA modes: time-point, event-order, time-order, and time-interval questions. Unlike subgraph QA generation, the input and output column names are dynamically generated based on the hop parameter, making it suitable for temporal QA scenarios based on path reasoning.
 
-## ✒️ `__init__` function
+## ✒️ `__init__` Function
 
 ```python
 def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", hop: int = 2, qa_type: str = "time_point", num_q: int = 5):
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -26,7 +25,7 @@ def __init__(self, llm_serving: LLMServingABC, seed: int = 0, lang: str = "en", 
 | **qa_type** | str | "time_point" | QA type, options: `"time_point"`, `"event_order"`, `"time_order"`, `"time_interval"`. |
 | **num_q** | int | 5 | Expected number of QA pairs to generate. |
 
-### Prompt Template
+#### Prompt Template
 
 The prompt template is automatically selected based on `qa_type` (shared with TKGTupleSubgraphQAGeneration for relation quadruple prompts):
 
@@ -39,7 +38,9 @@ The prompt template is automatically selected based on `qa_type` (shared with TK
 
 The default prompt (qa_type="time_point") is the same as TKGTupleSubgraphQAGeneration; see that operator's documentation.
 
-## 💡 `run` function
+## 💡 `run` Function
+
+`run` reads a DataFrame from `storage`. Before processing, it constructs the actual input and output column names based on `hop`: when `hop > 1`, the input column is `{hop}_{input_key_meta}` (e.g., `2_hop_paths`), and when `hop == 1`, the input column is `"tuple"`. The output column is always `{hop}_{output_key_meta}` (e.g., `2_QA_pairs`). It then validates the DataFrame, iterates over each row calling `process_batch()` to generate QA pairs via the LLM, and writes the resulting list into the output column. If the LLM response cannot be parsed, an empty list is written for that row. The function returns a list containing the `output_key` string.
 
 ```python
 def run(self, storage: DataFlowStorage = None, input_key_meta: str = "hop_paths", output_key_meta: str = "QA_pairs"):
@@ -86,14 +87,14 @@ generator.run(
 
 | Field | Type | Description |
 | --- | --- | --- |
-| **2_hop_paths** | str | Input multi-hop path string (preserved; column name varies with hop). |
-| **2_QA_pairs** | List[Dict] | Generated QA pairs; each element contains `question` and `answer` (column name varies with hop). |
+| 2_hop_paths | str | Input multi-hop path string (preserved; column name varies with hop). |
+| 2_QA_pairs | List[Dict] | Generated QA pairs; each element contains `question` and `answer` (column name varies with hop). |
 
 **Example Input:**
 
 ```json
 {
-  "2_hop_paths": "⟨subj⟩ Elon Musk ⟨obj⟩ SpaceX ⟨rel⟩ founded ⟨time⟩ 2002 || ⟨subj⟩ SpaceX ⟨obj⟩ ISS ⟨rel⟩ first commercial spacecraft docking with ⟨time⟩ 2012"
+  "2_hop_paths": "<subj> Elon Musk <obj> SpaceX <rel> founded <time> 2002 || <subj> SpaceX <obj> ISS <rel> first commercial spacecraft docking with <time> 2012"
 }
 ```
 
@@ -114,3 +115,10 @@ generator.run(
   ]
 }
 ```
+
+---
+
+#### Related Links
+
+- Operator implementation: `DataFlow-KG/dataflow/operators/temporal_kg/generate/tkg_rel_4tuple_path_qa_generator.py`
+- Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/tkg.py`
