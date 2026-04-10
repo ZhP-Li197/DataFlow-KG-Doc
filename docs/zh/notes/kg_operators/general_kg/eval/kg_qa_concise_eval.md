@@ -118,5 +118,5 @@ operator.run(
 
 #### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/general_kg/eval/kg_qa_concise_eval.py`
-- 默认 Prompt：`DataFlow-KG/dataflow/prompts/general_kg/rel_triple_eval.py`
+- 默认 Prompt：`DataFlow-KG/dataflow/prompts/core_kg/rel_triple_eval.py`
 - 下游过滤算子：`DataFlow-KG/dataflow/operators/general_kg/filter/kg_qa_concise_filtering.py`
