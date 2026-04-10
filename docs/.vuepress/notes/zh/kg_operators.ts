@@ -16,6 +16,65 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'DataFlow-KG 通用图谱',
+            collapsed: false,
+            icon: 'carbon:idea', 
+            prefix: 'general_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'kg_qa_concise_eval',
+                        'kg_qa_correlation_eval',
+                        'kg_qa_natural_eval',
+                        'kg_rel_triple_consistency_eval',
+                        'kg_rel_triple_nx_visual',
+                        'kg_rel_triple_strength_eval',
+                        'kg_rel_triple_topology_eval',
+                        'kg_subgraph_connectivity_eval',
+                        'kg_subgraph_consistence_eval',
+                        'kg_subgraph_scale_eval'
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'kg_attri_tuple_sampling',
+                        'kg_entity_validation',
+                        'kg_qa_concise_filtering',
+                        'kg_qa_correlation_filtering',
+                        'kg_qa_natural_filtering',
+                        'kg_rel_triple_strength_filtering',
+                        'kg_rel_tuple_path_sampling',
+                        'kg_rel_tuple_subgraph_sampling',
+                        'kg_subgraph_connectivity_filtering',
+                        'kg_subgraph_consistence_filtering',
+                        'kg_subgraph_scale_filtering',
+                        'kg_tuple_remove_repeated',
+                        'kg_tuple_validation'
+                    ]
+                },
+                {
+                    text: 'refine',
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                    ]
+                }
+            ],
+        },
+        {
         text: 'DataFlow-KG 多模态图谱',
         collapsed: false,
         icon: 'carbon:idea',
