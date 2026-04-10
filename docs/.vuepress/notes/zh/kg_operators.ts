@@ -26,6 +26,8 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
+                        'kg_attri_triple_qa_generator',
+                        'kg_entity_extractor'
                     ]
                 },
                 {
@@ -70,6 +72,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                     collapsed: false,
                     prefix: 'refine/',
                     items: [
+                        'kg_entity_alignment'
                     ]
                 }
             ],
