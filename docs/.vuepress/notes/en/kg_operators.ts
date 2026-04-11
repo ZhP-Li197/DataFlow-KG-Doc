@@ -26,7 +26,15 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             collapsed: false,
             prefix: 'generate/',
             items: [
-                
+                'kg_attri_triple_qa_generator',
+                'kg_entity_extractor',
+                'kg_rel_triple_conversation_generator',
+                'kg_rel_triple_inference',
+                'kg_rel_triple_path_qa_generator',
+                'kg_rel_triple_subgraph_qa_generator',
+                'kg_triple_extractor',
+                'kg_triple_merge',
+                'kg_tuple2text',
             ]
         },
         {
@@ -71,7 +79,13 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             collapsed: false,
             prefix: 'refine/',
             items: [
-                
+                'kg_entity_alignment',
+                'kg_entity_classification',
+                'kg_entity_disambiguation',
+                'kg_entity_link2database',
+                'kg_entity_normalization',
+                'kg_triple_disambiguation',
+                'kg_tuple_normalization',
             ]
         }
     ],
