@@ -14,6 +14,7 @@ Key characteristics of this operator:
 - Uses `KGQAConcisenessPrompt` by default to construct prompts.
 - Reads from the `QA_pairs` column by default and writes to `conciseness_scores` by default.
 - Supports input cells as either Python lists or JSON strings that can be deserialized.
+- The raw model output is required to be a strict JSON object: `{"conciseness_scores": [...]}`
 - Falls back to `[]` for the current row when a model call fails, the response is invalid JSON, or the input is empty.
 
 ---
@@ -46,7 +47,7 @@ def run(
     ...
 ```
 
-`run` reads the DataFrame from `storage` and extracts the column specified by `input_key` row by row, reorganizing it into the internally used `{"QA_pairs": ...}` structure. It then calls `process_batch()` to evaluate each row. If the cell content is a string, it is first parsed as JSON; if it is empty or parsing fails, the row outputs an empty list. For valid QA pair lists, the operator constructs system and user prompts and asks the model to return JSON containing only `conciseness_scores`. Final results are written to the `output_key` column.
+`run` reads the DataFrame from `storage` and extracts the column specified by `input_key` row by row, reorganizing it into the internally used `{"QA_pairs": ...}` structure. It then calls `process_batch()` to evaluate each row. If the cell content is a string, it is first parsed as JSON; if it is empty or parsing fails, the row outputs an empty list. For valid QA pair lists, the operator constructs system and user prompts and asks the model to return only `{"conciseness_scores": [...]}`. Final results are written to the `output_key` column, and the return value of `run()` matches that column name.
 
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
@@ -82,7 +83,16 @@ operator.run(
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `QA_pairs` | `List[Dict]` / `str` | Input QA pair list, or a JSON string that can be parsed into a list. |
-| `conciseness_scores` | `List[float]` | Conciseness scores positionally aligned with the input QA pairs. |
+| `conciseness_scores` | `List[float]` | Scores written back to the DataFrame, positionally aligned with the input QA pairs. |
+
+#### Raw Model Output Format
+```json
+{
+  "conciseness_scores": [0.95, 0.32]
+}
+```
+
+The final DataFrame keeps the original `QA_pairs` column and adds a `conciseness_scores` column. That DataFrame shape is not extra model output.
 
 ---
 
@@ -114,6 +124,6 @@ operator.run(
 ---
 
 #### Related Links
-- Operator implementation: `DataFlow-KG/dataflow/operators/core_kg/eval/kg_qa_concise_eval.py`
-- Default prompt: `DataFlow-KG/dataflow/prompts/general_kg/rel_triple_eval.py`
+- Operator implementation: `DataFlow-KG/dataflow/operators/general_kg/eval/kg_qa_concise_eval.py`
+- Default prompt: `DataFlow-KG/dataflow/prompts/core_kg/rel_triple_eval.py`
 - Downstream filter operator: `DataFlow-KG/dataflow/operators/general_kg/filter/kg_qa_concise_filtering.py`

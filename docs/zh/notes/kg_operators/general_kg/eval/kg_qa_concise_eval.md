@@ -14,6 +14,7 @@ permalink: /zh/kg_operators/general_kg/eval/kg_qa_concise_eval/
 - 默认使用 `KGQAConcisenessPrompt` 构造提示词
 - 默认读取 `QA_pairs` 列，默认输出到 `conciseness_scores`
 - 支持输入单元格为 Python 列表，也支持输入为可反序列化的 JSON 字符串
+- 模型原始输出要求为严格 JSON 对象：`{"conciseness_scores": [...]}`
 - 当模型调用失败、返回非法 JSON 或输入为空时，当前行会回退为 `[]`
 
 ---
@@ -47,7 +48,7 @@ def run(
     ...
 ```
 
-`run` 会先从 `storage` 中读取 DataFrame，并逐行取出 `input_key` 指定的列，重新组织成内部统一使用的 `{"QA_pairs": ...}` 结构。随后算子调用 `process_batch()` 对每一行进行评估：若单元格内容是字符串，会先尝试按 JSON 解析；若为空或解析失败，则该行输出空列表。对于有效 QA 对列表，算子会构造系统提示词和用户提示词，要求模型仅返回包含 `conciseness_scores` 的 JSON。最终结果会写回 `output_key` 指定的列。
+`run` 会先从 `storage` 中读取 DataFrame，并逐行取出 `input_key` 指定的列，重新组织成内部统一使用的 `{"QA_pairs": ...}` 结构。随后算子调用 `process_batch()` 对每一行进行评估：若单元格内容是字符串，会先尝试按 JSON 解析；若为空或解析失败，则该行输出空列表。对于有效 QA 对列表，算子会构造系统提示词和用户提示词，要求模型仅返回 `{"conciseness_scores": [...]}`。最终结果会写回 `output_key` 指定的列，`run()` 返回值也与该列名一致。
 
 #### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
@@ -85,7 +86,16 @@ operator.run(
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `QA_pairs` | `List[Dict]` / `str` | 输入 QA 问答对列表，或可被解析为列表的 JSON 字符串。 |
-| `conciseness_scores` | `List[float]` | 与输入 QA 对按位置对齐的简洁性评分列表。 |
+| `conciseness_scores` | `List[float]` | 写回 DataFrame 的评分结果，与输入 QA 对按位置对齐。 |
+
+#### 模型原始输出格式
+```json
+{
+  "conciseness_scores": [0.95, 0.32]
+}
+```
+
+DataFrame 最终结果会保留原始 `QA_pairs` 列，并新增 `conciseness_scores` 列；这不属于模型额外输出。
 
 ---
 
