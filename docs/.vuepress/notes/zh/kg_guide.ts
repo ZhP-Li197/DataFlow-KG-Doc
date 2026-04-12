@@ -38,6 +38,7 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             prefix: 'kg_pipelines_by_types',
             items: [
                 'install_video_understanding',
+                'kg_evaluation_visualization_pipeline',
                 'video_caption',
                 'video_clip_and_filter',
                 'video_qa',
