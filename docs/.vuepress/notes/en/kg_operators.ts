@@ -296,6 +296,44 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'Hyper-Relational KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'hyper_relation_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'hrkg_rel_triple_extractor_en',
+                        'hrkg_rel_triple_path_qa_generator_en',
+                        'hrkg_rel_triple_subgraph_qa_generator_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'hrkg_rel_triple_attribute_filtering_en',
+                        'hrkg_rel_triple_completeness_filtering_en',
+                        'hrkg_rel_triple_consistency_filtering_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'hrkg_rel_triple_consistency_eval_en',
+                        'hrkg_rel_triple_completeness_eval_en',
+                        'hrkg_rel_triple_attri_summary_en',
+                    ]
+                },
+            ],
+        },
+        {
             text: 'Dataflow Image',
             collapsed: false,
             icon: 'carbon:idea',
