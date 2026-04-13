@@ -40,7 +40,7 @@ def run(self, storage: DataFlowStorage, input_key: str = "tuple", output_key: st
 | `storage` | `DataFlowStorage` | Required | DataFlow storage instance, responsible for reading and writing data. |
 | `input_key` | `str` | `"tuple"` | Input column name, corresponding to the triple list field. |
 | `output_key` | `str` | `"filtered_tuple"` | Output column name, corresponding to the filtered triple list field. |
-| `attr_tag` | `str` | `"<Location>"` | Attribute tag to filter by; only tuples containing this tag are retained. Supports any tag in the form `<TagName>`, such as `<Time>`, `<Location>`, `<Value>`, `<Capacity>`, etc. |
+| `attr_tag` | `str` | `<Location>` | Attribute tag to filter by; only tuples containing this tag are retained. Supports any tag in the form `<TagName>`, such as `<Time>`, `<Location>`, `<Value>`, `<Capacity>`, etc. |
 
 ## 🤖 Example Usage
 
@@ -80,7 +80,7 @@ filter_op.run(
 }
 ```
 
-**Example Output (attr_tag="<Location>"):**
+**Example Output (attr_tag=`<Location>`):**
 
 ```json
 {
@@ -92,7 +92,7 @@ filter_op.run(
 }
 ```
 
-**Example Output (attr_tag="<Time>"):**
+**Example Output (attr_tag=`<Time>`):**
 
 ```json
 {

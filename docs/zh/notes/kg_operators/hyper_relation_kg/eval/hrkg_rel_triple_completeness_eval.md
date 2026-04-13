@@ -28,37 +28,39 @@ Prompt 使用 `HRKGTripleCompletenessPrompt`：
 ```python
 def build_system_prompt(self):
     return textwrap.dedent("""\
-        You are an expert in Knowledge Graph triple quality evaluation.
-        Your task is to evaluate the **completeness** of each triple.
+        你是一名知识图谱三元组质量评估专家。
+        你的任务是评估每个三元组的**完整性**。
 
-        ### Evaluation Criteria
-        - Does the triple contain subject, object, and relation?
-        - Are the key attributes for the relation present?
-        - Are attribute values clear and reasonable?
-        - Determine if the triple is missing important information.
+        ### 判断标准
+        - 三元组是否包含主体、客体和关系
+        - 关系所需的关键属性是否齐全
+        - 属性信息是否清晰且合理
+        - 判断三元组是否缺失重要信息
 
-        ### Output Format
-        Return ONLY a JSON object:
-
+        ### 输出格式
+        仅返回 JSON：
         {
             "completeness_scores": [float, float, ...]
         }
 
-        Each score corresponds to one triple (0-1):
-        1 = fully complete
-        0.5 = partially complete
-        0 = severely incomplete or unclear
+        每个三元组对应一个分数，范围 0-1：
+        1 = 信息完整
+        0.5 = 部分信息缺失
+        0 = 信息严重缺失或无法理解
 
-        Do not output explanations.
+        不要输出任何解释。
     """)
 
 def build_prompt(self, triples: list):
-    return f"""Evaluate the completeness of the following KG triples.
+    triple_block = ""
+    for idx, t in enumerate(triples):
+        triple_block += f"ID {idx}: {t}\n"
+    return f"""请评估以下知识图谱三元组的完整性。
 
         --- Triples ---
         {triple_block}
 
-        Return ONLY a JSON object containing completeness scores for each triple (0-1)."""
+        请返回每个三元组的完整性得分（0-1），并严格按照 JSON 输出。"""
 ```
 
 ## 💡 `run`函数
@@ -136,4 +138,4 @@ evaluator.run(
 
 - 算子实现：`DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_completeness_eval.py`
 - Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/hrkg.py`
-- 下游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py`
+- 下游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_completeness_filtering.py`

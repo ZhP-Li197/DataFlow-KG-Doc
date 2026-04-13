@@ -79,7 +79,7 @@ def build_system_prompt(self):
         - Key: "tuple"
         - Each item is a single string formatted exactly as:
 
-          "<subj> Entity <obj> Entity <rel> Relation <AttributeName1> ValueName1 <AttributeName2> ValueName2"
+          "⟨subj⟩ Entity ⟨obj⟩ Entity ⟨rel⟩ Relation ⟨AttributeName1⟩ ValueName1 ⟨AttributeName2⟩ ValueName2"
 
         - Do NOT add explanations or extra text
     """)
@@ -94,8 +94,8 @@ def build_prompt(self, text: str):
         Output ONLY JSON:
         {{
           "tuple": [
-            "<subj> Entity <obj> Entity <rel> Relation <AttributeName1> ValueName1",
-            "<subj> Entity <obj> Entity <rel> Relation <AttributeName1> ValueName1"
+            "⟨subj⟩ Entity ⟨obj⟩ Entity ⟨rel⟩ Relation ⟨AttributeName1⟩ ValueName1",
+            "⟨subj⟩ Entity ⟨obj⟩ Entity ⟨rel⟩ Relation ⟨AttributeName1⟩ ValueName1"
           ]
         }}
     """)

@@ -40,7 +40,7 @@ def run(self, storage: DataFlowStorage, input_key: str = "tuple", output_key: st
 | `storage` | `DataFlowStorage` | 必填 | DataFlow 存储实例，负责数据读写。 |
 | `input_key` | `str` | `"tuple"` | 输入列名，对应三元组列表字段。 |
 | `output_key` | `str` | `"filtered_tuple"` | 输出列名，对应过滤后的三元组列表字段。 |
-| `attr_tag` | `str` | `"<Location>"` | 要过滤的属性标签；仅保留包含此标签的元组。支持任意 `<TagName>` 形式的标签，如 `<Time>`、`<Location>`、`<Value>`、`<Capacity>` 等。 |
+| `attr_tag` | `str` | `<Location>` | 要过滤的属性标签；仅保留包含此标签的元组。支持任意 `<TagName>` 形式的标签，如 `<Time>`、`<Location>`、`<Value>`、`<Capacity>` 等。 |
 
 ## 🤖 示例用法
 
@@ -80,7 +80,7 @@ filter_op.run(
 }
 ```
 
-**示例输出（attr_tag="<Location>"）：**
+**示例输出（attr_tag=`<Location>`）：**
 
 ```json
 {
@@ -92,7 +92,7 @@ filter_op.run(
 }
 ```
 
-**示例输出（attr_tag="<Time>"）：**
+**示例输出（attr_tag=`<Time>`）：**
 
 ```json
 {

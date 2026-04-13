@@ -23,44 +23,43 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en"):
 
 #### Prompt 模板
 
-Prompt 使用 `HRKGTripleCompletenessPrompt`：
+Prompt 使用 `HRKGTripleConsistencyPrompt`：
 
 ```python
 def build_system_prompt(self):
     return textwrap.dedent("""\
-        You are an expert in Knowledge Graph triple quality evaluation.
-        Your task is to evaluate the **consistency** of each triple.
+        你是一名知识图谱三元组质量评估专家。
+        你的任务是评估每个三元组的**一致性**。
 
-        ### Evaluation Criteria
-        - Check if the subject, object, and relation are logically coherent
-        - Check if the relation's different attributes are consistent (e.g., time, location, values)
-        - Detect any obvious contradictions or conflicts
+        ### 判断标准
+        - 三元组的主体、客体和关系是否逻辑上协调
+        - 关系的不同属性是否相互一致（例如时间、地点、数值等是否合理匹配）
+        - 检查是否存在明显矛盾或冲突信息
 
-        ### Output Format
-        Return ONLY a JSON object:
-
+        ### 输出格式
+        仅返回 JSON：
         {
             "consistency_scores": [float, float, ...]
         }
 
-        Each score corresponds to one triple (0-1):
-        1 = fully consistent
-        0.5 = partially consistent, minor conflicts
-        0 = severely inconsistent or contradictory
+        每个三元组对应一个分数，范围 0-1：
+        1 = 完全一致
+        0.5 = 部分一致，有轻微矛盾
+        0 = 严重不一致或属性冲突
 
-        Do not output explanations.
+        不要输出任何解释。
     """)
 
 def build_prompt(self, triples: list):
     triple_block = ""
     for idx, t in enumerate(triples):
         triple_block += f"ID {idx}: {t}\n"
-    return f"""Evaluate the consistency of the following KG triples.
+    return f"""请评估以下知识图谱三元组的属性一致性。
 
         --- Triples ---
         {triple_block}
 
-        Return ONLY a JSON object containing consistency scores for each triple (0-1)."""
+        请返回每个三元组的一致性得分（0-1），并严格按照 JSON 输出。"""
 ```
 
 ## 💡 `run`函数
@@ -136,6 +135,6 @@ evaluator.run(
 
 #### 相关链接
 
-- 算子实现：`DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistence_eval.py`
+- 算子实现：`DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistency_eval.py`
 - Prompt 模板：`DataFlow-KG/dataflow/prompts/diverse_kg/hrkg.py`
-- 下游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistence_filtering.py`
+- 下游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py`

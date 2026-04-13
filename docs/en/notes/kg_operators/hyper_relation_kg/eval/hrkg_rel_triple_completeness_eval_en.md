@@ -53,6 +53,9 @@ def build_system_prompt(self):
     """)
 
 def build_prompt(self, triples: list):
+    triple_block = ""
+    for idx, t in enumerate(triples):
+        triple_block += f"ID {idx}: {t}\n"
     return f"""Evaluate the completeness of the following KG triples.
 
         --- Triples ---
@@ -136,4 +139,4 @@ evaluator.run(
 
 - Operator implementation: `DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_completeness_eval.py`
 - Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/hrkg.py`
-- Downstream operator: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py`
+- Downstream operator: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_completeness_filtering.py`

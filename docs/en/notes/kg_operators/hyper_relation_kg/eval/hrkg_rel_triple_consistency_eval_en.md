@@ -23,7 +23,7 @@ def __init__(self, llm_serving: LLMServingABC, lang: str = "en"):
 
 #### Prompt Template
 
-The prompt uses `HRKGTripleCompletenessPrompt`:
+The prompt uses `HRKGTripleConsistencyPrompt`:
 
 ```python
 def build_system_prompt(self):
@@ -136,6 +136,6 @@ evaluator.run(
 
 #### Related Links
 
-- Operator implementation: `DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistence_eval.py`
+- Operator implementation: `DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistency_eval.py`
 - Prompt templates: `DataFlow-KG/dataflow/prompts/diverse_kg/hrkg.py`
-- Downstream operator: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistence_filtering.py`
+- Downstream operator: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py`

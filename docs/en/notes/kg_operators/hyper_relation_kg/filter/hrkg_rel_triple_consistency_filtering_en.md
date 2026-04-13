@@ -6,7 +6,7 @@ permalink: /en/kg_operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency
 
 ## 📚 Overview
 
-[HRKGTripleConsistencyFilter](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistence_filtering.py) is a hyper-relational KG triple filtering operator based on consistency scores. It filters tuples whose consistency scores fall within a user-specified range. The operator aligns triples and scores by position and retains only those satisfying `min_score <= score <= max_score`. The filtered results can be written to a new column or overwrite the input column via parameters for flexible integration into different pipelines.
+[HRKGTripleConsistencyFilter](https://github.com/ZhP-Li197/DataFlow-KG/tree/main/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py) is a hyper-relational KG triple filtering operator based on consistency scores. It filters tuples whose consistency scores fall within a user-specified range. The operator aligns triples and scores by position and retains only those satisfying `min_score <= score <= max_score`. The filtered results can be written to a new column or overwrite the input column via parameters for flexible integration into different pipelines.
 
 ## ✒️ `__init__` Function
 
@@ -67,7 +67,7 @@ filter_op.run(
 | Field | Type | Description |
 | --- | --- | --- |
 | `tuple` | `List[str]` | Input original triple list (preserved). |
-| `consistency_scores` | `List[float]` | Aligned consistency/completeness scores for each tuple. |
+| `consistency_scores` | `List[float]` | Aligned consistency scores for each tuple. |
 | `filtered_tuple` | `List[str]` | Filtered triple list where scores fall within the specified range. |
 
 **Example Input:**
@@ -102,5 +102,5 @@ filter_op.run(
 
 #### Related Links
 
-- Operator implementation: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistence_filtering.py`
+- Operator implementation: `DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_consistency_filtering.py`
 - Upstream operator: `DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistency_eval.py`

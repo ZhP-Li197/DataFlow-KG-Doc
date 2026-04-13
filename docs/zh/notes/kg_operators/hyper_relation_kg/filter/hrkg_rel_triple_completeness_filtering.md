@@ -103,4 +103,4 @@ filter_op.run(
 #### 相关链接
 
 - 算子实现：`DataFlow-KG/dataflow/operators/hyper_relation_kg/filter/hrkg_rel_triple_completeness_filtering.py`
-- 上游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_consistency_eval.py`
+- 上游算子：`DataFlow-KG/dataflow/operators/hyper_relation_kg/eval/hrkg_rel_triple_completeness_eval.py`
