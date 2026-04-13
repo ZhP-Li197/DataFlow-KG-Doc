@@ -94,7 +94,7 @@ operator.run(
 ```json
 [
   {
-    "disambiguated_entity": "[\"Michael Jordan\", \"Chicago Bulls\"]"
+    "disambiguated_entity": "Michael Jordan, Chicago Bulls"
   }
 ]
 ```

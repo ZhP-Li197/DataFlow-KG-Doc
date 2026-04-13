@@ -91,14 +91,8 @@ operator.run(
 [
   {
     "QA_pairs": [
-      {
-        "question": "In which continent is the country where Einstein was born located?",
-        "answer": "Europe."
-      },
-      {
-        "question": "Where was Einstein born, and what larger region is it part of?",
-        "answer": "Einstein was born in Germany, which is part of Europe."
-      }
+      "Question: ... Answer: ...",
+      "Question: ... Answer: ..."
     ]
   }
 ]
