@@ -51,12 +51,16 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             text: 'DataFlow-KG 领域图谱',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'audio_understanding',
+            prefix: 'kg_pipelines_by_domains',
             items: [
                 'install_audio_understanding',
                 'audio_caption',
                 'whisper_asr',
                 'audio_asr_pipeline',
+                'MedicalKGPipeline',
+                'ScholarKGPipeline',
+                'LegalKGPipeline',
+                'KGExtractionPipeline',
             ],
         },
         {

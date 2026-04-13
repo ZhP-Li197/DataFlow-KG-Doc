@@ -55,7 +55,11 @@ export const KGGuide: ThemeNote = defineNoteConfig({
                 'install_audio_understanding',
                 'audio_caption',
                 'whisper_asr',
-                'audio_asr_pipeline'
+                'audio_asr_pipeline',
+                'MedicalKGPipeline_en',
+                'ScholarKGPipeline_en',
+                'LegalKGPipeline_en',
+                'KGExtractionPipeline_en',
             ],
         },
         {
