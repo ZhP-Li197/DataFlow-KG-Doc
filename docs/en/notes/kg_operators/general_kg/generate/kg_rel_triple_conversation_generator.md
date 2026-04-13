@@ -90,8 +90,8 @@ Example output:
   {
     "dialogue": {{
       "constructed_path": [
-        "<triple> ...",
-        "<triple> ..."
+        "...",
+        " ..."
       ],
       "turns": [
         {{

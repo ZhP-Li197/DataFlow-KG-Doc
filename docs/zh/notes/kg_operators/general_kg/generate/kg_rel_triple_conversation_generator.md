@@ -90,8 +90,8 @@ operator.run(
   {
     "dialogue": {{
       "constructed_path": [
-        "<triple> ...",
-        "<triple> ..."
+        " ...",
+        " ..."
       ],
       "turns": [
         {{

@@ -296,7 +296,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Domain KG',
+            text: 'Domain-Specific KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'domain_kg',
