@@ -1,7 +1,7 @@
 ---
 title: 知识图谱评测与可视化流水线
 createTime: 2026/04/12 17:00:00
-permalink: /zh/mm_guide/kg_evaluation_visualization_pipeline/
+permalink: /zh/kg_guide/kg_evaluation_visualization_pipeline/
 icon: carbon:chart-network
 ---
 
