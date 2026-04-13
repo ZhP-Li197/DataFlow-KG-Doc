@@ -94,7 +94,7 @@ Example output:
 ```json
 [
   {
-    "disambiguated_entity": "[\"Michael Jordan\", \"Chicago Bulls\"]"
+    "disambiguated_entity": "Michael Jordan, Chicago Bulls"
   }
 ]
 ```

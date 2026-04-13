@@ -96,8 +96,12 @@ operator.run(
   {
     "QA_pairs": [
       {
-        "question": "Which people work at the organization located in D?",
-        "answer": "A and C."
+        "question": "...",
+        "answer": "..."
+      },
+      {
+        "question": "...",
+        "answer": "..."
       }
     ]
   }

@@ -88,17 +88,19 @@ Example output:
 ```json
 [
   {
-    "multi_turn_dialogues": [
-      {
-        "path": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of",
-        "dialogue": [
-          {"role": "user", "content": "Who founded A?"},
-          {"role": "assistant", "content": "A was founded by B."},
-          {"role": "user", "content": "Where is B located?"},
-          {"role": "assistant", "content": "B is located in C."}
-        ]
-      }
-    ]
+    "dialogue": {{
+      "constructed_path": [
+        "<triple> ...",
+        "<triple> ..."
+      ],
+      "turns": [
+        {{
+          "turn_id": 1,
+          "question": "...",
+          "answer": "..."
+        }}
+      ]
+    }}
   }
 ]
 ```
