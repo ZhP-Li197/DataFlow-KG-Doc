@@ -6,9 +6,16 @@ permalink: /en/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 
 ## 📚 Overview
 
-`MMKGVisualTripleExtraction` extracts visual triples from `img_dict` and the candidate entity column `entity`. The operator calls a multi-image VLM once per image, keeps only entities that are both returned by the model and present in the candidate list, and writes triples in the normalized format `<subj> entity <rel> depicted_in <obj> image_id`.
+`MMKGVisualTripleExtraction` extracts visual triples from `img_dict` and the candidate entity column `entity`. For each image, the prompt first requires the model to return JSON in the following schema:
 
-If the model response cannot be parsed as JSON, or if `quality_score` is lower than `quality_threshold`, that image produces no triple.
+```json
+{
+  "entity": ["entity1", "entity2"],
+  "quality_score": 0
+}
+```
+
+The operator then keeps only entities that both appear in that JSON and belong to the candidate list, and converts them into normalized triples in the form `<subj> entity <rel> depicted_in <obj> image_id`. If the model response cannot be parsed as JSON, or if `quality_score` is lower than `quality_threshold`, that image produces no triple.
 
 ## ✒️ `__init__` Function
 
@@ -46,9 +53,9 @@ def run(
 | `storage` | `DataFlowStorage` | - | Input/output storage object |
 | `input_key` | `str` | `"img_dict"` | Column containing the image dictionary, usually `{image_id: image_path_or_url}` |
 | `input_key_meta` | `str` | `"entity"` | Candidate entity column; supports `list[str]` or a comma-separated string |
-| `output_key` | `str` | `"vis_triple"` | Output column name; each row stores a `list[str]` |
+| `output_key` | `str` | `"vis_triple"` | Output column name; each row stores the operator-converted `list[str]` |
 
-If `img_dict` is a string, the operator first tries to parse it as JSON. If `entity` is a string, it is split by commas. The function returns `[output_key]`.
+If `img_dict` is a string, the operator first tries to parse it as JSON. If `entity` is a string, it is split by commas. The function returns `[output_key]`, and the dataframe stores the converted `vis_triple` output rather than the model's raw JSON.
 
 ## 🤖 Example Usage
 
@@ -88,7 +95,16 @@ Example input:
 }
 ```
 
-Example output:
+Example raw model response for one image:
+
+```json
+{
+  "entity": ["Albert Einstein"],
+  "quality_score": 9
+}
+```
+
+Example output written back by the operator:
 
 ```json
 {
