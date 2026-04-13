@@ -1,7 +1,6 @@
----
+﻿---
 title: KGRAGQuestionPlausibilityEvaluation
 createTime: 2026/04/01 14:15:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_rag/eval/graphrag_answer_plausibility_eval/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to score question plausibility. |
@@ -58,8 +56,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates the question, answer, and output columns, and then processes the data row by row. If a row contains a single `question + answer`, the operator directly calls the LLM. If a row contains `List[str] + List[str]`, it evaluates them pairwise by position and writes a score list. After each LLM response, the operator attempts to clean it into JSON and extract the `question_plausibility_score` field. If parsing fails, it falls back to `0.0`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes scoring results back. |
@@ -79,7 +76,6 @@ from dataflow.operators.graph_rag.eval.graphrag_answer_plausibility_eval import 
     KGRAGQuestionPlausibilityEvaluation,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGRAGQuestionPlausibilityEvaluation(
     llm_serving=llm_serving,
@@ -96,8 +92,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | Input question column. It can contain a single question or multiple questions in one row. |
@@ -106,8 +101,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -117,8 +111,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -131,8 +124,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_plausibility_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/graph_rag/filter/graphrag_answer_plausibility_filtering.py`
+
+

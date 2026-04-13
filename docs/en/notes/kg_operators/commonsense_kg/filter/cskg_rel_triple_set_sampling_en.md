@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGRelationTripleSetSampling
 createTime: 2026/04/01 17:50:00
-icon: material-symbols:filter-alt-outline
 permalink: /en/kg_operators/commonsense_kg/filter/cskg_rel_triple_set_sampling/
 ---
 
@@ -32,8 +31,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | Reserved LLM serving parameter. The current implementation does not use it in the sampling logic. |
@@ -61,8 +59,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates the input and output columns, and then aggregates all triples across input rows. The operator parses and deduplicates triples into `(subj, rel, obj, raw_triple)` form, builds indexes, and then generates related triple sets according to `match_rule`: rule 1 groups by similar subjects, rule 2 groups by similar objects, and rule 3 groups by identical relations. The entire process supports index prebuilding, chunked multiprocessing, and global set deduplication. The final result is not appended back to the original DataFrame; instead, the operator writes a new one-column DataFrame containing only `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes a new set-result DataFrame back. |
@@ -100,16 +97,14 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `set_triple` | `List[List[str]]` | List of related triple sets. Each item is one set of related triples rather than a row-aligned result. |
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -126,8 +121,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -142,8 +136,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/filter/cskg_rel_triple_set_sampling.py`
 - Downstream QA-generation operator: `DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_rel_triple_qa_generator.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

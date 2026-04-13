@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathSearch
 createTime: 2026/04/01 15:05:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_reasoning/generate/reasoning_path_search/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, max_hop: int = 10):
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `max_hop` | `int` | `10` | Maximum hop limit for path search. Paths longer than this limit are not expanded further. |
@@ -48,8 +46,7 @@ def run(
 
 Internally, the search logic uses BFS to enumerate all simple paths from `src` to `tgt`. Each path is stored as a list of triplet strings. As long as the search reaches the target node with a non-empty path, that path is added to the output.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes path-search results back. |
@@ -77,8 +74,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triplet` | `List[str]` | Input KG triplet list. |
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -101,8 +96,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -125,8 +119,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
 - Downstream relation-generation operator: `DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_rel_generator.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: KGRAGQuestionDifficultyEvaluation
 createTime: 2026/04/01 14:20:00
-icon: material-symbols:check-circle-outline
 permalink: /zh/kg_operators/graph_rag/eval/graphrag_question_difficulty_eval/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 对问题难度进行分类。 |
@@ -57,8 +55,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，检查输入列和输出列状态，然后逐行处理 `question_key`。若单元格是字符串，则直接调用 LLM 评估难度；若单元格是 `List[str]`，则对列表中的每个问题逐个评估，并返回难度标签列表。模型返回后，算子会尝试把响应清洗为 JSON，并读取 `question_difficulty` 字段；如果解析失败，则默认回退为 `medium`。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将难度评估结果写回。 |
@@ -77,7 +74,6 @@ from dataflow.operators.graph_rag.eval.graphrag_question_difficulty_eval import 
     KGRAGQuestionDifficultyEvaluation,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGRAGQuestionDifficultyEvaluation(
     llm_serving=llm_serving,
@@ -93,8 +89,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | 输入问题列。可为单条问题，也可为一行多问题。 |
@@ -102,8 +97,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -112,8 +106,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -125,8 +118,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_question_difficulty_eval.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+
+

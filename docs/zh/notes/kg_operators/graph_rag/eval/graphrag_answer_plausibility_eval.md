@@ -1,7 +1,6 @@
----
+﻿---
 title: KGRAGQuestionPlausibilityEvaluation
 createTime: 2026/04/01 14:10:00
-icon: material-symbols:check-circle-outline
 permalink: /zh/kg_operators/graph_rag/eval/graphrag_answer_plausibility_eval/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 对问题合理性进行评分。 |
@@ -58,8 +56,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，检查问题列、答案列和输出列状态。随后逐行处理数据：如果某一行是单条 `question + answer`，则直接调用 LLM 评估；如果某一行是 `List[str] + List[str]`，则按位置逐对评估并返回分数列表。模型返回后，算子会尝试把响应清洗为 JSON，并读取 `question_plausibility_score` 字段；若解析失败，则回退为 `0.0`。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将评估结果写回。 |
@@ -80,7 +77,6 @@ from dataflow.operators.graph_rag.eval.graphrag_answer_plausibility_eval import 
 )
 
 
-llm_serving = YourLLMServing(...)
 
 operator = KGRAGQuestionPlausibilityEvaluation(
     llm_serving=llm_serving,
@@ -97,8 +93,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | 输入问题列。可为单条问题，也可为一行多问题。 |
@@ -107,8 +102,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -118,8 +112,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -132,8 +125,7 @@ operator.run(
 
 ---
 
-### 注意事项
-
+#### 注意事项
 - 输入 DataFrame 中必须存在 `question_key` 和 `answer_key` 指定的列，否则会抛出 `ValueError`。
 - 如果 `output_key` 已存在，算子会直接报错。
 - 当前实现支持两种输入组合：`str + str` 和 `List[str] + List[str]`，其他类型组合会抛出 `ValueError`。
@@ -141,8 +133,9 @@ operator.run(
 - LLM 输出需要能被解析为 JSON，并包含 `question_plausibility_score` 字段；如果解析失败，该条结果会回退为 `0.0`。
 - 虽然构造函数包含 `seed`，但当前实现没有在评估逻辑中使用随机采样。
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_plausibility_eval.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - 下游过滤算子：`DataFlow-KG/dataflow/operators/graph_rag/filter/graphrag_answer_plausibility_filtering.py`
+
+

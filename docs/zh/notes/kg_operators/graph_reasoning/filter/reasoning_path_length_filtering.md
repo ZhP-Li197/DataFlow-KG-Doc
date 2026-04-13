@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathLengthFilter
 createTime: 2026/04/01 15:45:00
-icon: material-symbols:filter-alt-outline
 permalink: /zh/kg_operators/graph_reasoning/filter/reasoning_path_length_filtering/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, min_length: int = 1, max_length: int = 10):
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `min_length` | `int` | `1` | 路径长度下界。只有长度不小于该值的路径才会被保留。 |
@@ -48,8 +46,7 @@ def run(
 
 `run` 会先从 `storage` 中读取 DataFrame，并检查 `mpath` 和 `mpath_length` 两列是否存在。随后逐行处理样本：对于每一行，算子会遍历每个实体对对应的路径集合，并根据同位置的长度列表筛选路径。只有长度落在 `[min_length, max_length]` 区间内的路径会被保留，过滤后的路径列表仍按原始实体对结构输出。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将过滤结果写回。 |
@@ -79,8 +76,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `mpath` | `List[List[List[str]]]` | 输入多跳路径结果，按实体对分组。 |
@@ -89,8 +85,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -107,8 +102,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -132,8 +126,8 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - 上游评估算子：`DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathLengthFilter
 createTime: 2026/04/01 15:50:00
-icon: material-symbols:filter-alt-outline
 permalink: /en/kg_operators/graph_reasoning/filter/reasoning_path_length_filtering/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, min_length: int = 1, max_length: int = 10):
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `min_length` | `int` | `1` | Lower bound of path length. Only paths with lengths not below this value are kept. |
@@ -48,8 +46,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates that `mpath` and `mpath_length` exist, and then processes rows one by one. For each row, the operator iterates over the path groups corresponding to each entity pair and filters the paths using the aligned length list. Only paths whose lengths fall inside `[min_length, max_length]` are kept, and the filtered result preserves the same per-pair nesting structure.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes filtered results back. |
@@ -79,8 +76,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `mpath` | `List[List[List[str]]]` | Input multi-hop path result grouped by entity pair. |
@@ -89,8 +85,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -107,8 +102,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -131,8 +125,8 @@ operator.run(
 ```
 
 ---
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - Upstream evaluation operator: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

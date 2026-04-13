@@ -1,7 +1,6 @@
----
+﻿---
 title: KGRAGAnswerTokenCount
 createTime: 2026/04/01 14:05:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_rag/eval/graphrag_answer_token_eval/
 ---
 
@@ -28,8 +27,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `model_name` | `str` | `"gpt-4o"` | Model name used to select the `tiktoken` encoder. The operator initializes the tokenizer via `tiktoken.encoding_for_model(model_name)`. |
@@ -49,8 +47,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, checks whether the answer column exists, and verifies that the output column does not already exist. It then processes `answer_key` row by row. If a cell is a string, the operator counts tokens for that string directly. If a cell is a list, it counts tokens for each answer in the list and stores the result as a list in the output column. Finally, the operator writes the token counts back into the DataFrame.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes token-count results back. |
@@ -78,8 +75,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `answer` | `str` / `List[str]` | Input answer column. It can contain a single answer or multiple answers in one row. |
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -97,8 +92,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -111,8 +105,8 @@ operator.run(
 ---
 
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_token_eval.py`
 - Related filtering operator: `DataFlow-KG/dataflow/operators/graph_rag/filter/graphrag_answer_token_filtering.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

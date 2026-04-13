@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGGetAnswer
 createTime: 2026/04/01 12:40:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_rag/generate/graphrag_get_answer/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 基于子图 Prompt 生成答案。 |
@@ -53,8 +51,7 @@ def run(
 
 在答案生成阶段，算子真正送入 LLM 的内容是 `subgraph_prompt`，并附带固定的 system prompt：要求模型只能基于提供的事实作答。生成完成后，算子会用正则去掉 Markdown 代码块，并做首尾空白清理；如果 LLM 调用失败，则回退为空字符串。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将答案结果写回。 |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_rag.generate.graphrag_get_answer import (
     KGGraphRAGGetAnswer,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGGraphRAGGetAnswer(
     llm_serving=llm_serving,
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | 输入问题列。可为单条问题，也可为一行多问题。 |
@@ -97,8 +92,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -108,8 +102,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -122,8 +115,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_get_answer.py`
 - 上游子图 Prompt 算子：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_prompt_generator.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+
+

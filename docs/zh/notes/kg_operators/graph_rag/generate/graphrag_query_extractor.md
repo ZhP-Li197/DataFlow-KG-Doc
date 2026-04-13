@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGQueryExtraction
 createTime: 2026/04/01 12:00:00
-icon: material-symbols:deployed-code-outline
 permalink: /zh/kg_operators/graph_rag/generate/graphrag_query_extractor/
 ---
 
@@ -33,8 +32,7 @@ def __init__(
     ...
 ```
 
-## `__init__` 参数说明
-
+#### `__init__` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | 大模型服务对象。算子通过 `generate_from_input` 调用模型完成实体和关系抽取。 |
@@ -59,8 +57,7 @@ def run(
 
 LLM 返回结果时，算子会尝试将响应清洗为 JSON 并解析出 `entities` 和 `relations`。如果解析失败，会记录 warning 日志，并回退为两个空列表。
 
-## `run` 参数说明
-
+#### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将处理结果写回。 |
@@ -79,7 +76,6 @@ from dataflow.operators.graph_rag.generate.graphrag_query_extractor import (
     KGGraphRAGQueryExtraction,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGGraphRAGQueryExtraction(
     llm_serving=llm_serving,
@@ -93,8 +89,7 @@ operator.run(
 )
 ```
 
-## 默认输出格式
-
+#### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `question` | `str` / `List[str]` | 输入问题列。支持单条问题或一行多问题。 |
@@ -103,8 +98,7 @@ operator.run(
 
 ---
 
-### 示例输入
-
+#### 示例输入
 ```json
 [
   {
@@ -113,8 +107,7 @@ operator.run(
 ]
 ```
 
-### 示例输出
-
+#### 示例输出
 ```json
 [
   {
@@ -127,8 +120,9 @@ operator.run(
 
 ---
 
-### 相关链接
-
+#### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_query_extractor.py`
 - 默认 Prompt：`DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
+
+

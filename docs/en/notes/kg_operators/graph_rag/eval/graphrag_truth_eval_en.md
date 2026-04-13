@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGAnswerLLMEvaluation
 createTime: 2026/04/01 14:35:00
-icon: material-symbols:check-circle-outline
 permalink: /en/kg_operators/graph_rag/eval/graphrag_truth_eval/
 ---
 
@@ -29,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to judge whether generated answers match ground truth. |
@@ -53,8 +51,7 @@ def run(
 
 Internally, the operator constructs a fixed English prompt asking the model whether the generated answer contains the key information from the ground truth. It then parses the model output using a simple keyword rule: if the returned text contains `true`, the result is treated as `True`; otherwise if it contains `false`, it is treated as `False`. If the output is ambiguous or the LLM call fails, the operator falls back to `False`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes correctness judgments back. |
@@ -72,7 +69,6 @@ from dataflow.operators.graph_rag.eval.graphrag_truth_eval import (
     KGGraphRAGAnswerLLMEvaluation,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = KGGraphRAGAnswerLLMEvaluation(
     llm_serving=llm_serving,
@@ -87,8 +83,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `answer` | `str` / `List[str]` | Model-generated answer column. |
@@ -97,8 +92,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -108,8 +102,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -122,8 +115,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_truth_eval.py`
 - Upstream answer generation operator: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_get_answer.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+
+

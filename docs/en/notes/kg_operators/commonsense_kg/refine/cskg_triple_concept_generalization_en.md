@@ -1,7 +1,6 @@
----
+﻿---
 title: CSKGTripleConceptGeneralization
 createTime: 2026/04/01 17:40:00
-icon: material-symbols:tune
 permalink: /en/kg_operators/commonsense_kg/refine/cskg_triple_concept_generalization/
 ---
 
@@ -17,8 +16,6 @@ Key characteristics of this operator:
 - It does not perform text-quality filtering and instead directly sends existing triples into the model
 - The current implementation uses built-in default prompts and does not expose a `prompt_template` parameter
 
----
-
 ## ✒️ __init__ Function
 ```python
 def __init__(
@@ -31,8 +28,7 @@ def __init__(
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `llm_serving` | `LLMServingABC` | - | LLM serving instance. The operator calls `generate_from_input` to perform concept generalization. |
@@ -55,8 +51,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates that the input column exists, and checks that the output column will not conflict with existing data. It then passes the input triple list into the internal batch-processing logic. For each row, the triples are used to build a prompt through `CSKGConceptGeneralizationPrompt`, sent to the LLM for concept generalization, and parsed as JSON to extract the `gen_triple` field before writing the final result into `output_key`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes generalized triples back. |
@@ -74,7 +69,6 @@ from dataflow.operators.commonsense_kg.refine.cskg_triple_concept_generalization
     CSKGTripleConceptGeneralization,
 )
 
-llm_serving = YourLLMServing(...)
 
 operator = CSKGTripleConceptGeneralization(
     llm_serving=llm_serving,
@@ -89,8 +83,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `triple` | `list` | Input triple list. |
@@ -98,8 +91,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -110,8 +102,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -127,8 +118,9 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/commonsense_kg/refine/cskg_triple_concept_generalization.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/diverse_kg/cskg.py`
 - Upstream triple-extraction operator: `DataFlow-KG/dataflow/operators/commonsense_kg/generate/cskg_triple_extractor.py`
+
+

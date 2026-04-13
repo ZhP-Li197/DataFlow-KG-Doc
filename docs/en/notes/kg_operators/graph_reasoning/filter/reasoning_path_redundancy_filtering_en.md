@@ -1,7 +1,6 @@
----
+﻿---
 title: KGReasoningPathRedundancyFilter
 createTime: 2026/04/01 16:00:00
-icon: material-symbols:filter-alt-outline
 permalink: /en/kg_operators/graph_reasoning/filter/reasoning_path_redundancy_filtering/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, merge_to_input: bool = False):
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `merge_to_input` | `bool` | `False` | Whether to write the filtered result back into the original path column specified by `input_key`. If `False`, the result is written to `output_key`. |
@@ -49,8 +47,7 @@ def run(
 
 `run` first reads a DataFrame from `storage`, validates that the input path column and score column exist, and then processes each row. In the current implementation, it directly zips the top-level `mpath` list with the top-level `redundancy_scores` list and keeps only the elements whose scores fall inside `[min_score, max_score]`. After processing, the filtered result is written either to the original input column or to the output column depending on `merge_to_input`.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes filtered results back. |
@@ -84,8 +81,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `mpath` | `list` | Input path column. In the current implementation, it is treated as a top-level list whose items are paired directly with the score list. |
@@ -94,8 +90,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -108,8 +103,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -126,8 +120,8 @@ operator.run(
 ```
 
 ---
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
 - Upstream evaluation operator: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

@@ -1,7 +1,6 @@
----
+﻿---
 title: KGGraphRAGSubgraphRetrieval
 createTime: 2026/04/01 12:35:00
-icon: material-symbols:deployed-code-outline
 permalink: /en/kg_operators/graph_rag/generate/graphrag_prompt_generator/
 ---
 
@@ -25,8 +24,7 @@ def __init__(self, hop: int = 1):
     ...
 ```
 
-## `__init__` Parameters
-
+#### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `hop` | `int` | `1` | Number of hops for subgraph retrieval. The operator performs `k`-hop BFS around seed entities and writes the collected triplets into the prompt. |
@@ -47,8 +45,7 @@ def run(
 
 Internally, the operator parses triplets in the `<subj> ... <obj> ... <rel> ...` format, builds an entity catalog and adjacency structure, and then selects seed entities. Seed entities are taken from the intersection between extracted entities and graph entities. If no extracted entity matches but the graph still contains entities, the operator falls back to the first entity in the catalog and continues prompt construction.
 
-## `run` Parameters
-
+#### `run` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow storage object. The operator reads the `dataframe` from it and writes generated prompts back to it. |
@@ -74,8 +71,7 @@ operator.run(
 
 ---
 
-## Default Output Format
-
+#### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
 | `question` | `List[str]` | Multiple questions within one row. The current implementation mainly processes this format. |
@@ -85,8 +81,7 @@ operator.run(
 
 ---
 
-### Example Input
-
+#### Example Input
 ```json
 [
   {
@@ -99,8 +94,7 @@ operator.run(
 ]
 ```
 
-### Example Output
-
+#### Example Output
 ```json
 [
   {
@@ -118,8 +112,8 @@ operator.run(
 
 ---
 
-### Related Links
-
+#### Related Links
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_prompt_generator.py`
 - Upstream query extraction operator: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_query_extractor.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
+

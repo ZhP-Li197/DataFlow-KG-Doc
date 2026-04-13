@@ -16,17 +16,92 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
     {
+    text: 'General KG',
+    collapsed: false,
+    icon: 'carbon:idea', 
+    prefix: 'general_kg',
+    items: [
+        {
+            text: 'generate',
+            collapsed: false,
+            prefix: 'generate/',
+            items: [
+                'kg_attri_triple_qa_generator',
+                'kg_entity_extractor',
+                'kg_rel_triple_conversation_generator',
+                'kg_rel_triple_inference',
+                'kg_rel_triple_path_qa_generator',
+                'kg_rel_triple_subgraph_qa_generator',
+                'kg_triple_extractor',
+                'kg_triple_merge',
+                'kg_tuple2text',
+            ]
+        },
+        {
+            text: 'eval',
+            collapsed: false,
+            prefix: 'eval/',
+            items: [
+                'kg_qa_concise_eval',
+                'kg_qa_correlation_eval',
+                'kg_qa_natural_eval',
+                'kg_rel_triple_consistency_eval',
+                'kg_rel_triple_nx_visual',
+                'kg_rel_triple_strength_eval',
+                'kg_rel_triple_topology_eval',
+                'kg_subgraph_connectivity_eval',
+                'kg_subgraph_consistence_eval',
+                'kg_subgraph_scale_eval'
+            ]
+        },
+        {
+            text: 'filter',
+            collapsed: false,
+            prefix: 'filter/',
+            items: [
+                'kg_attri_tuple_sampling',
+                'kg_entity_validation',
+                'kg_qa_concise_filtering',
+                'kg_qa_correlation_filtering',
+                'kg_qa_natural_filtering',
+                'kg_rel_triple_strength_filtering',
+                'kg_rel_tuple_path_sampling',
+                'kg_rel_tuple_subgraph_sampling',
+                'kg_subgraph_connectivity_filtering',
+                'kg_subgraph_consistence_filtering',
+                'kg_subgraph_scale_filtering',
+                'kg_tuple_remove_repeated',
+                'kg_tuple_validation'
+            ]
+        },
+        {
+            text: 'refine',
+            collapsed: false,
+            prefix: 'refine/',
+            items: [
+                'kg_entity_alignment',
+                'kg_entity_classification',
+                'kg_entity_disambiguation',
+                'kg_entity_link2database',
+                'kg_entity_normalization',
+                'kg_triple_disambiguation',
+                'kg_tuple_normalization',
+            ]
+        }
+    ],
+},
+    {
       text: 'Multimodal KG',
       collapsed: false,
       icon: 'carbon:idea',
       prefix: 'mmkg',
       items: [
-        {
-          text: 'Install',
-          collapsed: false,
-          prefix: '',
-          items: ['install_mmkg'],
-        },
+        // {
+        //   text: 'Install',
+        //   collapsed: false,
+        //   prefix: '',
+        //   items: ['install_mmkg'],
+        // },
         {
           text: 'generate',
           collapsed: false,
@@ -58,7 +133,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
       ],
     },
         {
-            text: 'Dataflow Commonsense Graph',
+            text: 'Commonsense KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'commonsense_kg',
@@ -102,7 +177,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Graph RAG',
+            text: 'KG Retrieval',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_rag',
@@ -140,7 +215,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Knowledge Graph Reasoning',
+            text: 'KG Reasoning',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_reasoning',
@@ -176,70 +251,46 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Temporal KG',
+            text: 'Temporal KG',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'temporal_kg',
             items: [
                 {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        {
-                            text: 'TKGTupleExtraction',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtupleextraction/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleMerger',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplemerger/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTupleSubgraphQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplesubgraphqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGTuplePathQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgtuplepathqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGAttriuteQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgattriuteqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
-                        {
-                            text: 'TKGRelationTripletDialogueQAGeneration',
-                            link: '/en/kg_operators/temporal_kg/generate/tkgrelationtripletdialogueqageneration/',
-                            icon: 'material-symbols:bolt',
-                        },
+                        'tkg_4tuple_extractor_en',
+                        'tkg_4tuple_merge_en',
+                        'tkg_rel_4tuple_subgraph_qa_generator_en',
+                        'tkg_rel_4tuple_path_qa_generator_en',
+                        'tkg_attri_4tuple_qa_generator_en',
+                        'tkg_rel_4tuple_conversation_generator_en',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'TKGTupleTimeFilter',
+                        'tkg_4tuple_time_sampling_en',
                     ]
                 },
                 {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'TKGTemporalStatistics',
-                    ]
-                },
-                {
-                    text: "refine",
+                    text: 'refine',
                     collapsed: false,
                     prefix: 'refine/',
                     items: [
-                        'TKGTupleDisambiguation',
+                        'tkg_4tuple_disambiguation_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'tkg_4tuple_time_summary_en',
                     ]
                 },
             ],
@@ -461,7 +512,7 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             // ],
             items: [
                 {
-                    text: '安装',
+                    text: 'Install',
                     collapsed: false,
                     prefix: '',
                     items: ['install_audio_understanding'],
