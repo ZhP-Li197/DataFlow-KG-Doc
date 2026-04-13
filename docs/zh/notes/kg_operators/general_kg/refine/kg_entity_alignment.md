@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_entity_alignment/
 
 这个算子不依赖大模型，而是使用 `fuzzywuzzy.fuzz.ratio` 做本地字符串相似度计算，因此适合图谱合并、实体归并等轻量级场景。默认读取 `triples_kg1` 和 `triples_kg2`，输出到 `entity_alignment`。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self, top_k: int = 5, threshold: int = 70):
     ...

@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_triple_merge/
 
 当输入是关系三元组时，算子会按实体对建立关系集合并检测歧义；当输入是属性三元组时，会按实体和属性归并不同取值；当输入类型混合时，则直接做映射后的拼接。最终输出统一是一个字典，包含 `unambiguous` 和 `ambiguous` 两个键。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self):
     pass

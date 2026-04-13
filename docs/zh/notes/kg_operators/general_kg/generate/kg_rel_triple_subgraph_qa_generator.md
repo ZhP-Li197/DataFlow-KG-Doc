@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_rel_triple_subgraph_qa_genera
 
 算子支持两种模式：`qa_type="num"` 使用数值型 Prompt，`qa_type="set"` 使用集合型 Prompt。默认读取 `subgraph` 列，输出到 `QA_pairs`；模型返回内容会被解析为包含 `QA_pairs` 字段的 JSON，如果解析失败，当前样本回退为空列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_tuple_normalization/
 
 这个算子默认优先使用传入的输入列；若未显式指定，也支持自动在 DataFrame 中查找 `triple` 或 `tuple`。输出列会根据输入列自动设为 `normalized_triple` 或 `normalized_tuple`，并在模型返回失败时回退为空字符串。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

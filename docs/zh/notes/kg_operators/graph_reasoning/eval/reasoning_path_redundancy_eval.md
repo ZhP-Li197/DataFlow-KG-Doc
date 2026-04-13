@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/eval/reasoning_path_redundancy_eval/
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

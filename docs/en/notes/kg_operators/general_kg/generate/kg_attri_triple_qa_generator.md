@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_attri_triple_qa_generator/
 
 By default, the operator reads from `triple` and writes to `QA_pairs`. Internally it selects the prompt template according to `qa_type`, extracts a JSON block from the model output with a regex, and then reads the `QA_pairs` field. If parsing fails, the sample falls back to an empty list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

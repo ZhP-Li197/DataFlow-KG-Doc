@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_entity_disambiguation/
 
 By default, the operator reads `raw_chunk` and `entity` and writes to `disambiguated_entity`. Before sending the request to the model, the text goes through quality checks on length, sentence count, and special-character ratio. If the text fails validation, an empty string is used as context.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

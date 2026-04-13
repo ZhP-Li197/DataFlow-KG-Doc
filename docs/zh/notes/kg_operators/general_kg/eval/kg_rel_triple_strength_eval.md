@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/general_kg/eval/kg_rel_triple_strength_eval/
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

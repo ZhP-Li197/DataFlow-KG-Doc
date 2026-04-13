@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_entity_extractor/
 
 这个算子带有预处理逻辑：文本长度必须在 10 到 200000 之间，文本中至少要有 2 个中英文句号，特殊字符占比不能超过 30%。模型返回后，算子会尝试将 JSON 数组解析为实体列表，再拼接为逗号分隔字符串，并进行停用词清理；如果校验或解析失败，则输出空字符串。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

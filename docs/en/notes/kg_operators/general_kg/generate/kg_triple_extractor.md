@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_triple_extractor/
 
 The operator supports two prompt modes: `triple_type="attribute"` uses the attribute-quadruple extraction prompt, while `triple_type="relation"` uses the relation-triple extraction prompt. Similar to the entity extractor, it also includes text-quality filtering, and texts that fail preprocessing directly return an empty triple list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

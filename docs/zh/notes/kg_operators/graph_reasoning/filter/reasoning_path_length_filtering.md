@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/filter/reasoning_path_length_filteri
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self, min_length: int = 1, max_length: int = 10):
     ...

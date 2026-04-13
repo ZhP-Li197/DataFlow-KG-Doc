@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_entity_classification/
 
 By default, it reads from `entity` and writes to `entity_type`. The model output is parsed as JSON when possible; if the returned value is not a list, it is wrapped into a one-element list. If parsing fails, the row falls back to an empty list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

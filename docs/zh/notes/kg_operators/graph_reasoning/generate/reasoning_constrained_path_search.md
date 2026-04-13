@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_constrained_path_
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_entity_disambiguation/
 
 算子默认读取 `raw_chunk` 和 `entity` 两列，输出到 `disambiguated_entity`。在调用模型前，文本会先经过长度、句子数和特殊字符比例等质量检查；如果文本不合格，会传入空字符串作为上下文。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,
