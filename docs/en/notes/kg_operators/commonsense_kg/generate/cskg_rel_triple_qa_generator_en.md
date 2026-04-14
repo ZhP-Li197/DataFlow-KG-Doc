@@ -18,7 +18,7 @@ Key characteristics of this operator:
 
 ---
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

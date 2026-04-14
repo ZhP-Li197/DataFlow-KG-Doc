@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_entity_classification/
 
 算子默认读取 `entity` 列，输出到 `entity_type` 列。模型返回内容会尝试按 JSON 解析；如果返回的不是列表，则会自动包装成单元素列表；解析失败时输出空列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

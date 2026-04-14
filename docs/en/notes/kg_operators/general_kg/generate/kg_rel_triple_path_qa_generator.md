@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_rel_triple_path_qa_generator/
 
 When `hop=1`, the operator reads from `triple`. When `hop>1`, the input column name becomes `"{hop}_{input_key_meta}"`, such as `2_hop_paths`. After generation, it parses `QA_pairs` from the returned JSON and requires each sample to contain at least 2 QA pairs; otherwise that sample is dropped.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,
@@ -91,14 +91,8 @@ Example output:
 [
   {
     "QA_pairs": [
-      {
-        "question": "In which continent is the country where Einstein was born located?",
-        "answer": "Europe."
-      },
-      {
-        "question": "Where was Einstein born, and what larger region is it part of?",
-        "answer": "Einstein was born in Germany, which is part of Europe."
-      }
+      "Question: ... Answer: ...",
+      "Question: ... Answer: ..."
     ]
   }
 ]

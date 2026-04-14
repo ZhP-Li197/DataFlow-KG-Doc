@@ -18,7 +18,7 @@ Key characteristics of this operator:
 
 ---
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,
@@ -49,14 +49,14 @@ def __init__(
 def run(
     self,
     storage: DataFlowStorage,
-    triplet_key: str = "triplet",
+    triple_key: str = "triple",
     target_key: str = "target_entity",
     output_key: str = "cons_mpath",
 ):
     ...
 ```
 
-`run` first reads a DataFrame from `storage`, then processes each row by reading triplets and target entities. For every row, the operator builds a graph from `triplet_key`, then interprets `target_entity` according to its format. If the value uses the newer `List[List[str]]` format, it searches one entity pair at a time. If it uses an older compatible string/list format, it expands the targets first and then enumerates all pairwise combinations. Path search itself is implemented with DFS, and only paths satisfying both the hop limit and all configured constraints are kept.
+`run` first reads a DataFrame from `storage`, then processes each row by reading triples and target entities. For every row, the operator builds a graph from `triple_key`, then interprets `target_entity` according to its format. If the value uses the newer `List[List[str]]` format, it searches one entity pair at a time. If it uses an older compatible string/list format, it expands the targets first and then enumerates all pairwise combinations. Path search itself is implemented with DFS, and only paths satisfying both the hop limit and all configured constraints are kept.
 
 Constraint checking happens after a candidate path is found. If `must_pass_entities` is configured, the path must cover all of them. If `required_entity_types` is configured, the set of entity types appearing on the path must intersect with the required type set.
 
@@ -64,7 +64,7 @@ Constraint checking happens after a candidate path is found. If `must_pass_entit
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes constrained path-search results back. |
-| `triplet_key` | `str` | `"triplet"` | Input triplet column name. |
+| `triple_key` | `str` | `"triple"` | Input triple column name. |
 | `target_key` | `str` | `"target_entity"` | Input target-entity column name. |
 | `output_key` | `str` | `"cons_mpath"` | Output column name used to store constrained multi-hop paths. |
 
@@ -85,7 +85,7 @@ operator = KGReasoningConstrainedPathSearch(
 )
 operator.run(
     storage=storage,
-    triplet_key="triplet",
+    triple_key="triple",
     target_key="target_entity",
     output_key="cons_mpath",
 )
@@ -96,9 +96,9 @@ operator.run(
 #### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
-| `triplet` | `List[str]` | Input KG triplet list. |
+| `triple` | `List[str]` | Input KG triple list. |
 | `target_entity` | `str` / `List[str]` / `List[List[str]]` | Target-entity input. The recommended format is `List[List[str]]`, where each item represents one entity pair. |
-| `cons_mpath` | `List[List[List[str]]]` | Constraint-satisfying path results. The outer layer is grouped by entity pair, the middle layer stores multiple paths, and the inner layer stores triplets inside each path. |
+| `cons_mpath` | `List[List[List[str]]]` | Constraint-satisfying path results. The outer layer is grouped by entity pair, the middle layer stores multiple paths, and the inner layer stores triples inside each path. |
 
 ---
 
@@ -106,7 +106,7 @@ operator.run(
 ```json
 [
   {
-    "triplet": [
+    "triple": [
       "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
       "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
     ],
@@ -119,7 +119,7 @@ operator.run(
 ```json
 [
   {
-    "triplet": [
+    "triple": [
       "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
       "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
     ],

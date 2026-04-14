@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_entity_link2database/
 
 By default, it reads from `entity` and writes to `linked_result`. The current implementation treats the input as a comma-separated entity string, queries the Wikipedia search API for candidate titles, then uses `wikipediaapi` to fetch page URLs. Successful links are stored in the form `<entity> ... <link> ...`.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_entity_normalization/
 
 The operator works in two stages. First, it merges all entity values from the input column into a global candidate set and asks the model to generate a normalization mapping from variants to canonical names. Then it applies that mapping back to each original row and deduplicates the row-level results. The default input column is `entity`, and the default output column is `normalized_entity`.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

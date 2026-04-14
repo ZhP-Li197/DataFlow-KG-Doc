@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_tuple_normalization/
 
 The operator prefers the explicitly provided input column, but it can also automatically fall back to either `triple` or `tuple` in the DataFrame. The output column is automatically set to `normalized_triple` or `normalized_tuple` based on the chosen input column. If model parsing fails, the normalized result falls back to an empty string.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

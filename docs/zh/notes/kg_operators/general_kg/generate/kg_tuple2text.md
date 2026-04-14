@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_tuple2text/
 
 这个算子默认优先读取显式传入的输入列；如果没有设置，它也支持在 DataFrame 中自动寻找 `triple` 或 `tuple` 列。模型输出不会再做 JSON 解析，而是直接作为 `description` 文本保存。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

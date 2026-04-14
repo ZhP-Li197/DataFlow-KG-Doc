@@ -1,4 +1,4 @@
-import type { ThemeNote } from 'vuepress-theme-plume'
+﻿import type { ThemeNote } from 'vuepress-theme-plume'
 import { defineNoteConfig } from 'vuepress-theme-plume'
 
 export const KGOperators: ThemeNote = defineNoteConfig({
@@ -177,6 +177,55 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'Domain KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'domain_kg',
+            items: [
+                {
+                    text: 'medical_kg',
+                    collapsed: false,
+                    prefix: 'medical_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'medkg_triple_extractor_en',
+                                'medkg_triple_drug_action_mechanism_discovery_en',
+                                'medkg_triple_drug_repositioning_discovery_en',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'medkg_triple_metapath_sampling_en',
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: 'scholar_kg',
+                    collapsed: false,
+                    prefix: 'scholar_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'schokg_triple_extractor_en',
+                                'schokg_query_reasoning_en',
+                                'schokg_recommend_en',
+                            ]
+                        }
+                    ]
+                }
+            ],
+        },        {
             text: 'KG Retrieval',
             collapsed: false,
             icon: 'carbon:idea',
@@ -334,191 +383,85 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'Dataflow Image',
+            text: 'Domain-Specific KG',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_understanding',
+            prefix: 'domain_kg',
             items: [
                 {
-                    text: 'install',
+                    text: 'Financial KG',
                     collapsed: false,
-                    prefix: '',
-                    items: ['install_image_understanding'],
+                    prefix: 'financial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'finkg_4tuple_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'finkg_marketaux_news_retriever',
+                                'finkg_event_impact_tracing',
+                                'finkg_investment_analysis',
+                                'finkg_entity_risk_assessment',
+                            ]
+                        }
+                    ],
                 },
                 {
-                    text: "generate",
+                    text: 'Geospatial KG',
                     collapsed: false,
-                    prefix: 'generate/',
+                    prefix: 'geospatial_kg/',
                     items: [
-                        'image_caption',
-                        'image_qa',
-                        'image_pers_qa',
-                        'multimodal_math',
-                        "prompt_templated_vqa_generator",
-                        "fix_prompted_vqa_generator",
-                        "prompted_vqa_generator",
-                        "batch_vqa_generator",
-                        "visual_reasoning_generator",
-                        "vlm_bbox_generator",
-                        "image_bbox_generator"
-                        // 'vision_mct_reasoning',
-                        // 'image_region_caption',
-                        // 'image_scale_caption',
-                        // 'image_gcot',
-                        // 'image_caprl',
-                        // 'multirole_videoqa',
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'image_clip_evaluator',
-                        'image_longclip_evaluator',
-                        'image_vqa_evaluator',
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'image_aesthetic_filter',
-                        'image_cat_filter',
-                        'image_clip_filter',
-                        'image_complexity_filter',
-                        'image_consistency_filter',
-                        'image_deduplication_filter',
-                        'image_diversity_filter',
-                        'image_sensitive_filter',
-                    ]
-                },
-                {
-                    text: "refine",
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'visual_dependency_refiner',
-                        'visual_grounding_refiner',
-                        'wiki_qa_refiner',
-                    ]
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'geokg_4tuple_extractor',
+                                'geokg_event_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'geokg_entity_link2database',
+                                'geokg_rel_4tuple_inference',
+                            ]
+                        },
+                        {
+                            text: 'eval',
+                            collapsed: false,
+                            prefix: 'eval/',
+                            items: [
+                                'geokg_event_consistence_eval',
+                                'geokg_event_rationale_eval',
+                                'geokg_event_summary',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'geokg_event_consistence_filtering',
+                                'geokg_event_rationale_filtering',
+                                'geokg_event_location_filtering',
+                                'geokg_event_time_filtering',
+                            ]
+                        }
+                    ],
                 }
             ],
-        },
-        {
-            text: 'Dataflow Video',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'video_understanding',
-            items: [
-                {
-                    text: 'Install',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_video_understanding'],
-                },
-                {
-                    text: "generate",
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'video_caption',
-                        'video_merged_caption',
-                        'video_qa',
-                        'video_cotqa',
-                        'video_clip'
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'general_text_answer_evaluator',
-                        'emscore_evaluator',
-                        'video_aesthetic_evaluator',
-                        'video_luminance_evaluator',
-                        'video_ocr_evaluator',
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'video_resolution_filter',
-                        'video_motion_score_filter',
-                        'video_clip_filter',
-                        'video_info_filter',
-                        'video_scene_filter',
-                        'video_score_filter',
-                        'video_frame_filter',
-                    ]
-                },
-            ],
-        },
-        {
-            text: 'Dataflow Audio',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'audio_understanding',
-            // items: [
-            //     'install_audio_understanding',
-            //     'audio_caption',
-            //     'whisper_asr',
-            // ],
-            items: [
-                {
-                    text: 'Install',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_audio_understanding'],
-                },
-                {
-                    text: "generate",
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'audio_caption',
-                        'silero_vad',
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'ctc_forced_aligner_eval',
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'ctc_forced_aligner_filter',
-                    ]
-                },
-                {
-                    text: "generaterow",
-                    collapsed: false,
-                    prefix: 'generaterow/',
-                    items: [
-                        'merge_chunks',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'Dataflow Generation',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'image_video_generation',
-            items: [
-                'install_image_video_generation',
-                'image_generation',
-            ],
-        },
+        }
     ]
 })
+

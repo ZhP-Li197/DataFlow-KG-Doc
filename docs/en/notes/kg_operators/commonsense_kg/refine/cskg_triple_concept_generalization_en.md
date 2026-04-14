@@ -16,7 +16,7 @@ Key characteristics of this operator:
 - It does not perform text-quality filtering and instead directly sends existing triples into the model
 - The current implementation uses built-in default prompts and does not expose a `prompt_template` parameter
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

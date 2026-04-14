@@ -6,9 +6,16 @@ permalink: /zh/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 
 ## 📚 概述
 
-`MMKGVisualTripleExtraction` 根据 `img_dict` 和候选实体列 `entity` 抽取视觉三元组。算子会逐张图片调用支持多图输入的 VLM，只保留模型返回且确实存在于候选实体列表中的实体，并统一写成 `<subj> 实体 <rel> depicted_in <obj> 图片ID`。
+`MMKGVisualTripleExtraction` 根据 `img_dict` 和候选实体列 `entity` 抽取视觉三元组。对每张图片，prompt 要求模型先返回一段 JSON，格式固定为：
 
-当模型返回的 JSON 解析失败，或者 `quality_score` 小于 `quality_threshold` 时，该图片不会产出三元组。
+```json
+{
+  "entity": ["实体1", "实体2"],
+  "quality_score": 0
+}
+```
+
+算子随后只保留 JSON 里命中候选实体列表的实体，并把它们转换成 `<subj> 实体 <rel> depicted_in <obj> 图片ID` 写回 `vis_triple`。如果模型返回的 JSON 解析失败，或者 `quality_score` 小于 `quality_threshold`，该图片不会产出三元组。
 
 ## ✒️ `__init__` 函数
 
@@ -46,9 +53,9 @@ def run(
 | `storage` | `DataFlowStorage` | - | 输入输出存储对象 |
 | `input_key` | `str` | `"img_dict"` | 图片字典列，格式通常为 `{图片ID: 图片路径或 URL}` |
 | `input_key_meta` | `str` | `"entity"` | 候选实体列，支持 `list[str]` 或逗号分隔字符串 |
-| `output_key` | `str` | `"vis_triple"` | 输出列名，每行写入 `list[str]` |
+| `output_key` | `str` | `"vis_triple"` | 输出列名，每行写入算子转换后的 `list[str]` |
 
-如果 `img_dict` 是字符串，算子会先尝试按 JSON 解析；如果 `entity` 是字符串，算子会按英文逗号切分。函数返回值为 `[output_key]`。
+如果 `img_dict` 是字符串，算子会先尝试按 JSON 解析；如果 `entity` 是字符串，算子会按英文逗号切分。函数返回值为 `[output_key]`，真正落盘的是转换后的 `vis_triple`，而不是模型原始 JSON。
 
 ## 🤖 示例用法
 
@@ -88,7 +95,16 @@ op.run(
 }
 ```
 
-输出示例：
+单张图片的模型原始返回示例：
+
+```json
+{
+  "entity": ["Albert Einstein"],
+  "quality_score": 9
+}
+```
+
+算子写回 `storage` 的输出示例：
 
 ```json
 {

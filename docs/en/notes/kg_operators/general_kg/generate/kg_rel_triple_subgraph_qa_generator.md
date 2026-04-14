@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_rel_triple_subgraph_qa_genera
 
 The operator supports two modes: `qa_type="num"` uses the numeric prompt and `qa_type="set"` uses the set-based prompt. By default it reads from `subgraph` and writes to `QA_pairs`. The model output is parsed as JSON with a `QA_pairs` field; if parsing fails, the sample falls back to an empty list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,
@@ -96,8 +96,12 @@ Example output:
   {
     "QA_pairs": [
       {
-        "question": "Which people work at the organization located in D?",
-        "answer": "A and C."
+        "question": "...",
+        "answer": "..."
+      },
+      {
+        "question": "...",
+        "answer": "..."
       }
     ]
   }

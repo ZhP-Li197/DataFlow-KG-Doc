@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_entity_normalization/
 
 这个算子的处理分为两段：首先把整列实体合并成全局候选集合，交给模型生成“变体到标准名”的归一化映射；随后再用该映射回写每一行实体列表，并在行内去重。默认输入列为 `entity`，输出列为 `normalized_entity`。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

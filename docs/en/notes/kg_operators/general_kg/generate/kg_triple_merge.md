@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_triple_merge/
 
 For relation triples, the operator groups relations by entity pair and detects ambiguity. For attribute triples, it groups values by entity and attribute and detects conflicting values. For mixed inputs, it applies entity mapping and concatenates the transformed triples directly. The final output is always a dictionary with `unambiguous` and `ambiguous` keys.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(self):
     pass

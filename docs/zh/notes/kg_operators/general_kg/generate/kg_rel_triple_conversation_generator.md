@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_rel_triple_conversation_gener
 
 算子的输入列名由 `k` 和 `input_key_meta` 拼接而成，例如 `k=3` 时默认读取 `3_hop_paths`。模型返回内容需要是带有 `dialogue.turns` 结构的 JSON；算子会去掉代码块标记后直接解析，如果解析成功，就把该路径和对应对话一起写入输出列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,
@@ -88,17 +88,19 @@ operator.run(
 ```json
 [
   {
-    "multi_turn_dialogues": [
-      {
-        "path": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of",
-        "dialogue": [
-          {"role": "user", "content": "Who founded A?"},
-          {"role": "assistant", "content": "A was founded by B."},
-          {"role": "user", "content": "Where is B located?"},
-          {"role": "assistant", "content": "B is located in C."}
-        ]
-      }
-    ]
+    "dialogue": {{
+      "constructed_path": [
+        " ...",
+        " ..."
+      ],
+      "turns": [
+        {{
+          "turn_id": 1,
+          "question": "...",
+          "answer": "..."
+        }}
+      ]
+    }}
   }
 ]
 ```

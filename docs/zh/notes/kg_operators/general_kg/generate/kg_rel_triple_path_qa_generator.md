@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_rel_triple_path_qa_generator/
 
 当 `hop=1` 时，算子默认读取 `triple` 列；当 `hop>1` 时，输入列名会被拼成 `"{hop}_{input_key_meta}"`，例如 `2_hop_paths`。模型返回后，算子会解析 JSON 中的 `QA_pairs`，并要求每个样本至少包含 2 个 QA 对，否则该样本会被丢弃。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,
@@ -91,14 +91,8 @@ operator.run(
 [
   {
     "QA_pairs": [
-      {
-        "question": "In which continent is the country where Einstein was born located?",
-        "answer": "Europe."
-      },
-      {
-        "question": "Where was Einstein born, and what larger region is it part of?",
-        "answer": "Einstein was born in Germany, which is part of Europe."
-      }
+      "Question: ... Answer: ...",
+      "Question: ... Answer: ..."
     ]
   }
 ]

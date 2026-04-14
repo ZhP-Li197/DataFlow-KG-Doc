@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_rel_triple_inference/
 
 如果 `with_text=True`，算子会连同 `raw_chunk` 文本一起参与推理；如果 `merge_to_input=True`，推理得到的新三元组还会被去重后合并回原始 `triple` 列。模型返回内容应包含 `inferred_triple` 字段；解析失败时，该行输出空列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,
