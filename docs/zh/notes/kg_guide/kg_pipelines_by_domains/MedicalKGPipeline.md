@@ -1,5 +1,6 @@
 ﻿---
 title: 医学领域知识图谱流水线
+icon: medical-icon:i-laboratory
 createTime: 2026/04/13 10:30:00
 permalink: /zh/kg_guide/kg_pipelines_by_domains/medicalkgpipeline/
 ---

@@ -1,5 +1,6 @@
 ﻿---
-title: Scholar Domain Knowledge Graph Pipeline
+title: Scholar KG Pipeline
+icon: material-symbols-light:book-ribbon-rounded
 createTime: 2026/04/13 11:05:00
 permalink: /en/kg_guide/kg_pipelines_by_domains/scholarkgpipeline/
 ---

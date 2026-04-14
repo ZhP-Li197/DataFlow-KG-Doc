@@ -5,7 +5,7 @@ permalink: /en/kg_guide/kg_evaluation_visualization_pipeline/
 icon: carbon:chart-network
 ---
 
-# Knowledge Graph Evaluation and Visualization Pipeline
+# KG Evaluation Pipeline
 
 ## 1. Overview
 
@@ -76,7 +76,7 @@ After execution, the evaluation results will be saved in the cache directory, an
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. **Input Data**
+### 3.1 **Input Data**
 
 The input data for this pipeline mainly includes the following fields:
 
@@ -115,7 +115,7 @@ dataflow/data_for_operator_testing/knowledge_extraction.json
 ]
 ```
 
-### 2. **Knowledge Graph Evaluation and Visualization Pipeline (KGEvaluationVisualizationPipeline)**
+### 3.2 **Knowledge Graph Evaluation and Visualization Pipeline (KGEvaluationVisualizationPipeline)**
 
 The core of this workflow is **KGEvaluationVisualizationPipeline**, which chains together 6 evaluation and visualization operators. The first 3 structural evaluation operators do not require a large language model, steps 4 and 5 depend on an LLM, and step 6 generates the final graph visualization result.
 
@@ -282,7 +282,7 @@ self.visualization.run(
 )
 ```
 
-### 3. **Output Data**
+### 3.3 **Output Data**
 
 In the end, the pipeline output usually contains the following fields:
 

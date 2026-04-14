@@ -1,7 +1,8 @@
 ﻿---
-title: General Knowledge Graph Extraction Pipeline
+title: General KG Extraction Pipeline
+icon: stash:search-solid
 createTime: 2026/04/13 11:35:00
-permalink: /en/kg_guide/kg_pipelines_by_domains/kgextractionpipeline/
+permalink: /en/kg_guide/kg_pipelines_by_domains/KGExtractionPipeline_en/
 ---
 
 ## 1. Overview

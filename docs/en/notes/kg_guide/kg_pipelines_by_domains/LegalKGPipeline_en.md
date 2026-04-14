@@ -1,5 +1,6 @@
 ﻿---
-title: Legal Domain Knowledge Graph Pipeline
+title: Legal KG Pipeline
+icon: material-symbols-light:page-info-rounded
 createTime: 2026/04/13 11:15:00
 permalink: /en/kg_guide/kg_pipelines_by_domains/legalkgpipeline/
 ---

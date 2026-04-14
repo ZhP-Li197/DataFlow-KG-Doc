@@ -37,14 +37,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_types',
             items: [
-                'install_video_understanding',
+                'KGExtractionPipeline_en',
                 'kg_evaluation_visualization_pipeline',
-                'video_caption',
-                'video_clip_and_filter',
-                'video_qa',
-                'video_cotqa',
-                'video_longvideo_cotqa_api',
-                'multirole_videoqa_pipeline'
             ],
         },
         {
@@ -53,14 +47,10 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_domains',
             items: [
-                'install_audio_understanding',
-                'audio_caption',
-                'whisper_asr',
-                'audio_asr_pipeline',
                 'MedicalKGPipeline_en',
                 'ScholarKGPipeline_en',
                 'LegalKGPipeline_en',
-                'KGExtractionPipeline_en',
+                
             ],
         },
         {

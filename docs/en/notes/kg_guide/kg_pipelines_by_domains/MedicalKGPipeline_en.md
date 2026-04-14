@@ -1,5 +1,6 @@
 ﻿---
-title: Medical Domain Knowledge Graph Pipeline
+title: Medical KG Pipeline
+icon: medical-icon:i-laboratory
 createTime: 2026/04/13 10:35:00
 permalink: /en/kg_guide/kg_pipelines_by_domains/medicalkgpipeline/
 ---

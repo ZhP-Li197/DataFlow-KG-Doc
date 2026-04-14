@@ -1,5 +1,6 @@
 ﻿---
 title: 法律领域知识图谱流水线
+icon: material-symbols-light:page-info-rounded
 createTime: 2026/04/13 11:10:00
 permalink: /zh/kg_guide/kg_pipelines_by_domains/legalkgpipeline/
 ---

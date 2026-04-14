@@ -1,5 +1,6 @@
 ﻿---
 title: 学者领域知识图谱流水线
+icon: material-symbols-light:book-ribbon-rounded
 createTime: 2026/04/13 11:00:00
 permalink: /zh/kg_guide/kg_pipelines_by_domains/scholarkgpipeline/
 ---

@@ -1,5 +1,6 @@
 ﻿---
 title: 通用知识图谱抽取流水线
+icon: stash:search-solid
 createTime: 2026/04/13 11:30:00
 permalink: /zh/kg_guide/kg_pipelines_by_domains/kgextractionpipeline/
 ---
