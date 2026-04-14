@@ -72,15 +72,15 @@ operator.run(
 
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
-| `triple` / `2_hop_paths` | `str` / `List[str]` | 输入路径三元组。 |
-| `QA_pairs` | `List[Dict]` | 生成的问答对列表。 |
+| `triple` / `2_hop_paths` | `str` | 输入路径字符串。单跳时为单条三元组；二跳时通常为两条三元组使用 `||` 连接。 |
+| `QA_pairs` | `List[str]` | 生成的问答对字符串列表，每项格式为 `"Question: ... Answer: ..."`。 |
 
 示例输入：
 
 ```json
 [
   {
-    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in; <subj> Germany <obj> Europe <rel> part_of"
+    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in || <subj> Germany <obj> Europe <rel> part_of"
   }
 ]
 ```

@@ -72,15 +72,15 @@ Default input and output format:
 
 | Field | Type | Description |
 | :-- | :-- | :-- |
-| `triple` / `2_hop_paths` | `str` / `List[str]` | Input path triples. |
-| `QA_pairs` | `List[Dict]` | Generated QA pairs. |
+| `triple` / `2_hop_paths` | `str` | Input path string. For one-hop it is a single triple; for two-hop it is usually two triples joined by `||`. |
+| `QA_pairs` | `List[str]` | Generated QA strings, where each item follows the format `"Question: ... Answer: ..."` . |
 
 Example input:
 
 ```json
 [
   {
-    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in; <subj> Germany <obj> Europe <rel> part_of"
+    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in || <subj> Germany <obj> Europe <rel> part_of"
   }
 ]
 ```

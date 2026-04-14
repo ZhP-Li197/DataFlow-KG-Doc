@@ -1,11 +1,11 @@
 ---
-title: KGRelationTripletDialogueQAGeneration
+title: KGRelationTripleDialogueQAGeneration
 createTime: 2026/04/11 12:00:00
 permalink: /zh/kg_operators/general_kg/generate/kg_rel_triple_conversation_generator/
 ---
 
 ## 📚 概述
-`KGRelationTripletDialogueQAGeneration` 用于把多跳知识图谱路径转换成多轮对话式问答。它面向路径级输入，通过大模型把一条路径改写成若干轮连续对话，并把每条路径对应的对话结果保存下来。
+`KGRelationTripleDialogueQAGeneration` 用于把多跳知识图谱路径转换成多轮对话式问答。它面向路径级输入，通过大模型把一条路径改写成若干轮连续对话，并把每条路径对应的对话结果保存下来。
 
 算子的输入列名由 `k` 和 `input_key_meta` 拼接而成，例如 `k=3` 时默认读取 `3_hop_paths`。模型返回内容需要是带有 `dialogue.turns` 结构的 JSON；算子会去掉代码块标记后直接解析，如果解析成功，就把该路径和对应对话一起写入输出列表。
 
@@ -50,10 +50,10 @@ def run(
 ## 🤖 示例用法
 ```python
 from dataflow.operators.general_kg.generate.kg_rel_triple_conversation_generator import (
-    KGRelationTripletDialogueQAGeneration,
+    KGRelationTripleDialogueQAGeneration,
 )
 
-operator = KGRelationTripletDialogueQAGeneration(
+operator = KGRelationTripleDialogueQAGeneration(
     llm_serving=llm_serving,
     lang="en",
     k=3,
@@ -70,15 +70,15 @@ operator.run(
 
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
-| `3_hop_paths` | `str` / `List[str]` | 输入的 3-hop 路径描述。 |
-| `multi_turn_dialogues` | `List[Dict]` | 每条路径对应的多轮对话结果。 |
+| `3_hop_paths` | `str` | 输入的 3-hop 路径字符串，通常由多条三元组使用 `||` 连接。 |
+| `multi_turn_dialogues` | `List[Dict]` | 每行输出一个列表；列表中的每个元素包含原始路径 `path` 和逐轮对话 `dialogue`。 |
 
 示例输入：
 
 ```json
 [
   {
-    "3_hop_paths": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of"
+    "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of"
   }
 ]
 ```
@@ -88,19 +88,23 @@ operator.run(
 ```json
 [
   {
-    "dialogue": {{
-      "constructed_path": [
-        "<triple> ...",
-        "<triple> ..."
-      ],
-      "turns": [
-        {{
-          "turn_id": 1,
-          "question": "...",
-          "answer": "..."
-        }}
-      ]
-    }}
+    "multi_turn_dialogues": [
+      {
+        "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+        "dialogue": [
+          {
+            "turn_id": 1,
+            "question": "...",
+            "answer": "..."
+          },
+          {
+            "turn_id": 2,
+            "question": "...",
+            "answer": "..."
+          }
+        ]
+      }
+    ]
   }
 ]
 ```

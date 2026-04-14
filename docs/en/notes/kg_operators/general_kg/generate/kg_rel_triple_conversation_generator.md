@@ -1,11 +1,11 @@
 ---
-title: KGRelationTripletDialogueQAGeneration
+title: KGRelationTripleDialogueQAGeneration
 createTime: 2026/04/11 12:00:00
 permalink: /en/kg_operators/general_kg/generate/kg_rel_triple_conversation_generator/
 ---
 
 ## 📚 Overview
-`KGRelationTripletDialogueQAGeneration` converts multi-hop KG paths into multi-turn dialogue QA. It operates on path-level inputs and uses an LLM to rewrite one path into a sequence of conversational turns, then stores the dialogue together with the source path.
+`KGRelationTripleDialogueQAGeneration` converts multi-hop KG paths into multi-turn dialogue QA. It operates on path-level inputs and uses an LLM to rewrite one path into a sequence of conversational turns, then stores the dialogue together with the source path.
 
 The input column name is built from `k` and `input_key_meta`; for example, when `k=3`, the default input column is `3_hop_paths`. The model output is expected to be JSON with a `dialogue.turns` structure. After removing code fences, the operator parses that JSON directly and writes the path plus dialogue into the output list.
 
@@ -50,10 +50,10 @@ def run(
 ## 🤖 Example Usage
 ```python
 from dataflow.operators.general_kg.generate.kg_rel_triple_conversation_generator import (
-    KGRelationTripletDialogueQAGeneration,
+    KGRelationTripleDialogueQAGeneration,
 )
 
-operator = KGRelationTripletDialogueQAGeneration(
+operator = KGRelationTripleDialogueQAGeneration(
     llm_serving=llm_serving,
     lang="en",
     k=3,
@@ -70,15 +70,15 @@ Default input and output format:
 
 | Field | Type | Description |
 | :-- | :-- | :-- |
-| `3_hop_paths` | `str` / `List[str]` | Input 3-hop path description. |
-| `multi_turn_dialogues` | `List[Dict]` | Multi-turn dialogue generated for each path. |
+| `3_hop_paths` | `str` | Input 3-hop path string, usually composed of triples joined by `||`. |
+| `multi_turn_dialogues` | `List[Dict]` | Each row stores a list whose items contain the original `path` and the generated turn-by-turn `dialogue`. |
 
 Example input:
 
 ```json
 [
   {
-    "3_hop_paths": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of"
+    "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of"
   }
 ]
 ```
@@ -88,19 +88,23 @@ Example output:
 ```json
 [
   {
-    "dialogue": {{
-      "constructed_path": [
-        "<triple> ...",
-        "<triple> ..."
-      ],
-      "turns": [
-        {{
-          "turn_id": 1,
-          "question": "...",
-          "answer": "..."
-        }}
-      ]
-    }}
+    "multi_turn_dialogues": [
+      {
+        "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+        "dialogue": [
+          {
+            "turn_id": 1,
+            "question": "...",
+            "answer": "..."
+          },
+          {
+            "turn_id": 2,
+            "question": "...",
+            "answer": "..."
+          }
+        ]
+      }
+    ]
   }
 ]
 ```
