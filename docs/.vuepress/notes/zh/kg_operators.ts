@@ -345,6 +345,44 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'DataFlow-KG 超关系图谱',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'hyper_relation_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'hrkg_rel_triple_extractor',
+                        'hrkg_rel_triple_path_qa_generator',
+                        'hrkg_rel_triple_subgraph_qa_generator',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'hrkg_rel_triple_attribute_filtering',
+                        'hrkg_rel_triple_completeness_filtering',
+                        'hrkg_rel_triple_consistency_filtering',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'hrkg_rel_triple_consistency_eval',
+                        'hrkg_rel_triple_completeness_eval',
+                        'hrkg_rel_triple_attri_summary',
+                    ]
+                },
+            ],
+        },
+        {
             text: 'DataFlow-KG 领域图谱',
             collapsed: false,
             icon: 'carbon:idea',
