@@ -84,9 +84,9 @@ operator.run(
 #### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
-| `mpath` | `list` | 输入路径列。当前实现把它当作顶层可与评分逐项配对的列表处理。 |
-| `redundancy_scores` | `list` | 输入冗余评分列。当前实现要求其元素可直接与 `min_score`、`max_score` 做数值比较。 |
-| `filtered_mpath` | `list` | 过滤后的路径结果列表。 |
+| `mpath` | `List[List[List[str]]]` | 输入路径列。当前实现把 `mpath` 顶层的每个实体对子组与一个冗余分数做配对过滤。 |
+| `redundancy_scores` | `List[float]` | 输入冗余评分列。当前实现要求它与 `mpath` 的顶层长度对齐，且每个元素都能直接与 `min_score`、`max_score` 做数值比较。 |
+| `filtered_mpath` | `List[List[List[str]]]` | 过滤后的路径结果列表。当前实现保留的是通过阈值筛选后的顶层实体对子组。 |
 
 ---
 
@@ -95,8 +95,19 @@ operator.run(
 [
   {
     "mpath": [
-      [["t1", "t2"]],
-      [["t3", "t4"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ],
+      [
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
+      ]
     ],
     "redundancy_scores": [0.2, 0.8]
   }
@@ -108,12 +119,28 @@ operator.run(
 [
   {
     "mpath": [
-      [["t1", "t2"]],
-      [["t3", "t4"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ],
+      [
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
+      ]
     ],
     "redundancy_scores": [0.2, 0.8],
     "filtered_mpath": [
-      [["t1", "t2"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ]
     ]
   }
 ]
@@ -124,4 +151,3 @@ operator.run(
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
 - 上游评估算子：`DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
-

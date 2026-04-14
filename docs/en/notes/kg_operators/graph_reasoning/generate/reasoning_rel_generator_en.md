@@ -13,7 +13,7 @@ Key characteristics of this operator:
 - It depends on `LLMServingABC` for relation inference
 - It uses `KGReasoningRelationInferencePrompt` by default for prompt construction
 - It reads `target_entity` and `mpath` by default
-- It writes to `inferred_triplets` by default
+- It writes to `inferred_triples` by default
 - It can restrict the model to relations already seen in the paths via `restrict_to_path_rel`
 
 ---
@@ -45,7 +45,7 @@ def run(
     storage: DataFlowStorage,
     target_key: str = "target_entity",
     path_key: str = "mpath",
-    output_key: str = "inferred_triplets"
+    output_key: str = "inferred_triples"
 ) -> List[str]:
     ...
 ```
@@ -60,7 +60,7 @@ After the LLM returns, the operator attempts to parse the response directly as a
 | `storage` | `DataFlowStorage` | - | Dataflow storage object. The operator reads the `dataframe` from it and writes inferred relation triples back. |
 | `target_key` | `str` | `"target_entity"` | Input target-entity column name. Each item is usually shaped like `[["Henry, Berlin"], ["Henry, Rome"]]`. |
 | `path_key` | `str` | `"mpath"` | Input path column name. Its structure must stay aligned with the order of entity pairs. |
-| `output_key` | `str` | `"inferred_triplets"` | Output column name used to store inferred relation triples. |
+| `output_key` | `str` | `"inferred_triples"` | Output column name used to store inferred relation triples. |
 
 ---
 
@@ -82,7 +82,7 @@ operator.run(
     storage=storage,
     target_key="target_entity",
     path_key="mpath",
-    output_key="inferred_triplets",
+    output_key="inferred_triples",
 )
 ```
 
@@ -93,7 +93,7 @@ operator.run(
 | :-- | :-- | :-- |
 | `target_entity` | `List[List[str]]` | Target entity-pair list. Each pair is usually wrapped as a one-string list. |
 | `mpath` | `List[List[List[str]]]` | Path collection aligned with the entity-pair order. |
-| `inferred_triplets` | `List[List[str]]` | Inferred relation-triplet list for each entity pair. |
+| `inferred_triples` | `List[List[str]]` | Inferred relation-triple list for each entity pair. |
 
 ---
 
@@ -127,7 +127,7 @@ operator.run(
         ]
       ]
     ],
-    "inferred_triplets": [
+    "inferred_triples": [
       [
         "<subj> Henry <obj> Berlin <rel> trained_in_city"
       ]

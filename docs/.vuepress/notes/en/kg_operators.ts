@@ -177,6 +177,55 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
+            text: 'Domain KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'domain_kg',
+            items: [
+                {
+                    text: 'medical_kg',
+                    collapsed: false,
+                    prefix: 'medical_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'medkg_triple_extractor_en',
+                                'medkg_triple_drug_action_mechanism_discovery_en',
+                                'medkg_triple_drug_repositioning_discovery_en',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'medkg_triple_metapath_sampling_en',
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: 'scholar_kg',
+                    collapsed: false,
+                    prefix: 'scholar_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'schokg_triple_extractor_en',
+                                'schokg_query_reasoning_en',
+                                'schokg_recommend_en',
+                            ]
+                        }
+                    ]
+                }
+            ],
+        },        {
             text: 'KG Retrieval',
             collapsed: false,
             icon: 'carbon:idea',
@@ -377,3 +426,4 @@ export const KGOperators: ThemeNote = defineNoteConfig({
         }
     ]
 })
+

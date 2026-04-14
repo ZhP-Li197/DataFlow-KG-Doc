@@ -84,9 +84,9 @@ operator.run(
 #### Default Output Format
 | Field | Type | Description |
 | :-- | :-- | :-- |
-| `mpath` | `list` | Input path column. In the current implementation, it is treated as a top-level list whose items are paired directly with the score list. |
-| `redundancy_scores` | `list` | Input redundancy-score column. In the current implementation, its elements are expected to be directly comparable as numeric values against `min_score` and `max_score`. |
-| `filtered_mpath` | `list` | Filtered path-result list. |
+| `mpath` | `List[List[List[str]]]` | Input path column. In the current implementation, each top-level entity-pair group in `mpath` is paired with one redundancy score for filtering. |
+| `redundancy_scores` | `List[float]` | Input redundancy-score column. In the current implementation, it is expected to align with the top level of `mpath`, and each element must be directly comparable as a numeric value against `min_score` and `max_score`. |
+| `filtered_mpath` | `List[List[List[str]]]` | Filtered path-result list. The current implementation keeps only the top-level entity-pair groups that pass the score threshold. |
 
 ---
 
@@ -95,8 +95,19 @@ operator.run(
 [
   {
     "mpath": [
-      [["t1", "t2"]],
-      [["t3", "t4"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ],
+      [
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
+      ]
     ],
     "redundancy_scores": [0.2, 0.8]
   }
@@ -108,12 +119,28 @@ operator.run(
 [
   {
     "mpath": [
-      [["t1", "t2"]],
-      [["t3", "t4"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ],
+      [
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
+      ]
     ],
     "redundancy_scores": [0.2, 0.8],
     "filtered_mpath": [
-      [["t1", "t2"]]
+      [
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ]
     ]
   }
 ]
@@ -124,4 +151,3 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_redundancy_filtering.py`
 - Upstream evaluation operator: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_redundancy_eval.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-

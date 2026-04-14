@@ -85,10 +85,11 @@ operator.run(
 ```json
 [
   {
-    "question": ["Who trained Henry?"],
-    "entities": [["Henry"]],
+    "question": ["Which institution is Alice Smith affiliated with?"],
+    "entities": [["Alice Smith"]],
     "triplet": [
-      "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by"
+      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+      "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ]
   }
 ]
@@ -98,13 +99,14 @@ operator.run(
 ```json
 [
   {
-    "question": ["Who trained Henry?"],
-    "entities": [["Henry"]],
+    "question": ["Which institution is Alice Smith affiliated with?"],
+    "entities": [["Alice Smith"]],
     "triplet": [
-      "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by"
+      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+      "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ],
     "subgraph_prompt": [
-      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nWho trained Henry?\n\nSubgraph centered at [Henry]:\n- <subj> Henry <obj> Maria Rodriguez <rel> is_trained_by\n\nAnswer the question based on the above knowledge graph subgraphs."
+      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nWhich institution is Alice Smith affiliated with?\n\nSubgraph centered at [Alice Smith]:\n- <subj> Alice Smith <obj> Peking University <rel> affiliated_with\n\nAnswer the question based on the above knowledge graph subgraphs."
     ]
   }
 ]
