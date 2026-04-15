@@ -39,6 +39,9 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             items: [
                 'install_video_understanding',
                 'kg_evaluation_visualization_pipeline',
+                'graph_rag_pipeline',
+                'graph_reasoning_pipeline',
+                'multimodal_kg_pipeline',
                 'video_caption',
                 'video_clip_and_filter',
                 'video_qa',
@@ -53,6 +56,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_domains',
             items: [
+                'finkg_risk_pipeline',
+                'geokg_spatiotemporal_event_pipeline',
                 'install_audio_understanding',
                 'audio_caption',
                 'whisper_asr',
