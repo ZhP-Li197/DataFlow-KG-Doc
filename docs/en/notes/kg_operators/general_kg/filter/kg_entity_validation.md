@@ -53,7 +53,7 @@ def run(
     ...
 ```
 
-`run` reads the DataFrame from `storage`, validates that the `input_key` column exists and the `output_key` column does not, then extracts the candidate entity strings and calls `process_batch()` to process each row. Here, "one row" means one LLM call, but each row typically contains multiple comma-separated entities. The output column stores the filtered entity batch, so semantically it keeps the same kind of batch-entity format as the input. Based on `merge_to_input`, the result is written back to either the `input_key` or `output_key` column.
+`run` performs valid-entity detection on the input data and outputs the filtered valid entities.
 
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
@@ -101,7 +101,8 @@ operator.run(
 ```json
 [
   {
-    "entity": "Albert Einstein, Paris, xkqz123, deep learning"
+    "entity": "Albert Einstein, Paris, xkqz123, deep learning",
+    "valid": ["Albert Einstein", "Paris", "deep learning"]
   }
 ]
 ```

@@ -11,9 +11,7 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'basicinfo',
             items: [
-                'intro',
-                'install',
-                'quickstart'
+                'intro'
             ],
         },
         {
@@ -22,6 +20,9 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_quickstart',
             items: [
+                'install',
+                'quickstart',
+                'first_pipeline',
                 'install_image_understanding',
                 'context_vqa',
                 'image_gcot',

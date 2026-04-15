@@ -54,7 +54,7 @@ def run(
     ...
 ```
 
-`run` 会先从 `storage` 中读取 DataFrame，校验 `input_key` 列存在且 `output_key` 列不存在，随后提取候选实体集合字符串并调用 `process_batch()` 逐行处理。这里的“逐行处理”指每一行触发一次 LLM 调用，但每行单元格本身通常包含多个逗号分隔实体。输出列保存的是过滤后的实体集合，语义上与输入列保持同一种“批量实体”格式。根据 `merge_to_input` 的取值，结果写回 `input_key` 列或 `output_key` 列。
+`run`会对输入的数据进行有效实体检测，最终输出过滤后有效的实体。
 
 #### `run` 参数说明
 | 参数名 | 类型 | 默认值 | 说明 |
@@ -88,7 +88,7 @@ operator.run(
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `entity` | `str` | 输入候选实体集合字符串，例如 `"Albert Einstein, Paris, xkqz123"`。 |
-| `valid` | `str` | 过滤后的有效实体集合字符串，通常仍为逗号分隔格式。 |
+| `valid` | `str` | 过滤后的有效实体字符串集合，通常仍为逗号分隔格式。 |
 
 ---
 
@@ -103,7 +103,8 @@ operator.run(
 ```json
 [
   {
-    "entity": "Albert Einstein, Paris, xkqz123, deep learning"
+    "entity": "Albert Einstein, Paris, xkqz123, deep learning",
+    "valid": ["Albert Einstein", "Paris", "deep learning"]
   }
 ]
 ```

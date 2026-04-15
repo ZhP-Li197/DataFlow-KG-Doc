@@ -88,19 +88,32 @@ operator.run(
 ```json
 [
   {
-    "multi_turn_dialogues": [
+    "returned_keys": [
+      "multi_turn_dialogues"
+    ],
+    "output": [
       {
-        "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
-        "dialogue": [
+        "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+        "multi_turn_dialogues": [
           {
-            "turn_id": 1,
-            "question": "...",
-            "answer": "..."
-          },
-          {
-            "turn_id": 2,
-            "question": "...",
-            "answer": "..."
+            "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+            "dialogue": [
+              {
+                "turn_id": 1,
+                "question": "Who was A founded by?",
+                "answer": "B"
+              },
+              {
+                "turn_id": 2,
+                "question": "Where is B located?",
+                "answer": "C"
+              },
+              {
+                "turn_id": 3,
+                "question": "What is C a part of?",
+                "answer": "D"
+              }
+            ]
           }
         ]
       }
