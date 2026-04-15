@@ -78,7 +78,7 @@ Example input:
 ```json
 [
   {
-    "3_hop_paths": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of"
+    "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of"
   }
 ]
 ```
@@ -88,19 +88,36 @@ Example output:
 ```json
 [
   {
-    "dialogue": {{
-      "constructed_path": [
-        "...",
-        " ..."
-      ],
-      "turns": [
-        {{
-          "turn_id": 1,
-          "question": "...",
-          "answer": "..."
-        }}
-      ]
-    }}
+    "returned_keys": [
+      "multi_turn_dialogues"
+    ],
+    "output": [
+      {
+        "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+        "multi_turn_dialogues": [
+          {
+            "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+            "dialogue": [
+              {
+                "turn_id": 1,
+                "question": "Who was A founded by?",
+                "answer": "B"
+              },
+              {
+                "turn_id": 2,
+                "question": "Where is B located?",
+                "answer": "C"
+              },
+              {
+                "turn_id": 3,
+                "question": "What is C a part of?",
+                "answer": "D"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
 ```

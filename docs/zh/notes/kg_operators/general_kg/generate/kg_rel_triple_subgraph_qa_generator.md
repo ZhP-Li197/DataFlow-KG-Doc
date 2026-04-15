@@ -94,14 +94,19 @@ operator.run(
 ```json
 [
   {
+    "subgraph": [
+      "<subj> A <obj> B <rel> works_at",
+      "<subj> C <obj> B <rel> works_at",
+      "<subj> B <obj> D <rel> located_in"
+    ],
     "QA_pairs": [
       {
-        "question": "...",
-        "answer": "..."
+        "Question": "Who works at the company located in D?",
+        "answer": "A, C"
       },
       {
-        "question": "...",
-        "answer": "..."
+        "Question": "Which company is worked at by A and C?",
+        "answer": "B"
       }
     ]
   }

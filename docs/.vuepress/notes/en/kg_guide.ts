@@ -21,7 +21,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             prefix: 'kg_quickstart',
             items: [
                 'install',
-                'quickstart'
+                'quickstart',
+                'first_pipeline'
             ],
         },
         {
