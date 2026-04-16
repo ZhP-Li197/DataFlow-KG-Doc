@@ -33,6 +33,9 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             items: [
                 'KGExtractionPipeline_en',
                 'kg_evaluation_visualization_pipeline',
+                'graph_rag_pipeline',
+                'graph_reasoning_pipeline',
+                'multimodal_kg_pipeline',
             ],
         },
         {
@@ -41,10 +44,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_domains',
             items: [
-                'MedicalKGPipeline_en',
-                'ScholarKGPipeline_en',
-                'LegalKGPipeline_en',
-                
+                'finkg_risk_pipeline',
+                'geokg_spatiotemporal_event_pipeline',
             ],
         },
         {

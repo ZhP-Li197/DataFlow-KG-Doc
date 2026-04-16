@@ -260,7 +260,87 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: 'DataFlow-KG 图谱RAG',
+            text: 'Dataflow领域图谱',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'domain_kg',
+            items: [
+                {
+                    text: '金融图谱',
+                    collapsed: false,
+                    prefix: 'financial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'finkg_4tuple_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'finkg_marketaux_news_retriever',
+                                'finkg_event_impact_tracing',
+                                'finkg_investment_analysis',
+                                'finkg_entity_risk_assessment',
+                            ]
+                        }
+                    ],
+                },
+                {
+                    text: '地理图谱',
+                    collapsed: false,
+                    prefix: 'geospatial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'geokg_4tuple_extractor',
+                                'geokg_event_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'geokg_entity_link2database',
+                                'geokg_rel_4tuple_inference',
+                            ]
+                        },
+                        {
+                            text: 'eval',
+                            collapsed: false,
+                            prefix: 'eval/',
+                            items: [
+                                'geokg_event_consistence_eval',
+                                'geokg_event_rationale_eval',
+                                'geokg_event_summary',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'geokg_event_consistence_filtering',
+                                'geokg_event_rationale_filtering',
+                                'geokg_event_location_filtering',
+                                'geokg_event_time_filtering',
+                            ]
+                        }
+                    ],
+                }
+            ],
+        },
+        {
+            text: 'Dataflow图像理解',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'graph_rag',
