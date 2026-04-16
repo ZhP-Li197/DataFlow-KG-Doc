@@ -2,7 +2,7 @@
 title: 安装
 icon: material-symbols:auto-transmission-sharp
 createTime: 2025/06/09 10:29:31
-permalink: /zh/kg_guide/install/
+permalink: /zh/kg_guide/kg_quickstart/install/
 ---
 # 安装
 

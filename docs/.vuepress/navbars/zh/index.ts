@@ -27,13 +27,13 @@ export const zhNavbar = defineNavbarConfig([
                             },
                             {
                                 text: '安装',
-                                link: '/zh/notes/kg_guide/basicinfo/install.md',
+                                link: '/zh/notes/kg_guide/kg_quickstart/install.md',
                                 icon: 'material-symbols:auto-transmission-sharp',
                                 activeMatch: '^/guide/'
                             },
                             {
                                 text: '快速开始',
-                                link: '/zh/notes/kg_guide/basicinfo/quickstart.md',
+                                link: '/zh/notes/kg_guide/kg_quickstart/quickstart.md',
                                 icon: 'mdi:bullseye-arrow',
                                 activeMatch: '^/guide/'
                             }
