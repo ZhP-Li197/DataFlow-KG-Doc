@@ -44,8 +44,11 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_domains',
             items: [
-                'finkg_risk_pipeline',
+                'MedicalKGPipeline',
+                'ScholarKGPipeline',
+                'LegalKGPipeline',
                 'geokg_spatiotemporal_event_pipeline',
+                'finkg_risk_pipeline'
             ],
         },
         {
