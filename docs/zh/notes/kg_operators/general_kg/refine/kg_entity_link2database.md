@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_entity_link2database/
 
 算子默认读取 `entity` 列，输出到 `linked_result`。当前实现会把输入看作逗号分隔的实体字符串，先通过 Wikipedia 搜索 API 获取候选标题，再结合 `wikipediaapi` 获取页面 URL，最终把成功链接的实体写成 `<entity> ... <link> ...` 形式。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

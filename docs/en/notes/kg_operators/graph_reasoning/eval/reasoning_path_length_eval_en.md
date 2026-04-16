@@ -18,7 +18,7 @@ Key characteristics of this operator:
 
 ---
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(self):
     ...
@@ -86,8 +86,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t3", "t4", "t5"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ]
   }
@@ -100,8 +107,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t3", "t4", "t5"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ],
     "mpath_length": [
@@ -116,4 +130,3 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-

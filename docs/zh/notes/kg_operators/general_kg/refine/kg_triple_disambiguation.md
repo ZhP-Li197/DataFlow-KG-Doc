@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/refine/kg_triple_disambiguation/
 
 算子默认读取 `merged_triples` 列中的 `ambiguous` 字段，并把消歧结果写到 `resolved`。它会先判断每条歧义 triple 是属性型还是关系型，再调用对应 Prompt，让模型从候选值中选择最合理的一项。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

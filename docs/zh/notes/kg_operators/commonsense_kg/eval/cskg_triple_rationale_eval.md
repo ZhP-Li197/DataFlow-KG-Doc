@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/commonsense_kg/eval/cskg_triple_rationale_eval/
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

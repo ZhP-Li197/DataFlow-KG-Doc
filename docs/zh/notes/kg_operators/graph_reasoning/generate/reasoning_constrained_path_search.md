@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_constrained_path_
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,
@@ -49,14 +49,14 @@ def __init__(
 def run(
     self,
     storage: DataFlowStorage,
-    triplet_key: str = "triplet",
+    triple_key: str = "triple",
     target_key: str = "target_entity",
     output_key: str = "cons_mpath",
 ):
     ...
 ```
 
-`run` 会先从 `storage` 中读取 DataFrame，然后逐行读取三元组与目标实体。对于每一行，算子先基于 `triplet_key` 构建图，再根据 `target_entity` 的格式决定如何解析实体对：若为新的 `List[List[str]]` 格式，则逐个实体对做搜索；若为兼容旧格式的字符串或列表，则先展开目标实体，再枚举两两组合。路径搜索通过 DFS 完成，只有同时满足跳数限制和约束条件的路径才会被保留。
+`run` 会先从 `storage` 中读取 DataFrame，然后逐行读取三元组与目标实体。对于每一行，算子先基于 `triple_key` 构建图，再根据 `target_entity` 的格式决定如何解析实体对：若为新的 `List[List[str]]` 格式，则逐个实体对做搜索；若为兼容旧格式的字符串或列表，则先展开目标实体，再枚举两两组合。路径搜索通过 DFS 完成，只有同时满足跳数限制和约束条件的路径才会被保留。
 
 约束检查发生在找到一条候选路径之后：如果设置了 `must_pass_entities`，则路径必须覆盖这些实体；如果设置了 `required_entity_types`，则路径上的实体类型集合必须与要求的类型集合有交集。
 
@@ -64,7 +64,7 @@ def run(
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | - | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将带约束的路径搜索结果写回。 |
-| `triplet_key` | `str` | `"triplet"` | 输入三元组列名。 |
+| `triple_key` | `str` | `"triple"` | 输入三元组列名。 |
 | `target_key` | `str` | `"target_entity"` | 输入目标实体列名。 |
 | `output_key` | `str` | `"cons_mpath"` | 输出列名，用于保存满足约束的多跳路径结果。 |
 
@@ -85,7 +85,7 @@ operator = KGReasoningConstrainedPathSearch(
 )
 operator.run(
     storage=storage,
-    triplet_key="triplet",
+    triple_key="triple",
     target_key="target_entity",
     output_key="cons_mpath",
 )
@@ -96,7 +96,7 @@ operator.run(
 #### 默认输出格式
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
-| `triplet` | `List[str]` | 输入知识图谱三元组列表。 |
+| `triple` | `List[str]` | 输入知识图谱三元组列表。 |
 | `target_entity` | `str` / `List[str]` / `List[List[str]]` | 目标实体输入。推荐使用 `List[List[str]]` 表示实体对。 |
 | `cons_mpath` | `List[List[List[str]]]` | 满足约束条件的路径结果。最外层按实体对分组，中间层是多条路径，内层是路径中的三元组序列。 |
 
@@ -106,7 +106,7 @@ operator.run(
 ```json
 [
   {
-    "triplet": [
+    "triple": [
       "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
       "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
     ],
@@ -119,7 +119,7 @@ operator.run(
 ```json
 [
   {
-    "triplet": [
+    "triple": [
       "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
       "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
     ],

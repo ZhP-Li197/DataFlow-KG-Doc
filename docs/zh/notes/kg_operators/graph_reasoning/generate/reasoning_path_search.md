@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/generate/reasoning_path_search/
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self, max_hop: int = 10):
     ...
@@ -42,7 +42,7 @@ def run(
     ...
 ```
 
-`run` 会先从 `storage` 中读取 DataFrame，检查必需列是否存在，然后逐行处理样本。对于每一行，算子会读取三元组列表并构建无向邻接表，再根据 `target_entity` 的格式决定如何解析目标实体对：如果是新的 `List[List[str]]` 格式，则逐个实体对搜索路径；如果是兼容旧格式的字符串或列表，则先展开所有目标实体，再枚举两两组合搜索路径。最终结果会以嵌套列表的形式写入 `output_key`。
+`run` 会先从 `storage` 中读取 DataFrame，检查必需列是否存在，然后逐行处理样本。对于每一行，算子会读取 `triplet` 三元组列表并构建无向邻接表，再根据 `target_entity` 的格式决定如何解析目标实体对：如果是新的 `List[List[str]]` 格式，则当前实现会把每个内层元素当作一个“逗号分隔的实体对字符串”来解析，例如 `[["Alice Smith, Beijing"]]`；如果是兼容旧格式的字符串或列表，则先展开所有目标实体，再枚举两两组合搜索路径。最终结果会以嵌套列表的形式写入 `output_key`。
 
 内部搜索逻辑采用 BFS，枚举 `src` 到 `tgt` 的所有简单路径，每条路径保存为三元组字符串列表。只要一条路径到达目标节点且非空，就会被加入结果集。
 
@@ -50,7 +50,7 @@ def run(
 | 参数名 | 类型 | 默认值 | 说明 |
 | :-- | :-- | :-- | :-- |
 | `storage` | `DataFlowStorage` | `None` | Dataflow 数据存储对象。算子会从中读取 `dataframe`，并将路径搜索结果写回。 |
-| `input_key` | `str` | `"triple"` | 三元组输入列名。当前实现实际校验的是 `triplet` 列，因此若直接使用默认值，需确认数据列名与实现一致。 |
+| `input_key` | `str` | `"triple"` | 三元组输入列名。当前实现实际要求 DataFrame 中存在 `triplet` 列，调用时也应传入 `input_key="triplet"` 才能与实现保持一致。 |
 | `output_key` | `str` | `"mpath"` | 输出列名，用于保存多跳路径结果。 |
 
 ---
@@ -78,7 +78,7 @@ operator.run(
 | 字段 | 类型 | 说明 |
 | :-- | :-- | :-- |
 | `triplet` | `List[str]` | 输入知识图谱三元组列表。 |
-| `target_entity` | `str` / `List[str]` / `List[List[str]]` | 目标实体输入。推荐使用 `List[List[str]]`，其中每个元素表示一个实体对。 |
+| `target_entity` | `str` / `List[str]` / `List[List[str]]` | 目标实体输入。推荐使用 `List[List[str]]`，且当前实现中每个内层元素通常写成一个逗号分隔的实体对字符串，例如 `[["Alice Smith, Beijing"]]`。 |
 | `mpath` | `List[List[List[str]]]` | 路径搜索结果。最外层按实体对分组，中间层是多条路径，内层是路径中的三元组序列。 |
 
 ---
@@ -88,10 +88,15 @@ operator.run(
 [
   {
     "triplet": [
-      "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
-      "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
+      "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+      "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at",
+      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+      "<subj> Peking University <obj> Beijing <rel> located_in"
     ],
-    "target_entity": [["Henry, Berlin"]]
+    "target_entity": [
+      ["Alice Smith, KDD 2024"],
+      ["Alice Smith, Beijing"]
+    ]
   }
 ]
 ```
@@ -101,15 +106,26 @@ operator.run(
 [
   {
     "triplet": [
-      "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
-      "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
+      "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+      "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at",
+      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+      "<subj> Peking University <obj> Beijing <rel> located_in"
     ],
-    "target_entity": [["Henry, Berlin"]],
+    "target_entity": [
+      ["Alice Smith, KDD 2024"],
+      ["Alice Smith, Beijing"]
+    ],
     "mpath": [
       [
         [
-          "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
-          "<subj> Maria Rodriguez <obj> Berlin <rel> lives_in"
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
+      ],
+      [
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in"
         ]
       ]
     ]
@@ -123,4 +139,3 @@ operator.run(
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_path_search.py`
 - 下游关系生成算子：`DataFlow-KG/dataflow/operators/graph_reasoning/generate/reasoning_rel_generator.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
-

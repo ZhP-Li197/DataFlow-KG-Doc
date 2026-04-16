@@ -18,7 +18,7 @@ Key characteristics of this operator:
 
 ---
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(self, min_length: int = 1, max_length: int = 10):
     ...
@@ -91,8 +91,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t1", "t2", "t3"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ],
     "mpath_length": [
@@ -108,8 +115,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t1", "t2", "t3"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ],
     "mpath_length": [
@@ -117,7 +131,10 @@ operator.run(
     ],
     "filtered_mpath": [
       [
-        ["t1", "t2"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
       ]
     ]
   }
@@ -129,4 +146,3 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - Upstream evaluation operator: `DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-

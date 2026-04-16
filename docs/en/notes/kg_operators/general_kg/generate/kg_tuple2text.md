@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_tuple2text/
 
 The operator first tries to use the explicitly specified input column. If that is not available, it can automatically fall back to either `triple` or `tuple` in the DataFrame. The model output is not parsed as JSON; it is stored directly as the `description` text.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

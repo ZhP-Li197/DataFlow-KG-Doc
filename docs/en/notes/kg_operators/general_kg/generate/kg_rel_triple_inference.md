@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_rel_triple_inference/
 
 When `with_text=True`, the operator also uses the `raw_chunk` text as context. When `merge_to_input=True`, the inferred triples are deduplicated and merged back into the original `triple` column. The model output is expected to contain an `inferred_triple` field; if parsing fails, the row falls back to an empty list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

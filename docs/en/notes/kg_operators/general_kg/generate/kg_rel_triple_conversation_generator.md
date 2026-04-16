@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_rel_triple_conversation_gener
 
 The input column name is built from `k` and `input_key_meta`; for example, when `k=3`, the default input column is `3_hop_paths`. The model output is expected to be JSON with a `dialogue.turns` structure. After removing code fences, the operator parses that JSON directly and writes the path plus dialogue into the output list.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,
@@ -78,7 +78,7 @@ Example input:
 ```json
 [
   {
-    "3_hop_paths": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of"
+    "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of"
   }
 ]
 ```
@@ -88,14 +88,33 @@ Example output:
 ```json
 [
   {
-    "multi_turn_dialogues": [
+    "returned_keys": [
+      "multi_turn_dialogues"
+    ],
+    "output": [
       {
-        "path": "<subj> A <obj> B <rel> founded_by; <subj> B <obj> C <rel> located_in; <subj> C <obj> D <rel> part_of",
-        "dialogue": [
-          {"role": "user", "content": "Who founded A?"},
-          {"role": "assistant", "content": "A was founded by B."},
-          {"role": "user", "content": "Where is B located?"},
-          {"role": "assistant", "content": "B is located in C."}
+        "3_hop_paths": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+        "multi_turn_dialogues": [
+          {
+            "path": "<subj> A <obj> B <rel> founded_by || <subj> B <obj> C <rel> located_in || <subj> C <obj> D <rel> part_of",
+            "dialogue": [
+              {
+                "turn_id": 1,
+                "question": "Who was A founded by?",
+                "answer": "B"
+              },
+              {
+                "turn_id": 2,
+                "question": "Where is B located?",
+                "answer": "C"
+              },
+              {
+                "turn_id": 3,
+                "question": "What is C a part of?",
+                "answer": "D"
+              }
+            ]
+          }
         ]
       }
     ]

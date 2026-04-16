@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/commonsense_kg/filter/cskg_triple_adapbility_filteri
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self, merge_to_input: bool = False):
     self.merge_to_input = merge_to_input

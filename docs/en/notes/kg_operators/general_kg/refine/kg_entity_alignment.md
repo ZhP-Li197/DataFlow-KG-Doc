@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_entity_alignment/
 
 This operator does not depend on an LLM. Instead, it uses `fuzzywuzzy.fuzz.ratio` for local string matching, so it is lightweight and fast for entity normalization and graph merging workflows. By default, it reads `triples_kg1` and `triples_kg2`, then writes the alignment results to `entity_alignment`.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(self, top_k: int = 5, threshold: int = 70):
     ...

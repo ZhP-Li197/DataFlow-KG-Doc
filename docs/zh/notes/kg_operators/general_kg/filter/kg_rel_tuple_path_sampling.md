@@ -19,7 +19,7 @@ permalink: /zh/kg_operators/general_kg/sample/kg_rel_tuple_path_sampling/
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

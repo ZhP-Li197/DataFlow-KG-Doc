@@ -133,124 +133,6 @@ export const KGOperators: ThemeNote = defineNoteConfig({
       ],
     },
         {
-            text: 'Commonsense KG',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'commonsense_kg',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'cskg_triple_extractor_en',
-                        'cskg_rel_triple_qa_generator_en',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'cskg_triple_adapbility_eval_en',
-                        'cskg_triple_rationale_eval_en',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'cskg_rel_triple_set_sampling_en',
-                        'cskg_triple_adapbility_filtering_en',
-                        'cskg_triple_rationale_filtering_en',
-                    ]
-                },
-                {
-                    text: 'refine',
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'cskg_triple_concept_generalization_en',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'KG Retrieval',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_rag',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'graphrag_query_extractor_en',
-                        'graphrag_prompt_generator_en',
-                        'graphrag_get_answer_en',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'graphrag_answer_plausibility_eval_en',
-                        'graphrag_answer_token_eval_en',
-                        'graphrag_question_difficulty_eval_en',
-                        'graphrag_truth_eval_en',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'graphrag_answer_plausibility_filtering_en',
-                        'graphrag_answer_token_filtering_en',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'KG Reasoning',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_reasoning',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'reasoning_path_search_en',
-                        'reasoning_constrained_path_search_en',
-                        'reasoning_rel_generator_en',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'reasoning_path_length_eval_en',
-                        'reasoning_path_redundancy_eval_en',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'reasoning_path_length_filtering_en',
-                        'reasoning_path_redundancy_filtering_en',
-                    ]
-                }
-            ],
-        },
-        {
             text: 'Temporal KG',
             collapsed: false,
             icon: 'carbon:idea',
@@ -295,6 +177,88 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                 },
             ],
         },
+        {
+            text: 'Hyper-Relational KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'hyper_relation_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'hrkg_rel_triple_extractor_en',
+                        'hrkg_rel_triple_path_qa_generator_en',
+                        'hrkg_rel_triple_subgraph_qa_generator_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'hrkg_rel_triple_attribute_filtering_en',
+                        'hrkg_rel_triple_completeness_filtering_en',
+                        'hrkg_rel_triple_consistency_filtering_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'hrkg_rel_triple_consistency_eval_en',
+                        'hrkg_rel_triple_completeness_eval_en',
+                        'hrkg_rel_triple_attri_summary_en',
+                    ]
+                },
+            ],
+        },
+        {
+            text: 'Commonsense KG',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'commonsense_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'cskg_triple_extractor_en',
+                        'cskg_rel_triple_qa_generator_en',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'cskg_triple_adapbility_eval_en',
+                        'cskg_triple_rationale_eval_en',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'cskg_rel_triple_set_sampling_en',
+                        'cskg_triple_adapbility_filtering_en',
+                        'cskg_triple_rationale_filtering_en',
+                    ]
+                },
+                {
+                    text: 'refine',
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                        'cskg_triple_concept_generalization_en',
+                    ]
+                }
+            ],
+        },        
         {
             text: 'Dataflow Domain KG',
             collapsed: false,
@@ -379,188 +343,198 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             text: 'Dataflow Image',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_understanding',
+            prefix: 'graph_rag',
             items: [
                 {
-                    text: 'install',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_image_understanding'],
-                },
-                {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        'image_caption',
-                        'image_qa',
-                        'image_pers_qa',
-                        'multimodal_math',
-                        "prompt_templated_vqa_generator",
-                        "fix_prompted_vqa_generator",
-                        "prompted_vqa_generator",
-                        "batch_vqa_generator",
-                        "visual_reasoning_generator",
-                        "vlm_bbox_generator",
-                        "image_bbox_generator"
-                        // 'vision_mct_reasoning',
-                        // 'image_region_caption',
-                        // 'image_scale_caption',
-                        // 'image_gcot',
-                        // 'image_caprl',
-                        // 'multirole_videoqa',
+                        'graphrag_query_extractor_en',
+                        'graphrag_prompt_generator_en',
+                        'graphrag_get_answer_en',
                     ]
                 },
                 {
-                    text: "eval",
+                    text: 'eval',
                     collapsed: false,
                     prefix: 'eval/',
                     items: [
-                        'image_clip_evaluator',
-                        'image_longclip_evaluator',
-                        'image_vqa_evaluator',
+                        'graphrag_answer_plausibility_eval_en',
+                        'graphrag_answer_token_eval_en',
+                        'graphrag_question_difficulty_eval_en',
+                        'graphrag_truth_eval_en',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'image_aesthetic_filter',
-                        'image_cat_filter',
-                        'image_clip_filter',
-                        'image_complexity_filter',
-                        'image_consistency_filter',
-                        'image_deduplication_filter',
-                        'image_diversity_filter',
-                        'image_sensitive_filter',
-                    ]
-                },
-                {
-                    text: "refine",
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'visual_dependency_refiner',
-                        'visual_grounding_refiner',
-                        'wiki_qa_refiner',
+                        'graphrag_answer_plausibility_filtering_en',
+                        'graphrag_answer_token_filtering_en',
                     ]
                 }
             ],
         },
         {
-            text: 'Dataflow Video',
+            text: 'KG Reasoning',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'video_understanding',
+            prefix: 'graph_reasoning',
             items: [
                 {
-                    text: 'Install',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_video_understanding'],
-                },
-                {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        'video_caption',
-                        'video_merged_caption',
-                        'video_qa',
-                        'video_cotqa',
-                        'video_clip'
+                        'reasoning_path_search_en',
+                        'reasoning_constrained_path_search_en',
+                        'reasoning_rel_generator_en',
                     ]
                 },
                 {
-                    text: "eval",
+                    text: 'eval',
                     collapsed: false,
                     prefix: 'eval/',
                     items: [
-                        'general_text_answer_evaluator',
-                        'emscore_evaluator',
-                        'video_aesthetic_evaluator',
-                        'video_luminance_evaluator',
-                        'video_ocr_evaluator',
+                        'reasoning_path_length_eval_en',
+                        'reasoning_path_redundancy_eval_en',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'video_resolution_filter',
-                        'video_motion_score_filter',
-                        'video_clip_filter',
-                        'video_info_filter',
-                        'video_scene_filter',
-                        'video_score_filter',
-                        'video_frame_filter',
-                    ]
-                },
-            ],
-        },
-        {
-            text: 'Dataflow Audio',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'audio_understanding',
-            // items: [
-            //     'install_audio_understanding',
-            //     'audio_caption',
-            //     'whisper_asr',
-            // ],
-            items: [
-                {
-                    text: 'Install',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_audio_understanding'],
-                },
-                {
-                    text: "generate",
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'audio_caption',
-                        'silero_vad',
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'ctc_forced_aligner_eval',
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'ctc_forced_aligner_filter',
-                    ]
-                },
-                {
-                    text: "generaterow",
-                    collapsed: false,
-                    prefix: 'generaterow/',
-                    items: [
-                        'merge_chunks',
+                        'reasoning_path_length_filtering_en',
+                        'reasoning_path_redundancy_filtering_en',
                     ]
                 }
             ],
         },
         {
-            text: 'Dataflow Generation',
+            text: 'Domain-Specific KG',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_video_generation',
+            prefix: 'domain_kg',
             items: [
-                'install_image_video_generation',
-                'image_generation',
+                {
+                    text: 'Financial KG',
+                    collapsed: false,
+                    prefix: 'financial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'finkg_4tuple_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'finkg_marketaux_news_retriever',
+                                'finkg_event_impact_tracing',
+                                'finkg_investment_analysis',
+                                'finkg_entity_risk_assessment',
+                            ]
+                        }
+                    ],
+                },
+                {
+                    text: 'Geospatial KG',
+                    collapsed: false,
+                    prefix: 'geospatial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'geokg_4tuple_extractor',
+                                'geokg_event_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'geokg_entity_link2database',
+                                'geokg_rel_4tuple_inference',
+                            ]
+                        },
+                        {
+                            text: 'eval',
+                            collapsed: false,
+                            prefix: 'eval/',
+                            items: [
+                                'geokg_event_consistence_eval',
+                                'geokg_event_rationale_eval',
+                                'geokg_event_summary',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'geokg_event_consistence_filtering',
+                                'geokg_event_rationale_filtering',
+                                'geokg_event_location_filtering',
+                                'geokg_event_time_filtering',
+                            ]
+                        }
+                    ],
+                },
+                {
+                    text: 'medical_kg',
+                    collapsed: false,
+                    prefix: 'medical_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'medkg_triple_extractor_en',
+                                'medkg_triple_drug_action_mechanism_discovery_en',
+                                'medkg_triple_drug_repositioning_discovery_en',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'medkg_triple_metapath_sampling_en',
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: 'scholar_kg',
+                    collapsed: false,
+                    prefix: 'scholar_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'schokg_triple_extractor_en',
+                                'schokg_query_reasoning_en',
+                                'schokg_recommend_en',
+                            ]
+                        }
+                    ]
+                }
             ],
-        },
+        }
     ]
 })
+

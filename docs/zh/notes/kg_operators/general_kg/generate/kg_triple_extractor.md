@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_triple_extractor/
 
 算子支持两类抽取模板：`triple_type="attribute"` 时使用属性四元组抽取 Prompt，`triple_type="relation"` 时使用关系三元组抽取 Prompt。和实体抽取算子类似，它也包含文本质量过滤逻辑，未通过预处理的文本会直接返回空三元组列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

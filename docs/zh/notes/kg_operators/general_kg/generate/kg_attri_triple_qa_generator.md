@@ -9,7 +9,7 @@ permalink: /zh/kg_operators/general_kg/generate/kg_attri_triple_qa_generator/
 
 该算子默认读取 `triple` 列，并将结果写入 `QA_pairs` 列。内部会根据 `qa_type` 自动选择对应 Prompt 模板，并在模型返回后通过正则提取 JSON，再读取其中的 `QA_pairs` 字段；如果解析失败，则当前样本返回空列表。
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

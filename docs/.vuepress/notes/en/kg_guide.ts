@@ -12,8 +12,6 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             prefix: 'basicinfo',
             items: [
                 'intro',
-                'install',
-                'quickstart'
             ],
         },
         {
@@ -22,13 +20,9 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_quickstart',
             items: [
-                'install_image_understanding',
-                'context_vqa',
-                'image_gcot',
-                'vision_mct_reasoning_pipeline',
-                'image_region_caption_pipeline',
-                'image_scale_caption_pipeline',
-                'image_visual_only_mcq_pipeline',
+                'install',
+                'quickstart',
+                'first_pipeline'
             ],
         },
         {
@@ -37,17 +31,11 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             icon: 'carbon:idea',
             prefix: 'kg_pipelines_by_types',
             items: [
-                'install_video_understanding',
+                'KGExtractionPipeline_en',
                 'kg_evaluation_visualization_pipeline',
                 'graph_rag_pipeline',
                 'graph_reasoning_pipeline',
                 'multimodal_kg_pipeline',
-                'video_caption',
-                'video_clip_and_filter',
-                'video_qa',
-                'video_cotqa',
-                'video_longvideo_cotqa_api',
-                'multirole_videoqa_pipeline'
             ],
         },
         {
@@ -58,10 +46,6 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             items: [
                 'finkg_risk_pipeline',
                 'geokg_spatiotemporal_event_pipeline',
-                'install_audio_understanding',
-                'audio_caption',
-                'whisper_asr',
-                'audio_asr_pipeline'
             ],
         },
         {

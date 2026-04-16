@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/refine/kg_triple_disambiguation/
 
 By default, the operator reads the `ambiguous` field inside `merged_triples` and writes the resolved results to `resolved`. For each ambiguous triple, it first determines whether the triple is attribute-style or relation-style, then calls the corresponding prompt so the model can choose the most plausible candidate.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

@@ -16,7 +16,7 @@ permalink: /zh/kg_operators/commonsense_kg/refine/cskg_triple_concept_generaliza
 - 不再做文本质量筛选，而是直接对已有三元组列表调用模型
 - 当前实现内部固定使用默认 Prompt，不暴露 `prompt_template` 参数
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(
     self,

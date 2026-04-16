@@ -133,124 +133,6 @@ export const KGOperators: ThemeNote = defineNoteConfig({
         ],
         },
         {
-            text: 'DataFlow-KG 常识图谱',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'commonsense_kg',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'cskg_triple_extractor',
-                        'cskg_rel_triple_qa_generator',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'cskg_triple_adapbility_eval',
-                        'cskg_triple_rationale_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'cskg_rel_triple_set_sampling',
-                        'cskg_triple_adapbility_filtering',
-                        'cskg_triple_rationale_filtering',
-                    ]
-                },
-                {
-                    text: 'refine',
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'cskg_triple_concept_generalization',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'DataFlow-KG 图谱RAG',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_rag',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'graphrag_query_extractor',
-                        'graphrag_prompt_generator',
-                        'graphrag_get_answer',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'graphrag_answer_plausibility_eval',
-                        'graphrag_answer_token_eval',
-                        'graphrag_question_difficulty_eval',
-                        'graphrag_truth_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'graphrag_answer_plausibility_filtering',
-                        'graphrag_answer_token_filtering',
-                    ]
-                }
-            ],
-        },
-        {
-            text: 'DataFlow-KG 图谱推理',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'graph_reasoning',
-            items: [
-                {
-                    text: 'generate',
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'reasoning_path_search',
-                        'reasoning_constrained_path_search',
-                        'reasoning_rel_generator',
-                    ]
-                },
-                {
-                    text: 'eval',
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'reasoning_path_length_eval',
-                        'reasoning_path_redundancy_eval',
-                    ]
-                },
-                {
-                    text: 'filter',
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'reasoning_path_length_filtering',
-                        'reasoning_path_redundancy_filtering',
-                    ]
-                }
-            ],
-        },
-        {
             text: 'DataFlow-KG 时序图谱',
             collapsed: false,
             icon: 'carbon:idea',
@@ -293,6 +175,88 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                         'tkg_4tuple_time_summary',
                     ]
                 },
+            ],
+        },
+        {
+            text: 'DataFlow-KG 超关系图谱',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'hyper_relation_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'hrkg_rel_triple_extractor',
+                        'hrkg_rel_triple_path_qa_generator',
+                        'hrkg_rel_triple_subgraph_qa_generator',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'hrkg_rel_triple_attribute_filtering',
+                        'hrkg_rel_triple_completeness_filtering',
+                        'hrkg_rel_triple_consistency_filtering',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'hrkg_rel_triple_consistency_eval',
+                        'hrkg_rel_triple_completeness_eval',
+                        'hrkg_rel_triple_attri_summary',
+                    ]
+                },
+            ],
+        },
+        {
+            text: 'DataFlow-KG 常识图谱',
+            collapsed: false,
+            icon: 'carbon:idea',
+            prefix: 'commonsense_kg',
+            items: [
+                {
+                    text: 'generate',
+                    collapsed: false,
+                    prefix: 'generate/',
+                    items: [
+                        'cskg_triple_extractor',
+                        'cskg_rel_triple_qa_generator',
+                    ]
+                },
+                {
+                    text: 'eval',
+                    collapsed: false,
+                    prefix: 'eval/',
+                    items: [
+                        'cskg_triple_adapbility_eval',
+                        'cskg_triple_rationale_eval',
+                    ]
+                },
+                {
+                    text: 'filter',
+                    collapsed: false,
+                    prefix: 'filter/',
+                    items: [
+                        'cskg_rel_triple_set_sampling',
+                        'cskg_triple_adapbility_filtering',
+                        'cskg_triple_rationale_filtering',
+                    ]
+                },
+                {
+                    text: 'refine',
+                    collapsed: false,
+                    prefix: 'refine/',
+                    items: [
+                        'cskg_triple_concept_generalization',
+                    ]
+                }
             ],
         },
         {
@@ -379,190 +343,198 @@ export const KGOperators: ThemeNote = defineNoteConfig({
             text: 'Dataflow图像理解',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_understanding',
+            prefix: 'graph_rag',
             items: [
                 {
-                    text: '安装',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_image_understanding'],
-                },
-                {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        'image_caption',
-                        'image_qa',
-                        'image_pers_qa',
-                        'multimodal_math',
-                        'prompt_templated_vqa_generator',
-                        'fix_prompted_vqa_generator',
-                        "prompted_vqa_generator",
-                        "batch_vqa_generator",
-                        "visual_reasoning_generator",
-                        "vlm_bbox_generator",
-                        "image_bbox_generator"
-                        // 'vision_mct_reasoning',
-                        // 'image_region_caption',
-                        // 'image_scale_caption',
-                        // 'image_gcot',
-                        // 'image_caprl',
-                        // 'multirole_videoqa',
+                        'graphrag_query_extractor',
+                        'graphrag_prompt_generator',
+                        'graphrag_get_answer',
                     ]
                 },
                 {
-                    text: "eval",
+                    text: 'eval',
                     collapsed: false,
                     prefix: 'eval/',
                     items: [
-                        'image_clip_evaluator',
-                        'image_longclip_evaluator',
-                        'image_vqa_evaluator',
+                        'graphrag_answer_plausibility_eval',
+                        'graphrag_answer_token_eval',
+                        'graphrag_question_difficulty_eval',
+                        'graphrag_truth_eval',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'image_aesthetic_filter',
-                        'image_cat_filter',
-                        'image_clip_filter',
-                        'image_complexity_filter',
-                        'image_consistency_filter',
-                        'image_deduplication_filter',
-                        'image_diversity_filter',
-                        'image_sensitive_filter',
-                    ]
-                },
-                {
-                    text: "refine",
-                    collapsed: false,
-                    prefix: 'refine/',
-                    items: [
-                        'visual_dependency_refiner',
-                        'visual_grounding_refiner',
-                        'wiki_qa_refiner',
+                        'graphrag_answer_plausibility_filtering',
+                        'graphrag_answer_token_filtering',
                     ]
                 }
             ],
         },
         {
-            text: 'Dataflow视频理解',
+            text: 'DataFlow-KG 图谱推理',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'video_understanding',
+            prefix: 'graph_reasoning',
             items: [
                 {
-                    text: '安装',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_video_understanding'],
-                },
-                {
-                    text: "generate",
+                    text: 'generate',
                     collapsed: false,
                     prefix: 'generate/',
                     items: [
-                        'video_caption',
-                        'video_merged_caption',
-                        'video_qa',
-                        'video_cotqa',
-                        'video_clip'
+                        'reasoning_path_search',
+                        'reasoning_constrained_path_search',
+                        'reasoning_rel_generator',
                     ]
                 },
                 {
-                    text: "eval",
+                    text: 'eval',
                     collapsed: false,
                     prefix: 'eval/',
                     items: [
-                        'general_text_answer_evaluator',
-                        'emscore_evaluator',
-                        'video_aesthetic_evaluator',
-                        'video_luminance_evaluator',
-                        'video_ocr_evaluator',
+                        'reasoning_path_length_eval',
+                        'reasoning_path_redundancy_eval',
                     ]
                 },
                 {
-                    text: "filter",
+                    text: 'filter',
                     collapsed: false,
                     prefix: 'filter/',
                     items: [
-                        'video_resolution_filter',
-                        'video_motion_score_filter',
-                        'video_clip_filter',
-                        'video_info_filter',
-                        'video_scene_filter',
-                        'video_score_filter',
-                        'video_frame_filter',
-                    ]
-                },
-            ],
-        },
-        {
-            text: 'Dataflow语音理解',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'audio_understanding',
-            // items: [
-            //     'install_audio_understanding',
-            //     'audio_caption',
-            //     'silero_vad',
-            //     'merge_chunks',
-            //     'ctc_forced_aligner_eval',
-            // ],
-            items: [
-                {
-                    text: '安装',
-                    collapsed: false,
-                    prefix: '',
-                    items: ['install_audio_understanding'],
-                },
-                {
-                    text: "generate",
-                    collapsed: false,
-                    prefix: 'generate/',
-                    items: [
-                        'audio_caption',
-                        'silero_vad',
-                    ]
-                },
-                {
-                    text: "eval",
-                    collapsed: false,
-                    prefix: 'eval/',
-                    items: [
-                        'ctc_forced_aligner_eval',
-                    ]
-                },
-                {
-                    text: "filter",
-                    collapsed: false,
-                    prefix: 'filter/',
-                    items: [
-                        'ctc_forced_aligner_filter',
-                    ]
-                },
-                {
-                    text: "generaterow",
-                    collapsed: false,
-                    prefix: 'generaterow/',
-                    items: [
-                        'merge_chunks',
+                        'reasoning_path_length_filtering',
+                        'reasoning_path_redundancy_filtering',
                     ]
                 }
             ],
         },
         {
-            text: 'Dataflow图像/视频生成',
+            text: 'DataFlow-KG 领域图谱',
             collapsed: false,
             icon: 'carbon:idea',
-            prefix: 'image_video_generation',
+            prefix: 'domain_kg',
             items: [
-                'install_image_video_generation',
-                'image_generation',
+                {
+                    text: '金融图谱',
+                    collapsed: false,
+                    prefix: 'financial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'finkg_4tuple_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'finkg_marketaux_news_retriever',
+                                'finkg_event_impact_tracing',
+                                'finkg_investment_analysis',
+                                'finkg_entity_risk_assessment',
+                            ]
+                        }
+                    ],
+                },
+                {
+                    text: '地理图谱',
+                    collapsed: false,
+                    prefix: 'geospatial_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'geokg_4tuple_extractor',
+                                'geokg_event_extractor',
+                            ]
+                        },
+                        {
+                            text: 'refine',
+                            collapsed: false,
+                            prefix: 'refine/',
+                            items: [
+                                'geokg_entity_link2database',
+                                'geokg_rel_4tuple_inference',
+                            ]
+                        },
+                        {
+                            text: 'eval',
+                            collapsed: false,
+                            prefix: 'eval/',
+                            items: [
+                                'geokg_event_consistence_eval',
+                                'geokg_event_rationale_eval',
+                                'geokg_event_summary',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'geokg_event_consistence_filtering',
+                                'geokg_event_rationale_filtering',
+                                'geokg_event_location_filtering',
+                                'geokg_event_time_filtering',
+                            ]
+                        }
+                    ],
+                },
+                {
+                    text: '医学图谱',
+                    collapsed: false,
+                    prefix: 'medical_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'medkg_triple_extractor',
+                                'medkg_triple_drug_action_mechanism_discovery',
+                                'medkg_triple_drug_repositioning_discovery',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'medkg_triple_metapath_sampling',
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: '学者图谱',
+                    collapsed: false,
+                    prefix: 'scholar_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'schokg_triple_extractor',
+                                'schokg_query_reasoning',
+                                'schokg_recommend',
+                            ]
+                        }
+                    ]
+                }
             ],
-        },
+        }
     ]
 })
+

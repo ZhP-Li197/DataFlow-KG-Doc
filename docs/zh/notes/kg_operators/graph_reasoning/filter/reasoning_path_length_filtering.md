@@ -18,7 +18,7 @@ permalink: /zh/kg_operators/graph_reasoning/filter/reasoning_path_length_filteri
 
 ---
 
-## ✒️ __init__ 函数
+## ✒️ `__init__` 函数
 ```python
 def __init__(self, min_length: int = 1, max_length: int = 10):
     ...
@@ -91,8 +91,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t1", "t2", "t3"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ],
     "mpath_length": [
@@ -108,8 +115,15 @@ operator.run(
   {
     "mpath": [
       [
-        ["t1", "t2"],
-        ["t1", "t2", "t3"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ],
+        [
+          "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
+          "<subj> Peking University <obj> Beijing <rel> located_in",
+          "<subj> Beijing <obj> China <rel> part_of"
+        ]
       ]
     ],
     "mpath_length": [
@@ -117,7 +131,10 @@ operator.run(
     ],
     "filtered_mpath": [
       [
-        ["t1", "t2"]
+        [
+          "<subj> Alice Smith <obj> Graph Neural Networks for Scientific Discovery <rel> author_of",
+          "<subj> Graph Neural Networks for Scientific Discovery <obj> KDD 2024 <rel> published_at"
+        ]
       ]
     ]
   }
@@ -130,4 +147,3 @@ operator.run(
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_reasoning/filter/reasoning_path_length_filtering.py`
 - 上游评估算子：`DataFlow-KG/dataflow/operators/graph_reasoning/eval/reasoning_path_length_eval.py`
 - 存储实现：`DataFlow-KG/dataflow/utils/storage.py`
-

@@ -9,7 +9,7 @@ permalink: /en/kg_operators/general_kg/generate/kg_entity_extractor/
 
 The operator includes built-in preprocessing: text length must be between 10 and 200000 characters, the text must contain at least 2 Chinese or English sentence delimiters, and the special-character ratio must not exceed 30%. After generation, it parses the returned JSON array into an entity list, joins the items into a comma-separated string, and removes common stopwords. If validation or parsing fails, it returns an empty string.
 
-## ✒️ __init__ Function
+## ✒️ `__init__` Function
 ```python
 def __init__(
     self,

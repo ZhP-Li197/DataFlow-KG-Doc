@@ -5,11 +5,11 @@ permalink: /zh/kg_guide/kg_evaluation_visualization_pipeline/
 icon: carbon:chart-network
 ---
 
-# 知识图谱评测与可视化流水线
+# 知识图谱评测流水线
 
 ## 1. 概述
 
-**知识图谱评测与可视化流水线**面向通用知识图谱（General KG）的质量分析与结果展示场景，支持对抽取得到的三元组图谱进行多维度评测，并进一步生成可交互的图谱可视化结果。该流水线适用于图谱构建质量检查、图谱清洗前的统计分析、图谱结构诊断与展示等任务。
+**知识图谱评测流水线**面向通用知识图谱（General KG）的质量分析与结果展示场景，支持对抽取得到的三元组图谱进行多维度评测，并进一步生成可交互的图谱可视化结果。该流水线适用于图谱构建质量检查、图谱清洗前的统计分析、图谱结构诊断与展示等任务。
 
 我们支持以下应用场景：
 
@@ -31,18 +31,18 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 第一步：创建新的 DataFlow 工作文件夹
+### 步骤1：创建新的 DataFlow 工作文件夹
 
 ```bash
 mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 第二步：准备脚本
+### 步骤2：准备脚本
 
 将下文“流水线示例”中的代码保存为 `kg_evaluation_visualization_pipeline.py`。
 
-### 第三步：配置 API Key 和运行参数
+### 步骤3：配置 API Key 和运行参数
 
 在运行前，请先配置大模型 API Key：
 
@@ -64,7 +64,7 @@ pipeline = KGEvaluationVisualizationPipeline(
 )
 ```
 
-### 第四步：一键运行
+### 步骤4：一键运行
 
 ```bash
 python kg_evaluation_visualization_pipeline.py
@@ -76,7 +76,7 @@ python kg_evaluation_visualization_pipeline.py
 
 ## 3. 数据流与流水线逻辑
 
-### 1. **输入数据**
+### 3.1 **输入数据**
 
 该流程的输入数据主要包括以下字段：
 
@@ -115,7 +115,7 @@ dataflow/data_for_operator_testing/knowledge_extraction.json
 ]
 ```
 
-### 2. **知识图谱评测与可视化流水线（KGEvaluationVisualizationPipeline）**
+### 3.2 **知识图谱评测与可视化流水线（KGEvaluationVisualizationPipeline）**
 
 该流程的核心是 **KGEvaluationVisualizationPipeline**，它串联了 6 个评测与可视化算子，其中前 3 个结构评测算子无需大模型，第 4、5 步依赖 LLM，第 6 步生成最终的图谱可视化结果。
 
@@ -282,7 +282,7 @@ self.visualization.run(
 )
 ```
 
-### 3. **输出数据**
+### 3.3 **输出数据**
 
 最终，流水线输出的数据通常将包含以下内容：
 
