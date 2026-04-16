@@ -31,18 +31,18 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 步骤1：创建新的 DataFlow 工作文件夹
+### 步骤 1：创建新的 DataFlow 工作文件夹
 
 ```bash
 mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 步骤2：准备脚本
+### 步骤 2：准备脚本
 
 将下文“流水线示例”中的代码保存为 `kg_evaluation_visualization_pipeline.py`。
 
-### 步骤3：配置 API Key 和运行参数
+### 步骤 3：配置 API Key 和运行参数
 
 在运行前，请先配置大模型 API Key：
 
@@ -64,7 +64,7 @@ pipeline = KGEvaluationVisualizationPipeline(
 )
 ```
 
-### 步骤4：一键运行
+### 步骤 4：一键运行
 
 ```bash
 python kg_evaluation_visualization_pipeline.py

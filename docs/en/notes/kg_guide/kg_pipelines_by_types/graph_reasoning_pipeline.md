@@ -84,7 +84,7 @@ python graph_reasoning_pipeline.py
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. Input Data
+### 3.1 Input Data
 
 This pipeline requires at least the following fields:
 
@@ -114,7 +114,7 @@ A sample input record is:
 ]
 ```
 
-### 2. Graph Reasoning Pipeline Logic (GraphReasoningPipeline)
+### 3.2 Graph Reasoning Pipeline Logic (GraphReasoningPipeline)
 
 #### Step 1: Multi-hop Path Search (KGReasoningPathSearch)
 
@@ -156,7 +156,7 @@ A sample input record is:
 **Input**: `target_entity`, `filtered_mpath`  
 **Output**: `inferred_triplets`
 
-### 3. Output Data
+### 3.3 Output Data
 
 Typical output fields include:
 

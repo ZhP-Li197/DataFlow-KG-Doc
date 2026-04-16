@@ -80,7 +80,7 @@ pipeline.forward()
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. Input Data
+### 3.1 Input Data
 
 This pipeline requires two input fields:
 
@@ -98,7 +98,7 @@ A sample input is:
 ]
 ```
 
-### 2. Financial KG Risk Analysis Pipeline Logic (FinKGRiskPipeline)
+### 3.2 Financial KG Risk Analysis Pipeline Logic (FinKGRiskPipeline)
 
 #### Step 1: Financial Quadruple Extraction (FinKGTupleExtraction)
 
@@ -136,7 +136,7 @@ Example quadruple format:
 **Input**: `tuple`, `target_entity`  
 **Output**: `risk_answer`, `risk_score`
 
-### 3. Output Data
+### 3.3 Output Data
 
 Typical output fields include:
 

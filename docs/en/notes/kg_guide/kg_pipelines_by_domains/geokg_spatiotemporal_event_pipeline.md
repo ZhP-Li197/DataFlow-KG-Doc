@@ -76,7 +76,7 @@ pipeline.forward()
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. Input Data
+### 3.1 Input Data
 
 This pipeline requires only one mandatory field:
 
@@ -92,7 +92,7 @@ A sample input is:
 ]
 ```
 
-### 2. Geospatial Event Pipeline Logic (GeoKGSpatiotemporalEventPipeline)
+### 3.2 Geospatial Event Pipeline Logic (GeoKGSpatiotemporalEventPipeline)
 
 #### Step 1: Event Extraction (GeoKGEventExtraction)
 
@@ -154,7 +154,7 @@ A sample input is:
 **Input**: `tuple`, `consistency_scores`  
 **Output**: `tuple`
 
-### 3. Output Data
+### 3.3 Output Data
 
 Typical output fields include:
 

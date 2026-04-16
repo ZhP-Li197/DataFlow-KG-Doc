@@ -86,7 +86,7 @@ After execution, the cache directory will contain query semantics, subgraph prom
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. Input Data
+### 3.1 Input Data
 
 This pipeline requires at least the following fields:
 
@@ -120,7 +120,7 @@ A sample input record is:
 ]
 ```
 
-### 2. GraphRAG Pipeline Logic (GraphRAGPipeline)
+### 3.2 GraphRAG Pipeline Logic (GraphRAGPipeline)
 
 The pipeline chains 6 operators together following the pattern: semantic extraction -> subgraph retrieval -> answer generation -> quality evaluation.
 
@@ -169,7 +169,7 @@ The pipeline chains 6 operators together following the pattern: semantic extract
 **Input**: `answer`, `question_plausibility_score`  
 **Output**: `filtered_answer`
 
-### 3. Output Data
+### 3.3 Output Data
 
 Typical output fields include:
 

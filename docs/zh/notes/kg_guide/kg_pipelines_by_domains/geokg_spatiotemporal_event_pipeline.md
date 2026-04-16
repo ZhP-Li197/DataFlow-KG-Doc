@@ -30,7 +30,7 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 第一步：准备脚本
+### 步骤 1：准备脚本
 
 将下方“流水线实例”中的代码保存为 `geokg_spatiotemporal_event_pipeline.py`。
 
@@ -40,13 +40,13 @@ icon: carbon:chart-network
 dataflow/data_for_operator_testing/geokg_rel.json
 ```
 
-### 第二步：配置 API Key
+### 步骤 2：配置 API Key
 
 ```bash
 export DF_API_KEY=sk-xxxx
 ```
 
-### 第三步：初始化模型服务并运行
+### 步骤 3：初始化模型服务并运行
 
 ```python
 from dataflow.serving import APILLMServing_request
@@ -76,7 +76,7 @@ pipeline.forward()
 
 ## 3. 数据流和流水线逻辑
 
-### 1. 输入数据
+### 3.1 输入数据
 
 该流水线最少需要一个字段：
 
@@ -92,7 +92,7 @@ pipeline.forward()
 ]
 ```
 
-### 2. 地理时空事件流水线逻辑（GeoKGSpatiotemporalEventPipeline）
+### 3.2 地理时空事件流水线逻辑（GeoKGSpatiotemporalEventPipeline）
 
 #### 步骤 1：事件抽取（GeoKGEventExtraction）
 
@@ -154,7 +154,7 @@ pipeline.forward()
 **输入**：`tuple`、`consistency_scores`  
 **输出**：`tuple`
 
-### 3. 输出数据
+### 3.3 输出数据
 
 常见输出字段包括：
 

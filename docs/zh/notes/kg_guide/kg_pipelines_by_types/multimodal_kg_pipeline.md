@@ -30,14 +30,14 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 第一步：创建新的 DataFlow 工作目录
+### 步骤 1：创建新的 DataFlow 工作目录
 
 ```bash
 mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 第二步：准备输入文件
+### 步骤 2：准备输入文件
 
 将下述示例保存为 `mmkg_demo.json`。其中 `img_dict` 的 value 需要是本地可访问的图片路径。
 
@@ -53,7 +53,7 @@ cd run_dataflow_kg
 ]
 ```
 
-### 第三步：保存脚本并配置环境变量
+### 步骤 3：保存脚本并配置环境变量
 
 将下方“流水线实例”中的代码保存为 `multimodal_kg_pipeline.py`，并配置：
 
@@ -82,7 +82,7 @@ vlm_serving = APIVLMServing_openai(
 )
 ```
 
-### 第四步：运行脚本
+### 步骤 4：运行脚本
 
 ```bash
 python multimodal_kg_pipeline.py
@@ -92,7 +92,7 @@ python multimodal_kg_pipeline.py
 
 ## 3. 数据流和流水线逻辑
 
-### 1. 输入数据
+### 3.1 输入数据
 
 该流水线至少需要以下字段：
 
@@ -115,7 +115,7 @@ python multimodal_kg_pipeline.py
 
 需要注意，当前 `MMKGEntityBasedSubgraphSampling` 更适合以**单条原始记录**为起点展开，因为它会把一个样本中的不同实体拆成多条子图记录再写回缓存。
 
-### 2. 多模态知识图谱流水线逻辑（MultimodalKGPipeline）
+### 3.2 多模态知识图谱流水线逻辑（MultimodalKGPipeline）
 
 #### 步骤 1：文本实体抽取（KGEntityExtraction）
 
@@ -168,7 +168,7 @@ python multimodal_kg_pipeline.py
 **输入**：`vis_url`、`subgraph`、`vis_triple`  
 **输出**：`QA_pairs`
 
-### 3. 输出数据
+### 3.3 输出数据
 
 常见输出字段包括：
 

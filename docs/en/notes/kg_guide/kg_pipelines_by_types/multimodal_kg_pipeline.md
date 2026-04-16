@@ -92,7 +92,7 @@ python multimodal_kg_pipeline.py
 
 ## 3. Data Flow and Pipeline Logic
 
-### 1. Input Data
+### 3.1 Input Data
 
 This pipeline requires at least the following fields:
 
@@ -115,7 +115,7 @@ A sample input is:
 
 One implementation detail is worth noting: the current `MMKGEntityBasedSubgraphSampling` operator works best when it starts from a **single source record**, because it expands that record into multiple subgraph rows grouped by entity.
 
-### 2. Multimodal KG Pipeline Logic (MultimodalKGPipeline)
+### 3.2 Multimodal KG Pipeline Logic (MultimodalKGPipeline)
 
 #### Step 1: Text Entity Extraction (KGEntityExtraction)
 
@@ -168,7 +168,7 @@ One implementation detail is worth noting: the current `MMKGEntityBasedSubgraphS
 **Input**: `vis_url`, `subgraph`, `vis_triple`  
 **Output**: `QA_pairs`
 
-### 3. Output Data
+### 3.3 Output Data
 
 Typical output fields include:
 

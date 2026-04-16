@@ -29,14 +29,14 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 第一步：创建新的 DataFlow 工作目录
+### 步骤 1：创建新的 DataFlow 工作目录
 
 ```bash
 mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 第二步：准备脚本
+### 步骤 2：准备脚本
 
 将下方“流水线实例”中的代码保存为 `graph_reasoning_pipeline.py`。
 
@@ -46,7 +46,7 @@ cd run_dataflow_kg
 dataflow/data_for_operator_testing/graphreasoning.json
 ```
 
-### 第三步：配置 API Key 与模型服务
+### 步骤 3：配置 API Key 与模型服务
 
 ```bash
 export DF_API_KEY=sk-xxxx
@@ -74,7 +74,7 @@ pipeline = GraphReasoningPipeline(
 )
 ```
 
-### 第四步：一键运行
+### 步骤 4：一键运行
 
 ```bash
 python graph_reasoning_pipeline.py
@@ -84,7 +84,7 @@ python graph_reasoning_pipeline.py
 
 ## 3. 数据流和流水线逻辑
 
-### 1. 输入数据
+### 3.1 输入数据
 
 该流水线至少需要以下字段：
 
@@ -114,7 +114,7 @@ python graph_reasoning_pipeline.py
 ]
 ```
 
-### 2. 图推理流水线逻辑（GraphReasoningPipeline）
+### 3.2 图推理流水线逻辑（GraphReasoningPipeline）
 
 #### 步骤 1：多跳路径搜索（KGReasoningPathSearch）
 
@@ -166,7 +166,7 @@ self.path_search_step1.run(
 **输入**：`target_entity`、`filtered_mpath`  
 **输出**：`inferred_triplets`
 
-### 3. 输出数据
+### 3.3 输出数据
 
 常见输出字段包括：
 

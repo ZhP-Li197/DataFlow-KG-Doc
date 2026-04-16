@@ -28,7 +28,7 @@ icon: carbon:chart-network
 
 ## 2. 快速开始
 
-### 第一步：准备输入数据
+### 步骤 1：准备输入数据
 
 该流水线要求输入文件至少包含：
 
@@ -46,13 +46,13 @@ icon: carbon:chart-network
 ]
 ```
 
-### 第二步：配置 API Key
+### 步骤 2：配置 API Key
 
 ```bash
 export DF_API_KEY=sk-xxxx
 ```
 
-### 第三步：初始化模型服务并运行流水线
+### 步骤 3：初始化模型服务并运行流水线
 
 ```python
 from dataflow.serving import APILLMServing_request
@@ -80,7 +80,7 @@ pipeline.forward()
 
 ## 3. 数据流和流水线逻辑
 
-### 1. 输入数据
+### 3.1 输入数据
 
 该流水线至少需要两个输入字段：
 
@@ -98,7 +98,7 @@ pipeline.forward()
 ]
 ```
 
-### 2. 金融知识图谱风险分析流水线逻辑（FinKGRiskPipeline）
+### 3.2 金融知识图谱风险分析流水线逻辑（FinKGRiskPipeline）
 
 #### 步骤 1：金融四元组抽取（FinKGTupleExtraction）
 
@@ -136,7 +136,7 @@ pipeline.forward()
 **输入**：`tuple`、`target_entity`  
 **输出**：`risk_answer`、`risk_score`
 
-### 3. 输出数据
+### 3.3 输出数据
 
 流水线运行结束后，常见输出字段包括：
 
