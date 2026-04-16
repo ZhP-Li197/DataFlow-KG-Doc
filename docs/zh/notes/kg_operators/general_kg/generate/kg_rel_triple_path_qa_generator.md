@@ -80,7 +80,7 @@ operator.run(
 ```json
 [
   {
-    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in; <subj> Germany <obj> Europe <rel> part_of"
+    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in || <subj> Germany <obj> Europe <rel> part_of"
   }
 ]
 ```
@@ -90,9 +90,10 @@ operator.run(
 ```json
 [
   {
+    "2_hop_paths": "<subj> Einstein <obj> Germany <rel> born_in || <subj> Germany <obj> Europe <rel> part_of",
     "QA_pairs": [
-      "Question: ... Answer: ...",
-      "Question: ... Answer: ..."
+      "Question: In which continent was Einstein born? Answer: Europe",
+      "Question: Einstein was born in a country that is part of which continent? Answer: Europe"
     ]
   }
 ]
