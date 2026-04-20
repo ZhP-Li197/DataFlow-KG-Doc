@@ -452,6 +452,38 @@ export const KGOperators: ThemeNote = defineNoteConfig({
                             ]
                         }
                     ]
+                },
+                {
+                    text: '法律图谱',
+                    collapsed: false,
+                    prefix: 'legal_kg/',
+                    items: [
+                        {
+                            text: 'generate',
+                            collapsed: false,
+                            prefix: 'generate/',
+                            items: [
+                                'legalkg_triple_extractor',
+                                'legalkg_case_judgement_generator',
+                            ]
+                        },
+                        {
+                            text: 'eval',
+                            collapsed: false,
+                            prefix: 'eval/',
+                            items: [
+                                'legalkg_case_similarity_eval',
+                            ]
+                        },
+                        {
+                            text: 'filter',
+                            collapsed: false,
+                            prefix: 'filter/',
+                            items: [
+                                'legalkg_case_similarity_filtering',
+                            ]
+                        }
+                    ]
                 }
             ],
         }
