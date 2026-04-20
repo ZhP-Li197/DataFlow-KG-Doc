@@ -1,15 +1,15 @@
 ---
-title: GraphRAG 流水线
+title: 基于知识图谱增强检索流水线
 createTime: 2026/04/15 18:00:00
 permalink: /zh/kg_guide/graph_rag_pipeline/
 icon: carbon:chart-network
 ---
 
-# GraphRAG 流水线
+# 基于知识图谱增强检索流水线
 
 ## 1. 概述
 
-**GraphRAG 流水线**面向“已有知识图谱 triples + 用户问题列表”的问答场景。它会先从问题中抽取检索语义，再围绕问题实体做子图检索，随后把检索到的子图组织成提示词，调用大模型生成答案，并对答案做难度评估、合理性评估和过滤。
+**基于知识图谱增强检索流水线**(GraphRAG)面向“已有知识图谱 triples + 用户问题列表”的问答场景。它会先从问题中抽取检索语义，再围绕问题实体做子图检索，随后把检索到的子图组织成提示词，调用大模型生成答案，并对答案做难度评估、合理性评估和过滤。
 
 该流水线适合以下任务：
 
@@ -21,7 +21,7 @@ icon: carbon:chart-network
 流水线的主要阶段包括：
 
 1. **查询语义抽取**：从问题中抽取实体和关系线索。
-2. **子图检索**：以实体为中心，从 `triplet` 中检索 k-hop 子图。
+2. **子图检索**：以实体为中心，从 `triple` 中检索 k-hop 子图。
 3. **答案生成**：基于子图提示词生成回答。
 4. **问题难度评估**：为每个问题打上 easy / medium / hard 等标签。
 5. **答案合理性评估**：根据问题和答案计算合理性分数。
@@ -93,7 +93,7 @@ python graph_rag_pipeline.py
 该流水线至少需要以下字段：
 
 - **question**：问题列表。当前实现建议每一行放一个问题列表，而不是“一行一个问题”。
-- **triplet**：知识图谱三元组列表，格式为 `"<subj> ... <obj> ... <rel> ..."`。
+- **triple**：知识图谱三元组列表，格式为 `"<subj> ... <obj> ... <rel> ..."`。
 
 当前测试数据中的一条输入样例如下：
 
@@ -106,7 +106,7 @@ python graph_rag_pipeline.py
       "Which organization that Lucy joins inspires Henry?",
       "Which cities has Maple Leaves performed in?"
     ],
-    "triplet": [
+    "triple": [
       "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
       "<subj> Henry <obj> Maple Leaves <rel> forms",
       "<subj> Lucy <obj> University Toronto <rel> studies_at",
@@ -150,10 +150,10 @@ self.query_extraction_step1.run(
 
 **功能：**
 
-- 基于 `entities` 和 `triplet` 做 k-hop 子图检索
+- 基于 `entities` 和 `triple` 做 k-hop 子图检索
 - 将检索结果整理成可直接送入大模型的 `subgraph_prompt`
 
-**输入**：`question`、`entities`、`triplet`  
+**输入**：`question`、`entities`、`triple`  
 **输出**：`subgraph_prompt`
 
 **算子运行：**
