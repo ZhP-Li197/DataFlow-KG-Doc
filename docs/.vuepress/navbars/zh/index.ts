@@ -17,7 +17,7 @@ export const zhNavbar = defineNavbarConfig([
         icon: 'icon-park-outline:guide-board',
         items: [
             {
-                text: '基本信息',
+                text: '基础信息',
                 items: [
                             {
                                 text: '简介',
@@ -25,18 +25,18 @@ export const zhNavbar = defineNavbarConfig([
                                 icon: 'mdi:tooltip-text-outline',
                                 activeMatch: '^/guide/'
                             },
-                            {
-                                text: '安装',
-                                link: '/zh/notes/kg_guide/kg_quickstart/install.md',
-                                icon: 'material-symbols:auto-transmission-sharp',
-                                activeMatch: '^/guide/'
-                            },
-                            {
-                                text: '快速开始',
-                                link: '/zh/notes/kg_guide/kg_quickstart/quickstart.md',
-                                icon: 'mdi:bullseye-arrow',
-                                activeMatch: '^/guide/'
-                            }
+                            // {
+                            //     text: '安装',
+                            //     link: '/zh/notes/kg_guide/kg_quickstart/install.md',
+                            //     icon: 'material-symbols:auto-transmission-sharp',
+                            //     activeMatch: '^/guide/'
+                            // },
+                            // {
+                            //     text: '快速开始',
+                            //     link: '/zh/notes/kg_guide/kg_quickstart/quickstart.md',
+                            //     icon: 'mdi:bullseye-arrow',
+                            //     activeMatch: '^/guide/'
+                            // }
                 ]
             },
         ]
@@ -51,7 +51,7 @@ export const zhNavbar = defineNavbarConfig([
         // ]
         items: [
             {
-                text: '基本信息',
+                text: '基础信息',
                 items: [
                             {
                                 text: '简介',

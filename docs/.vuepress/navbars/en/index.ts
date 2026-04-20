@@ -26,18 +26,18 @@ export const enNavbar = defineNavbarConfig([
                         icon: 'mdi:tooltip-text-outline',
                         activeMatch: '^/guide/'
                     },
-                    {
-                        text: 'Installation',
-                        link: '/en/notes/kg_guide/kg_quickstart/install.md',
-                        icon: 'material-symbols:auto-transmission-sharp',
-                        activeMatch: '^/guide/'
-                    },
-                    {
-                        text: 'Quickstart',
-                        link: '/en/notes/kg_guide/kg_quickstart/quickstart.md',
-                        icon: 'mdi:bullseye-arrow',
-                        activeMatch: '^/guide/'
-                    }
+                    // {
+                    //     text: 'Installation',
+                    //     link: '/en/notes/kg_guide/kg_quickstart/install.md',
+                    //     icon: 'material-symbols:auto-transmission-sharp',
+                    //     activeMatch: '^/guide/'
+                    // },
+                    // {
+                    //     text: 'Quickstart',
+                    //     link: '/en/notes/kg_guide/kg_quickstart/quickstart.md',
+                    //     icon: 'mdi:bullseye-arrow',
+                    //     activeMatch: '^/guide/'
+                    // }
                 ]
             },
         ]
