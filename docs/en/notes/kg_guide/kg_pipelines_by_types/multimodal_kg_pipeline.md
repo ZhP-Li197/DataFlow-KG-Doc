@@ -2,7 +2,7 @@
 title: Multimodal Knowledge Graph Pipeline
 createTime: 2026/04/15 18:35:00
 permalink: /en/kg_guide/multimodal_kg_pipeline/
-icon: carbon:chart-network
+icon: solar:skip-next-bold
 ---
 
 # Multimodal Knowledge Graph Pipeline

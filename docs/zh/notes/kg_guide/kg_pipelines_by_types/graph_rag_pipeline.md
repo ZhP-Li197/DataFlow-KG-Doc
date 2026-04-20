@@ -2,7 +2,7 @@
 title: 基于知识图谱增强检索流水线
 createTime: 2026/04/15 18:00:00
 permalink: /zh/kg_guide/graph_rag_pipeline/
-icon: carbon:chart-network
+icon: solar:routing-3-bold
 ---
 
 # 基于知识图谱增强检索流水线

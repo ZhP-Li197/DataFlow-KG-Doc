@@ -22,7 +22,8 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             items: [
                 'install',
                 'quickstart',
-                'first_pipeline'
+                'first_pipeline',
+                'data_pre'
             ],
         },
         {

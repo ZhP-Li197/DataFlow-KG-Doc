@@ -9,7 +9,7 @@ permalink: /en/kg_guide/kg_quickstart/first_pipeline/
 
 Here is a minimal DataFlow pipeline that allows you to use the same prompt to drive a large language model to transform your batch inputs. You can copy it and run it directly.
 
-## Code for the First Pipeline
+## 1. Code for the First Pipeline
 
 ```python
 # Text2KGPipeline.py
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     pipeline.forward()
 ```
 
-## Dataset Preparation
+##2.  Dataset Preparation
 
 You need to prepare a dataset. Create a file named `./input.json` and fill it with some test data. Here is an out-of-the-box question set:
 
@@ -87,7 +87,7 @@ You need to prepare a dataset. Create a file named `./input.json` and fill it wi
 ]
 ```
 
-## API_KEY Preparation
+## 3. API_KEY Preparation
 
 Since the pipeline above uses an API-based large language model, you need to provide the corresponding `api_url` and secret key. For security reasons, you should export the `DF_API_KEY` environment variable instead of writing the key directly into code.
 
@@ -111,7 +111,7 @@ $env:DF_API_KEY = "sh-xxxxx"
 
 After setting it up, the program can read the API key from the environment. Make sure not to expose the key in public code.
 
-## Run the Pipeline
+## 4. Run the Pipeline
 
 You only need to run the Python file above:
 
@@ -161,7 +161,7 @@ After that, you can find the output file in the default output directory `./demo
 
 With this, you have completed the simplest operation of using DataFlow to perform batch inference on a set of content.
 
-## Detailed Explanation: LLMServing Classes
+## 5. Detailed Explanation: LLMServing Classes
 
 If you do not have access to an API but do have your own GPU, we recommend using a local LLMServing for inference. The available Serving classes are mainly located under `dataflow/serving/`.
 
@@ -193,7 +193,7 @@ Parameters prefixed with `hf_` mainly describe the model name, cache path, and o
 
 To use a local model, import the corresponding local Serving class at the top of your Python script and replace the API serving in the sample pipeline.
 
-## Detailed Explanation: Storage Classes
+## 6. Detailed Explanation: Storage Classes
 
 The Storage classes in DataFlow are defined in `dataflow.utils.storage`. The main ones are:
 

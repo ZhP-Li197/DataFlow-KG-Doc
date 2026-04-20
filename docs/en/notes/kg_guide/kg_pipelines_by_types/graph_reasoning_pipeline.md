@@ -2,7 +2,7 @@
 title: Graph Reasoning Pipeline
 createTime: 2026/04/15 18:30:00
 permalink: /en/kg_guide/graph_reasoning_pipeline/
-icon: carbon:chart-network
+icon: solar:course-up-outline
 ---
 
 # Graph Reasoning Pipeline

@@ -2,7 +2,7 @@
 title: Geospatial Spatio-Temporal Event Extraction Pipeline
 createTime: 2026/04/15 18:45:00
 permalink: /en/kg_guide/geokg_spatiotemporal_event_pipeline/
-icon: carbon:chart-network
+icon: solar:station-minimalistic-line-duotone
 ---
 
 # Geospatial Spatio-Temporal Event Extraction Pipeline

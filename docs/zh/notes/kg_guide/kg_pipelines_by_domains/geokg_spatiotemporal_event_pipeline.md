@@ -2,7 +2,7 @@
 title: 地理时空事件抽取流水线
 createTime: 2026/04/15 18:20:00
 permalink: /zh/kg_guide/geokg_spatiotemporal_event_pipeline/
-icon: carbon:chart-network
+icon: solar:station-minimalistic-line-duotone
 ---
 
 # 地理时空事件抽取流水线

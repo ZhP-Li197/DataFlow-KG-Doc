@@ -2,7 +2,7 @@
 title: Knowledge Graph Evaluation and Visualization Pipeline
 createTime: 2026/04/12 17:00:00
 permalink: /en/kg_guide/kg_evaluation_visualization_pipeline/
-icon: carbon:chart-network
+icon: solar:chart-2-broken
 ---
 
 # KG Evaluation Pipeline

@@ -2,7 +2,7 @@
 title: 多模态知识图谱流水线
 createTime: 2026/04/15 18:10:00
 permalink: /zh/kg_guide/multimodal_kg_pipeline/
-icon: carbon:chart-network
+icon: solar:skip-next-bold
 ---
 
 # 多模态知识图谱流水线

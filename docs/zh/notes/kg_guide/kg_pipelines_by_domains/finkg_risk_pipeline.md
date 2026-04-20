@@ -2,7 +2,7 @@
 title: 金融实体风险识别流水线
 createTime: 2026/04/15 18:15:00
 permalink: /zh/kg_guide/finkg_risk_pipeline/
-icon: carbon:chart-network
+icon: ic:baseline-attach-money
 ---
 
 # 金融实体风险识别流水线

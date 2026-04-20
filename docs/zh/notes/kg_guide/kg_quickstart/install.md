@@ -10,7 +10,7 @@ permalink: /zh/kg_guide/kg_quickstart/install/
 
 > **注：** 针对 Knowledge Graph (KG) 任务，目前的依赖库已经过大幅精简优化。核心的图结构处理和可视化依赖于 `networkx` 与 `pyvis`，这使得整体安装过程更加轻量和迅速。为了提升安装速度，我们强烈推荐使用 `uv` 进行安装。
 
-## 普通用户安装
+## 1. 普通用户安装
 
 如果你没有 GPU 做本地推理环境，仅需使用 API 和 CPU 功能，则配置 Python 环境并安装 DataFlow-KG 正式版👇
 
@@ -49,7 +49,7 @@ You are using the latest version: 0.0.2.
 
 此外还有`dfkg env`指令用于查看当前硬件软件环境，用于报告Bug使用。
 
-## 开发者安装
+## 2. 开发者安装
 
 DataFlow-KG开发者可以通过以下指令安装:
 
@@ -58,7 +58,7 @@ DataFlow-KG开发者可以通过以下指令安装:
 conda create -n dfkg python=3.10
 conda activate dfkg
 
-git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+git clone https://github.com/OpenDCAI/DataFlow-KG.git
 cd DataFlow-KG
 pip install -e .
 ```
@@ -68,7 +68,7 @@ pip install -e .
 conda create -n dfkg python=3.10
 conda activate dfkg
 
-git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+git clone https://github.com/OpenDCAI/DataFlow-KG.git
 cd DataFlow-KG
 pip install -e .[vllm]
 ```

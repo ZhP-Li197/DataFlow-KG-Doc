@@ -15,14 +15,15 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             ],
         },
         {
-            text: '上手案例',
+            text: '从这里开始',
             collapsed: false,
             icon: 'carbon:idea',
             prefix: 'kg_quickstart',
             items: [
                 'install',
                 'quickstart',
-                'first_pipeline'
+                'first_pipeline',
+                'data_pre'
             ],
         },
         {

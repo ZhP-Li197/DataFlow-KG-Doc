@@ -2,7 +2,7 @@
 title: Financial Entity Risk Analysis Pipeline
 createTime: 2026/04/15 18:40:00
 permalink: /en/kg_guide/finkg_risk_pipeline/
-icon: carbon:chart-network
+icon: ic:baseline-attach-money
 ---
 
 # Financial Entity Risk Analysis Pipeline

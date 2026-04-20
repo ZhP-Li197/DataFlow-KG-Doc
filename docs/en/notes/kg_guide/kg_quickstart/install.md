@@ -10,7 +10,7 @@ This section introduces how to install DataFlow-KG. If you simply want to quickl
 
 > **Note:** For Knowledge Graph (KG) tasks, the current dependencies have been significantly streamlined and optimized. Core graph structure processing and visualization rely on `networkx` and `pyvis`, making the overall installation process more lightweight and faster. To speed up the installation, we highly recommend using `uv`.
 
-## General User Installation
+## 1. General User Installation
 
 If you don't have a GPU for a local inference environment and only need to use APIs and CPU functions, configure your Python environment and install the DataFlow-KG official release👇
 
@@ -50,7 +50,7 @@ You are using the latest version: 0.0.2.
 
 Additionally, there is the `dfkg env` command to view the current hardware and software environment, which is useful for bug reporting.
 
-## Developer Installation
+## 2. Developer Installation
 
 DataFlow-KG developers can install via the following commands:
 
@@ -59,7 +59,7 @@ If local GPU inference is not required:
 conda create -n dfkg python=3.10
 conda activate dfkg
 
-git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+git clone https://github.com/OpenDCAI/DataFlow-KG.git
 cd DataFlow-KG
 pip install -e .
 ```
@@ -69,7 +69,7 @@ If local GPU inference is required:
 conda create -n dfkg python=3.10
 conda activate dfkg
 
-git clone https://github.com/ZhP-Li197/DataFlow-KG.git
+git clone https://github.com/OpenDCAI/DataFlow-KG.git
 cd DataFlow-KG
 pip install -e .[vllm]
 ```

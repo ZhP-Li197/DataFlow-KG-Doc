@@ -2,7 +2,7 @@
 title: 图推理流水线
 createTime: 2026/04/15 18:05:00
 permalink: /zh/kg_guide/graph_reasoning_pipeline/
-icon: carbon:chart-network
+icon: solar:course-up-outline
 ---
 
 # 图推理流水线

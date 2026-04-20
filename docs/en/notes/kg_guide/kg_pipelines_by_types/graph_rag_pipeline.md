@@ -2,7 +2,7 @@
 title: GraphRAG Pipeline
 createTime: 2026/04/15 18:25:00
 permalink: /en/kg_guide/graph_rag_pipeline/
-icon: carbon:chart-network
+icon: solar:routing-3-bold
 ---
 
 # GraphRAG Pipeline
