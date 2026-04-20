@@ -44,7 +44,7 @@ cd run_kg_extraction_pipeline
 ### Step 3: Initialize DataFlow
 
 ```bash
-dataflow init
+dfkg init
 ```
 
 You will see:
@@ -179,7 +179,7 @@ Because `KGTupleRemoveRepeated` writes the deduplicated results into a new tripl
 ## 4. Pipeline Example
 
 ```python
-from dataflow.serving import APILLMServing_request
+from dataflow.serving.api_llm_serving_request import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.general_kg.generate.kg_entity_extractor import (
     KGEntityExtraction,
@@ -201,7 +201,7 @@ from dataflow.operators.general_kg.filter.kg_tuple_validation import (
 class KGExtractionPipeline:
     def __init__(self):
         self.storage = FileStorage(
-            first_entry_file_name="./input/kg_extraction_input.jsonl",
+            first_entry_file_name="../example_data/kg_extraction_pipeline_input.json",
             cache_path="./cache_kg_extraction",
             file_name_prefix="kg_extraction_pipeline",
             cache_type="jsonl",
@@ -209,7 +209,7 @@ class KGExtractionPipeline:
 
         self.llm_serving = APILLMServing_request(
             api_url="https://api.openai.com/v1/chat/completions",
-            model_name="gpt-4o",
+            model_name="gpt-4o-mini",
             max_workers=20,
         )
 
