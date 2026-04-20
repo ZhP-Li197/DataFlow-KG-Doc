@@ -1,15 +1,15 @@
 ---
-title: 地理时空事件流水线
+title: 地理时空事件抽取流水线
 createTime: 2026/04/15 18:20:00
 permalink: /zh/kg_guide/geokg_spatiotemporal_event_pipeline/
 icon: carbon:chart-network
 ---
 
-# 地理时空事件流水线
+# 地理时空事件抽取流水线
 
 ## 1. 概述
 
-**地理时空事件流水线**面向地理事件抽取与清洗场景。它会先从原始文本中抽取带时间、地点等信息的事件元组，再按时间范围和地点约束进行过滤，随后通过 LLM 对事件合理性和一致性打分，最终得到更加可信的地理事件结果。
+**地理时空事件抽取流水线**面向地理事件抽取与清洗场景。它会先从原始文本中抽取带时间、地点等信息的事件元组，再按时间范围和地点约束进行过滤，随后通过 LLM 对事件合理性和一致性打分，最终得到更加可信的地理事件结果。
 
 该流水线适合以下任务：
 
@@ -92,7 +92,7 @@ pipeline.forward()
 ]
 ```
 
-### 3.2 地理时空事件流水线逻辑（GeoKGSpatiotemporalEventPipeline）
+### 3.2 地理时空事件抽取流水线逻辑（GeoKGSpatiotemporalEventPipeline）
 
 #### 步骤 1：事件抽取（GeoKGEventExtraction）
 

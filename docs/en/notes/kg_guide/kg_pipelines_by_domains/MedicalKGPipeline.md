@@ -1,5 +1,5 @@
 ﻿---
-title: Medical KG Pipeline
+title: Drug Mechanism Explanation Pipeline
 icon: medical-icon:i-laboratory
 createTime: 2026/04/13 10:35:00
 permalink: /en/kg_guide/kg_pipelines_by_domains/medicalkgpipeline/
@@ -7,7 +7,7 @@ permalink: /en/kg_guide/kg_pipelines_by_domains/medicalkgpipeline/
 
 ## 1. Overview
 
-The core objective of the **Medical Domain Knowledge Graph Pipeline** is to extract structured knowledge from medical text and build high-quality triples for downstream analysis around medical entities such as drugs, diseases, and genes. The pipeline first loads a medical ontology as a constraint, then extracts medical triples, filters key relations according to a target ontology item, and finally generates a drug action mechanism explanation from the filtered evidence.
+The core objective of the **Drug Mechanism Explanation Pipeline** is to extract structured knowledge from medical text and build high-quality triples for downstream analysis around medical entities such as drugs, diseases, and genes. The pipeline first loads a medical ontology as a constraint, then extracts medical triples, filters key relations according to a target ontology item, and finally generates a drug action mechanism explanation from the filtered evidence.
 
 We support the following application scenarios:
 

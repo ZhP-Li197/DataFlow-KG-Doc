@@ -1,15 +1,15 @@
 ---
-title: Financial KG Risk Analysis Pipeline
+title: Financial Entity Risk Analysis Pipeline
 createTime: 2026/04/15 18:40:00
 permalink: /en/kg_guide/finkg_risk_pipeline/
 icon: carbon:chart-network
 ---
 
-# Financial KG Risk Analysis Pipeline
+# Financial Entity Risk Analysis Pipeline
 
 ## 1. Overview
 
-The **Financial KG Risk Analysis Pipeline** is designed for risk identification over financial text. It first extracts Financial KG quadruples from raw text, filters them by ontology, and then produces a risk explanation and a risk score for a specified `target_entity`.
+The **Financial Entity Risk Analysis Pipeline** is designed for risk identification over financial text. It first extracts Financial KG quadruples from raw text, filters them by ontology, and then produces a risk explanation and a risk score for a specified `target_entity`.
 
 This pipeline is suitable for:
 
@@ -98,7 +98,7 @@ A sample input is:
 ]
 ```
 
-### 3.2 Financial KG Risk Analysis Pipeline Logic (FinKGRiskPipeline)
+### 3.2 Financial Entity Risk Analysis Pipeline Logic (FinKGRiskPipeline)
 
 #### Step 1: Financial Quadruple Extraction (FinKGTupleExtraction)
 

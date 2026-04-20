@@ -1,5 +1,5 @@
 ﻿---
-title: Scholar KG Pipeline
+title: Scholar Knowledge Answering Pipeline
 icon: material-symbols-light:book-ribbon-rounded
 createTime: 2026/04/13 11:05:00
 permalink: /en/kg_guide/kg_pipelines_by_domains/scholarkgpipeline/
@@ -7,7 +7,7 @@ permalink: /en/kg_guide/kg_pipelines_by_domains/scholarkgpipeline/
 
 ## 1. Overview
 
-The core objective of the **Scholar Domain Knowledge Graph Pipeline** is to extract structured knowledge from scholarly text and build a scholar knowledge graph around entities such as authors, papers, organizations, venues, and research topics. The pipeline first loads a scholarly ontology as an extraction constraint, then extracts triples from text, filters key academic relations according to a target ontology item, and finally generates a query reasoning answer from the filtered graph evidence.
+The core objective of the **Scholar Knowledge Answering Pipeline** is to extract structured knowledge from scholarly text and build a scholar knowledge graph around entities such as authors, papers, organizations, venues, and research topics. The pipeline first loads a scholarly ontology as an extraction constraint, then extracts triples from text, filters key academic relations according to a target ontology item, and finally generates a query reasoning answer from the filtered graph evidence.
 
 We support the following application scenarios:
 

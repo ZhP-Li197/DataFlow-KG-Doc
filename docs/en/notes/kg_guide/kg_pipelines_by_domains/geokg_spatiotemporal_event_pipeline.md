@@ -1,15 +1,15 @@
 ---
-title: Geospatial Spatio-Temporal Event Pipeline
+title: Geospatial Spatio-Temporal Event Extraction Pipeline
 createTime: 2026/04/15 18:45:00
 permalink: /en/kg_guide/geokg_spatiotemporal_event_pipeline/
 icon: carbon:chart-network
 ---
 
-# Geospatial Spatio-Temporal Event Pipeline
+# Geospatial Spatio-Temporal Event Extraction Pipeline
 
 ## 1. Overview
 
-The **Geospatial Spatio-Temporal Event Pipeline** is designed for geospatial event extraction and refinement. It first extracts event tuples with time and location information from raw text, then filters them by time range and target location, and finally uses an LLM to score rationale and consistency so that only more reliable geospatial events remain.
+The **Geospatial Spatio-Temporal Event Extraction Pipeline** is designed for geospatial event extraction and refinement. It first extracts event tuples with time and location information from raw text, then filters them by time range and target location, and finally uses an LLM to score rationale and consistency so that only more reliable geospatial events remain.
 
 This pipeline is suitable for:
 
@@ -92,7 +92,7 @@ A sample input is:
 ]
 ```
 
-### 3.2 Geospatial Event Pipeline Logic (GeoKGSpatiotemporalEventPipeline)
+### 3.2 Geospatial Event Extraction Pipeline Logic (GeoKGSpatiotemporalEventPipeline)
 
 #### Step 1: Event Extraction (GeoKGEventExtraction)
 

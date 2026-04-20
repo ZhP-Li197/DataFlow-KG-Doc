@@ -1,15 +1,15 @@
 ---
-title: 金融知识图谱风险分析流水线
+title: 金融实体风险识别流水线
 createTime: 2026/04/15 18:15:00
 permalink: /zh/kg_guide/finkg_risk_pipeline/
 icon: carbon:chart-network
 ---
 
-# 金融知识图谱风险分析流水线
+# 金融实体风险识别流水线
 
 ## 1. 概述
 
-**金融知识图谱风险分析流水线**面向金融文本中的实体风险识别场景。它先从文本中抽取金融四元组，再按金融本体筛选目标类型相关的关系，最后围绕指定 `target_entity` 生成风险分析结果和风险分数。
+**金融实体风险识别流水线**面向金融文本中的实体风险识别场景。它先从文本中抽取金融四元组，再按金融本体筛选目标类型相关的关系，最后围绕指定 `target_entity` 生成风险分析结果和风险分数。
 
 该流水线适合以下任务：
 
@@ -98,7 +98,7 @@ pipeline.forward()
 ]
 ```
 
-### 3.2 金融知识图谱风险分析流水线逻辑（FinKGRiskPipeline）
+### 3.2 金融实体风险识别流水线逻辑（FinKGRiskPipeline）
 
 #### 步骤 1：金融四元组抽取（FinKGTupleExtraction）
 

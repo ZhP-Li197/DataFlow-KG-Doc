@@ -1,8 +1,8 @@
 ﻿---
-title: Legal KG Pipeline
+title: Legal Judgement Prediction Pipeline
 icon: material-symbols-light:page-info-rounded
 createTime: 2026/04/13 11:15:00
-permalink: /en/kg_guide/kg_pipelines_by_domains/legalkgpipeline/
+permalink: /en/kg_guide/LegalKGPipeline/
 ---
 
 ## 1. Overview
@@ -19,7 +19,7 @@ We support the following application scenarios:
 
 The main processes of the pipeline include:
 
-1. **Legal ontology loading**: `LegalKGGetBasicOntology` generates the general legal KG ontology for later extraction and filtering.
+1. **Legal ontology loading**: `LegalKGGetBasicOntology` generates the general Legal Judgement Prediction ontology for later extraction and filtering.
 2. **Legal triple extraction**: `LegalKGTupleExtraction` extracts `triple`, `entity_class`, and `case_summary` from `raw_chunk`.
 3. **Target ontology filtering**: `LegalKGTripleFilter` filters triples by a target ontology item, such as keeping facts involving `NaturalPerson`.
 4. **Case similarity evaluation**: `LegalKGCaseSummarySimilarity` evaluates the semantic match between `case_summary` and the target case type description.
@@ -122,7 +122,7 @@ self.storage = FileStorage(
 
 ### 3.2 Legal ontology loading
 
-The first step uses `LegalKGGetBasicOntology` to load the general legal KG ontology. This operator generates entity types, relation types, and attribute types, and writes them to the cache path:
+The first step uses `LegalKGGetBasicOntology` to load the general Legal Judgement Prediction ontology. This operator generates entity types, relation types, and attribute types, and writes them to the cache path:
 
 ```text
 ./.cache/api/legal_ontology.json
