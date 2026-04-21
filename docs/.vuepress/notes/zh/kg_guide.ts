@@ -31,6 +31,9 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             prefix: 'kg_pipelines_by_types',
             items: [
                 'KGExtractionPipeline',
+                'kg_qa_pipeline',
+                'tkg_qa_pipeline',
+                'hyper_kg_qa_pipeline',
                 'kg_evaluation_visualization_pipeline',
             ],
         },
