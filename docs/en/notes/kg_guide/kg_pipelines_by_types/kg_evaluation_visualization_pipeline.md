@@ -5,58 +5,91 @@ permalink: /en/kg_guide/kg_evaluation_visualization_pipeline/
 icon: solar:chart-2-broken
 ---
 
-# KG Evaluation Pipeline
+# Knowledge Graph Evaluation and Visualization Pipeline
 
 ## 1. Overview
 
-The **Knowledge Graph Evaluation and Visualization Pipeline** is designed for quality analysis and result presentation of General Knowledge Graphs (General KG). It supports multi-dimensional evaluation of extracted triple-based graphs and further generates interactive graph visualization results. This pipeline is suitable for tasks such as graph construction quality inspection, statistical analysis before graph cleaning, graph structure diagnosis, and result presentation.
+The **Knowledge Graph Evaluation and Visualization Pipeline** is designed for quality analysis and result presentation of General Knowledge Graphs. It supports multi-dimensional evaluation of extracted relation-triple graphs and generates an interactive HTML visualization. This pipeline is suitable for graph construction quality inspection, statistical analysis before graph cleaning, graph structure diagnosis, and result presentation.
 
-We support the following use cases:
+Supported use cases include:
 
 - Quality evaluation of general knowledge graph extraction results
-- Graph structure connectivity and scale analysis
-- Triple consistency and semantic strength evaluation based on large language models
+- Graph connectivity and scale analysis
+- LLM-based triple logical consistency and semantic strength evaluation
 - Interactive knowledge graph visualization
 
-The main stages of the pipeline include:
+The main stages of this pipeline are:
 
-1. **Topology Evaluation**: Analyze overall graph topology features such as connected components, average degree, and fragmentation.
-2. **Subgraph Scale Evaluation**: Measure scale-related metrics such as the number of nodes, number of edges, and density.
-3. **Subgraph Connectivity Evaluation**: Compute connectivity indicators including vertex connectivity, edge connectivity, and global efficiency.
-4. **Triple Consistency Evaluation**: Use a large language model to determine whether triples satisfy basic logical and semantic consistency.
-5. **Triple Semantic Strength Scoring**: Evaluate the strength of relation expressions based on the original text and triple content.
-6. **Knowledge Graph Visualization**: Render triples into an interactive graph structure and export it as an HTML file.
-
----
+1. **Topology Evaluation**: `KGRelationTripleTopologyEvaluator` analyzes graph topology features such as connected components, average degree, and fragmentation.
+2. **Subgraph Scale Evaluation**: `KGSubgraphScaleEvaluator` computes the number of nodes, number of edges, and graph density.
+3. **Subgraph Connectivity Evaluation**: `KGSubgraphConnectivityEvaluator` computes vertex connectivity, edge connectivity, and global efficiency.
+4. **Triple Consistency Evaluation**: `KGRelationTripleConsistencyEvaluator` uses an LLM to determine whether triples satisfy basic logical and semantic consistency.
+5. **Triple Semantic Strength Scoring**: `KGRelationStrengthScoring` evaluates relation strength based on the original text and triple content.
+6. **Knowledge Graph Visualization**: `KGRelationTripleVisualization` renders triples as an interactive graph and exports an HTML file.
 
 ## 2. Quick Start
 
-### Step 1: Create a new DataFlow workspace
+### Step 1: Install DataFlow-KG
 
 ```bash
-mkdir run_dataflow_kg
-cd run_dataflow_kg
+pip install dataflow-kg
 ```
 
-### Step 2: Prepare the script
-
-Save the code from the "Pipeline Example" section below as `kg_evaluation_visualization_pipeline.py`.
-
-### Step 3: Configure the API Key and runtime parameters
-
-Before running the pipeline, configure the API key for the large model:
+### Step 2: Create a new DataFlow workspace
 
 ```bash
-export DF_API_KEY=sk-xxxx
+mkdir run_kg_evaluation_visualization_pipeline
+cd run_kg_evaluation_visualization_pipeline
 ```
 
-If you need to modify the input file, cache path, model name, or service endpoint, you can adjust the following parameters in `kg_evaluation_visualization_pipeline.py`:
+### Step 3: Initialize DataFlow
+
+```bash
+dfkg init
+```
+
+After initialization, the pipeline script and default sample data will be generated automatically:
+
+```shell
+api_pipelines/kg_evaluation_visualization_pipeline.py
+example_data/kg_evaluation_visualization_pipeline/input.json
+```
+
+`api_pipelines/kg_evaluation_visualization_pipeline.py` is the runnable pipeline script, and `example_data/kg_evaluation_visualization_pipeline/input.json` is the default input data. Users do not need to copy code from this document or manually create the pipeline script.
+
+### Step 4: Configure the API Key and API URL
+
+Linux and macOS:
+
+```shell
+export DF_API_KEY="sk-xxxxx"
+```
+
+Windows PowerShell:
+
+```powershell
+$env:DF_API_KEY = "sk-xxxxx"
+```
+
+Configure `api_url` in `api_pipelines/kg_evaluation_visualization_pipeline.py`:
+
+```python
+self.llm_serving = APILLMServing_request(
+    api_url="https://api.openai.com/v1/chat/completions",
+    key_name_of_api_key=api_key_env,
+    model_name=model_name,
+    max_workers=max_workers,
+    temperature=0.0,
+)
+```
+
+If you need to modify the input file, cache path, model name, or concurrency, adjust the initialization parameters of `KGEvaluationVisualizationPipeline`:
 
 ```python
 pipeline = KGEvaluationVisualizationPipeline(
     input_file="your_kg_data.json",
     cache_path="./cache_kg_eval",
-    api_url="http://172.96.141.132:3001/v1/chat/completions",
+    api_url="https://api.openai.com/v1/chat/completions",
     model_name="gpt-4o-mini",
     api_key_env="DF_API_KEY",
     max_workers=10,
@@ -64,26 +97,56 @@ pipeline = KGEvaluationVisualizationPipeline(
 )
 ```
 
-### Step 4: One-click run
+### Step 5: Check the default input data
 
-```bash
-python kg_evaluation_visualization_pipeline.py
+The default input file after initialization is:
+
+```shell
+example_data/kg_evaluation_visualization_pipeline/input.json
 ```
 
-After execution, the evaluation results will be saved in the cache directory, and the interactive graph visualization file `kg_visualization.html` will also be generated. Next, we will introduce each step and configuration item in the pipeline in detail.
+This file contains at least the following fields:
 
----
+- `raw_chunk`: the original text chunk, used by context-aware evaluation operators such as semantic strength scoring.
+- `triple`: a list of relation-triple strings, used as the core input for structure evaluation and visualization.
+
+Example:
+
+```json
+[
+  {
+    "raw_chunk": "Henry, a musician from Canada, trained under conductor Maria Rodriguez. He later formed the band The Maple Leaves.",
+    "triple": [
+      "<subj> Henry <obj> Canada <rel> comes_from",
+      "<subj> Henry <obj> Maria Rodriguez <rel> trained_under",
+      "<subj> Henry <obj> The Maple Leaves <rel> formed"
+    ]
+  }
+]
+```
+
+### Step 6: Run the pipeline
+
+```bash
+python api_pipelines/kg_evaluation_visualization_pipeline.py
+```
+
+After execution, the evaluation results will be saved in `cache_kg_eval/`, and the interactive graph visualization file will be generated:
+
+```shell
+cache_kg_eval/kg_visualization.html
+```
 
 ## 3. Data Flow and Pipeline Logic
 
-### 3.1 **Input Data**
+### 3.1 Input Data
 
-The input data for this pipeline mainly includes the following fields:
+The pipeline input mainly contains the following fields:
 
-- **triple**: A list of knowledge graph triples. This is the core input for both evaluation and visualization.
-- **raw_chunk**: The original text chunk, used by evaluation operators that require context, such as semantic strength scoring.
+- **raw_chunk**: the original text chunk, which can come from general corpora, web text, document passages, or upstream KG extraction results.
+- **triple**: a list of relation-triple strings in the format `"<subj> subject <obj> object <rel> relation"`.
 
-These input fields can be stored in a `json` file and managed and read through the `FileStorage` object:
+The input data is loaded through `FileStorage`. After initialization, the default path points to `example_data/kg_evaluation_visualization_pipeline/input.json`:
 
 ```python
 self.storage = FileStorage(
@@ -94,238 +157,99 @@ self.storage = FileStorage(
 )
 ```
 
-When `input_file` is not explicitly specified, the pipeline reads the following file by default:
+### 3.2 Topology Evaluation
 
-```python
-dataflow/data_for_operator_testing/knowledge_extraction.json
-```
+The first step uses `KGRelationTripleTopologyEvaluator` to analyze the graph structure formed by relation triples:
 
-**Input Data Example**:
+- Input: `triple`
+- Output: `lcc_ratio`, `structure_avg_degree`, `fragmentation_score`, `num_components`, `node_count`, `edge_count`
 
-```json
-[
-    {
-        "raw_chunk": "Marie Curie discovered polonium and radium during her pioneering research on radioactivity.",
-        "triple": [
-            ["Marie Curie", "discovered", "polonium"],
-            ["Marie Curie", "discovered", "radium"],
-            ["Marie Curie", "researched", "radioactivity"]
-        ]
-    }
-]
-```
+These metrics describe whether the graph forms a large connected region, how densely entities are connected, and how fragmented the graph is.
 
-### 3.2 **Knowledge Graph Evaluation and Visualization Pipeline (KGEvaluationVisualizationPipeline)**
+### 3.3 Subgraph Scale Evaluation
 
-The core of this workflow is **KGEvaluationVisualizationPipeline**, which chains together 6 evaluation and visualization operators. The first 3 structural evaluation operators do not require a large language model, steps 4 and 5 depend on an LLM, and step 6 generates the final graph visualization result.
+The second step uses `KGSubgraphScaleEvaluator` to compute graph scale metrics:
 
-#### Step 1: Topology Evaluation (KGRelationTripleTopologyEvaluator)
+- Input: `triple`
+- Output: `num_nodes`, `num_edges`, `density`
 
-**Functionality:**
+This step quickly measures the number of nodes, number of edges, and density of the current graph.
 
-- Analyze the basic topological structure of the graph
-- Output indicators such as largest connected component ratio, average degree, fragmentation score, and number of connected components
+### 3.4 Subgraph Connectivity Evaluation
 
-**Input**: `triple`  
-**Output**: Topology evaluation result fields such as `lcc_ratio`, `structure_avg_degree`, and `fragmentation_score`
+The third step uses `KGSubgraphConnectivityEvaluator` to evaluate graph connectivity:
 
-**Operator Initialization**:
+- Input: `triple`
+- Output: `vertex_connectivity`, `edge_connectivity`, `global_efficiency`
 
-```python
-self.topology_eval = KGRelationTripleTopologyEvaluator()
-```
+These metrics help identify sparse graphs, disconnected structures, and information propagation efficiency between nodes.
 
-**Operator Execution**:
+### 3.5 Triple Logical Consistency Evaluation
 
-```python
-self.topology_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
+The fourth step uses `KGRelationTripleConsistencyEvaluator` to determine whether triples are logically consistent based on an LLM:
 
-#### Step 2: Subgraph Scale Evaluation (KGSubgraphScaleEvaluator)
+- Input: `triple`
+- Output: `logical_consistency_score`
+- Key parameters: `sample_rate=1.0`, `max_samples=10`
 
-**Functionality:**
+This step is useful for discovering obvious semantic conflicts, abnormal relations, or extraction errors. Because this operator calls an LLM, make sure `DF_API_KEY` and a valid `api_url` are configured.
 
-- Measure scale-related characteristics of the graph
-- Output metrics such as the number of nodes, number of edges, and graph density
+### 3.6 Triple Semantic Strength Scoring
 
-**Input**: `triple`  
-**Output**: Scale evaluation result fields such as `num_nodes`, `num_edges`, and `density`
+The fifth step uses `KGRelationStrengthScoring` to score relation strength based on the original text context and triple content:
 
-**Operator Initialization**:
+- Input: `raw_chunk`
+- Metadata input: `triple`
+- Output: `triple_strength_score`
 
-```python
-self.scale_eval = KGSubgraphScaleEvaluator()
-```
+This step determines whether a relation is sufficiently supported by the original text and is useful for graph cleaning and quality filtering.
 
-**Operator Execution**:
+### 3.7 Knowledge Graph Visualization
 
-```python
-self.scale_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
+The sixth step uses `KGRelationTripleVisualization` to render triples into an interactive HTML graph:
 
-#### Step 3: Subgraph Connectivity Evaluation (KGSubgraphConnectivityEvaluator)
+- Input: `triple`
+- Output: `kg_visualization`
+- HTML file: `cache_kg_eval/kg_visualization.html`
 
-**Functionality:**
+The generated HTML file can be opened directly in a browser to inspect entity nodes, relation edges, and the overall graph structure.
 
-- Evaluate graph connectivity characteristics
-- Output indicators such as vertex connectivity, edge connectivity, and global efficiency
+### 3.8 Output Data
 
-**Input**: `triple`  
-**Output**: Connectivity evaluation result fields such as `vertex_connectivity`, `edge_connectivity`, and `global_efficiency`
+The final output usually contains the following fields:
 
-**Operator Initialization**:
+- **triple**: original knowledge graph triples
+- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components**: topology metrics
+- **num_nodes / num_edges / density**: scale evaluation metrics
+- **vertex_connectivity / edge_connectivity / global_efficiency**: connectivity evaluation metrics
+- **logical_consistency_score**: triple logical consistency score
+- **triple_strength_score**: triple semantic strength score
+- **kg_visualization**: visualization HTML file path
 
-```python
-self.connectivity_eval = KGSubgraphConnectivityEvaluator()
-```
-
-**Operator Execution**:
-
-```python
-self.connectivity_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
-
-#### Step 4: Triple Logical Consistency Evaluation (KGRelationTripleConsistencyEvaluator)
-
-**Functionality:**
-
-- Use a large language model to determine whether triples satisfy basic logical consistency
-- Suitable for discovering obvious semantic conflicts, abnormal relations, or extraction errors
-
-**Input**: `triple`  
-**Output**: Logical consistency scoring result such as `logical_consistency_score`
-
-**Operator Initialization**:
-
-```python
-self.consistency_eval = KGRelationTripleConsistencyEvaluator(
-    llm_serving=self.llm_serving,
-    sample_rate=1.0,
-    max_samples=10,
-    lang=lang,
-)
-```
-
-**Operator Execution**:
-
-```python
-self.consistency_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
-
-#### Step 5: Triple Semantic Strength Scoring (KGRelationStrengthScoring)
-
-**Functionality:**
-
-- Score the strength of relation expressions by combining the original text context and triple content
-- Useful for determining whether a relation is sufficiently supported by the source text
-
-**Input**: `raw_chunk`, `triple`  
-**Output**: Semantic strength scoring field `triple_strength_score`
-
-**Operator Initialization**:
-
-```python
-self.strength_eval = KGRelationStrengthScoring(
-    llm_serving=self.llm_serving,
-    lang=lang,
-)
-```
-
-**Operator Execution**:
-
-```python
-self.strength_eval.run(
-    storage=self.storage.step(),
-    input_key="raw_chunk",
-    input_key_meta="triple",
-    output_key="triple_strength_score",
-)
-```
-
-#### Step 6: Knowledge Graph Visualization (KGRelationTripleVisualization)
-
-**Functionality:**
-
-- Render triples into an interactive graph visualization result
-- Export an HTML file for direct viewing in a browser
-
-**Input**: `triple`  
-**Output**: Visualization result field `kg_visualization` and the HTML file `kg_visualization.html`
-
-**Operator Initialization**:
-
-```python
-self.visualization = KGRelationTripleVisualization(lang=lang)
-```
-
-**Operator Execution**:
-
-```python
-visual_html = os.path.join(self.storage.cache_path, "kg_visualization.html")
-self.visualization.run(
-    storage=self.storage.step(),
-    input_key="triple",
-    output_key="kg_visualization",
-    output_html=visual_html,
-)
-```
-
-### 3.3 **Output Data**
-
-In the end, the pipeline output usually contains the following fields:
-
-- **triple**: Original knowledge graph triples
-- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components**: Topology metrics
-- **num_nodes / num_edges / density**: Scale evaluation metrics
-- **vertex_connectivity / edge_connectivity / global_efficiency**: Connectivity evaluation metrics
-- **logical_consistency_score**: Triple logical consistency score
-- **triple_strength_score**: Triple semantic strength score
-- **kg_visualization**: Visualization result field
-
-In addition, the cache directory will contain an interactive HTML file:
-
-- **kg_visualization.html**: Knowledge graph visualization page
-
-**Output Example**:
+Output example:
 
 ```json
 {
-    "triple": [
-        ["Marie Curie", "discovered", "polonium"],
-        ["Marie Curie", "discovered", "radium"]
-    ],
-    "lcc_ratio": 1.0,
-    "structure_avg_degree": 1.33,
-    "fragmentation_score": 0.0,
-    "num_nodes": 3,
-    "num_edges": 2,
-    "density": 0.3333,
-    "vertex_connectivity": 1,
-    "edge_connectivity": 1,
-    "global_efficiency": 0.8333,
-    "logical_consistency_score": 0.95,
-    "triple_strength_score": [0.91, 0.93],
-    "kg_visualization": "./cache_kg_eval/kg_visualization.html"
+  "triple": [
+    "<subj> Henry <obj> Canada <rel> comes_from",
+    "<subj> Henry <obj> The Maple Leaves <rel> formed"
+  ],
+  "lcc_ratio": 1.0,
+  "structure_avg_degree": 1.33,
+  "fragmentation_score": 0.0,
+  "num_nodes": 3,
+  "num_edges": 2,
+  "density": 0.3333,
+  "vertex_connectivity": 1,
+  "edge_connectivity": 1,
+  "global_efficiency": 0.8333,
+  "logical_consistency_score": 0.95,
+  "triple_strength_score": [0.91, 0.93],
+  "kg_visualization": "./cache_kg_eval/kg_visualization.html"
 }
 ```
 
----
-
-## 4. Pipeline Example
-
-Below is the complete implementation of `KGEvaluationVisualizationPipeline`.
+## 4. Pipeline Instance
 
 ```python
 import os
@@ -346,15 +270,22 @@ class KGEvaluationVisualizationPipeline:
         self,
         input_file: str = "",
         cache_path: str = "./cache_kg_eval",
-        api_url: str = "http://172.96.141.132:3001/v1/chat/completions",
+        api_url: str = "https://api.openai.com/v1/chat/completions",
         model_name: str = "gpt-4o-mini",
         api_key_env: str = "DF_API_KEY",
         max_workers: int = 10,
         lang: str = "en",
     ):
         if not input_file:
-            repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
-            input_file = os.path.join(repo_root, "dataflow", "data_for_operator_testing", "knowledge_extraction.json")
+            pipeline_dir = os.path.dirname(os.path.abspath(__file__))
+            input_file = os.path.abspath(
+                os.path.join(
+                    pipeline_dir,
+                    "..",
+                    "example_data",
+                    "kg_evaluation_visualization_pipeline/input.json",
+                )
+            )
 
         self.storage = FileStorage(
             first_entry_file_name=input_file,

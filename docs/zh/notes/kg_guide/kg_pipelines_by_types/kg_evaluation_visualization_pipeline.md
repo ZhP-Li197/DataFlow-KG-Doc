@@ -5,58 +5,91 @@ permalink: /zh/kg_guide/kg_evaluation_visualization_pipeline/
 icon: solar:chart-2-broken
 ---
 
-# 知识图谱评测流水线
+# 知识图谱评测与可视化流水线
 
 ## 1. 概述
 
-**知识图谱评测流水线**面向通用知识图谱（General KG）的质量分析与结果展示场景，支持对抽取得到的三元组图谱进行多维度评测，并进一步生成可交互的图谱可视化结果。该流水线适用于图谱构建质量检查、图谱清洗前的统计分析、图谱结构诊断与展示等任务。
+**知识图谱评测与可视化流水线**面向通用知识图谱（General KG）的质量分析与结果展示场景，支持对抽取得到的关系三元组图谱进行多维度评测，并进一步生成可交互的 HTML 图谱可视化结果。该流水线适用于图谱构建质量检查、图谱清洗前的统计分析、图谱结构诊断和结果展示等任务。
 
 我们支持以下应用场景：
 
 - 通用知识图谱抽取结果的质量评测
 - 图谱结构连通性与规模分析
-- 基于大模型的三元组一致性与语义强度评测
+- 基于大模型的三元组逻辑一致性与语义强度评测
 - 交互式知识图谱可视化展示
 
-流水线的主要流程包括：
+该流水线的主要流程包括：
 
-1. **拓扑结构评测**：分析图谱整体拓扑特征，如连通分量、平均度、碎片化程度等。
-2. **子图规模评测**：统计图谱的节点数、边数与稠密度等规模指标。
-3. **子图连通性评测**：计算点连通度、边连通度和全局效率等连通性指标。
-4. **三元组一致性评测**：基于大模型判断三元组是否符合基本逻辑与语义一致性。
-5. **三元组语义强度评分**：结合原始文本和三元组内容，评估关系表达强度。
-6. **知识图谱可视化**：将三元组渲染为交互式图结构，并导出为 HTML 文件。
-
----
+1. **拓扑结构评测**：`KGRelationTripleTopologyEvaluator` 分析图谱整体拓扑特征，如连通分量、平均度和碎片化程度等。
+2. **子图规模评测**：`KGSubgraphScaleEvaluator` 统计节点数、边数和图密度等规模指标。
+3. **子图连通性评测**：`KGSubgraphConnectivityEvaluator` 计算点连通度、边连通度和全局效率等连通性指标。
+4. **三元组一致性评测**：`KGRelationTripleConsistencyEvaluator` 基于大模型判断三元组是否符合基本逻辑与语义一致性。
+5. **三元组语义强度评分**：`KGRelationStrengthScoring` 结合原始文本和三元组内容，评估关系表达强度。
+6. **知识图谱可视化**：`KGRelationTripleVisualization` 将三元组渲染为交互式图结构，并导出为 HTML 文件。
 
 ## 2. 快速开始
 
-### 步骤 1：创建新的 DataFlow 工作文件夹
+### 步骤 1：安装 DataFlow-KG
 
 ```bash
-mkdir run_dataflow_kg
-cd run_dataflow_kg
+pip install dataflow-kg
 ```
 
-### 步骤 2：准备脚本
-
-将下文“流水线示例”中的代码保存为 `kg_evaluation_visualization_pipeline.py`。
-
-### 步骤 3：配置 API Key 和运行参数
-
-在运行前，请先配置大模型 API Key：
+### 步骤 2：创建新的 DataFlow 工作目录
 
 ```bash
-export DF_API_KEY=sk-xxxx
+mkdir run_kg_evaluation_visualization_pipeline
+cd run_kg_evaluation_visualization_pipeline
 ```
 
-如果你需要修改输入文件、缓存路径、模型名称或服务地址，可以在 `kg_evaluation_visualization_pipeline.py` 中调整以下参数：
+### 步骤 3：初始化 DataFlow
+
+```bash
+dfkg init
+```
+
+初始化完成后，当前目录下会自动生成流水线脚本和默认样例数据：
+
+```shell
+api_pipelines/kg_evaluation_visualization_pipeline.py
+example_data/kg_evaluation_visualization_pipeline/input.json
+```
+
+其中，`api_pipelines/kg_evaluation_visualization_pipeline.py` 是可直接运行的流水线代码，`example_data/kg_evaluation_visualization_pipeline/input.json` 是默认输入数据。用户不需要从文档中复制代码或手动新建流水线脚本。
+
+### 步骤 4：配置 API Key 和 API URL
+
+Linux 和 macOS：
+
+```shell
+export DF_API_KEY="sk-xxxxx"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:DF_API_KEY = "sk-xxxxx"
+```
+
+在 `api_pipelines/kg_evaluation_visualization_pipeline.py` 中配置 `api_url`：
+
+```python
+self.llm_serving = APILLMServing_request(
+    api_url="https://api.openai.com/v1/chat/completions",
+    key_name_of_api_key=api_key_env,
+    model_name=model_name,
+    max_workers=max_workers,
+    temperature=0.0,
+)
+```
+
+如果需要修改输入文件、缓存路径、模型名称或并发数，可以调整 `KGEvaluationVisualizationPipeline` 的初始化参数：
 
 ```python
 pipeline = KGEvaluationVisualizationPipeline(
     input_file="your_kg_data.json",
     cache_path="./cache_kg_eval",
-    api_url="http://172.96.141.132:3001/v1/chat/completions",
+    api_url="https://api.openai.com/v1/chat/completions",
     model_name="gpt-4o-mini",
     api_key_env="DF_API_KEY",
     max_workers=10,
@@ -64,26 +97,56 @@ pipeline = KGEvaluationVisualizationPipeline(
 )
 ```
 
-### 步骤 4：一键运行
+### 步骤 5：检查默认输入数据
 
-```bash
-python kg_evaluation_visualization_pipeline.py
+初始化后的默认输入文件为：
+
+```shell
+example_data/kg_evaluation_visualization_pipeline/input.json
 ```
 
-运行完成后，评测结果会保存在缓存目录中，同时输出交互式图谱可视化文件 `kg_visualization.html`。接下来，我们会详细介绍流水线中的各个步骤和参数配置。
+该文件至少包含以下字段：
 
----
+- `raw_chunk`：原始文本片段，用于语义强度评分等需要上下文的评测算子。
+- `triple`：关系三元组字符串列表，是结构评测和可视化的核心输入。
 
-## 3. 数据流与流水线逻辑
+示例：
 
-### 3.1 **输入数据**
+```json
+[
+  {
+    "raw_chunk": "Henry, a musician from Canada, trained under conductor Maria Rodriguez. He later formed the band The Maple Leaves.",
+    "triple": [
+      "<subj> Henry <obj> Canada <rel> comes_from",
+      "<subj> Henry <obj> Maria Rodriguez <rel> trained_under",
+      "<subj> Henry <obj> The Maple Leaves <rel> formed"
+    ]
+  }
+]
+```
 
-该流程的输入数据主要包括以下字段：
+### 步骤 6：一键执行
 
-- **triple**：知识图谱三元组列表，是评测与可视化的核心输入。
-- **raw_chunk**：原始文本片段，用于语义强度评分等需要结合上下文的评测算子。
+```bash
+python api_pipelines/kg_evaluation_visualization_pipeline.py
+```
 
-这些输入数据可以存储在 `json` 文件中，并通过 `FileStorage` 对象进行管理和读取：
+运行完成后，评测结果会保存在 `cache_kg_eval/` 目录中，同时生成交互式图谱可视化文件：
+
+```shell
+cache_kg_eval/kg_visualization.html
+```
+
+## 3. 数据流和流水线逻辑
+
+### 3.1 输入数据
+
+该流水线的输入数据主要包含以下字段：
+
+- **raw_chunk**：原始文本片段，可以来自通用语料、网页文本、文档段落或上游知识图谱抽取结果。
+- **triple**：关系三元组字符串列表，格式为 `"<subj> 主体 <obj> 客体 <rel> 关系"`。
+
+输入数据通过 `FileStorage` 读取。初始化后，默认路径会指向 `example_data/kg_evaluation_visualization_pipeline/input.json`：
 
 ```python
 self.storage = FileStorage(
@@ -94,197 +157,66 @@ self.storage = FileStorage(
 )
 ```
 
-当未显式指定 `input_file` 时，流水线默认读取：
+### 3.2 拓扑结构评测
 
-```python
-dataflow/data_for_operator_testing/knowledge_extraction.json
-```
+第一步使用 `KGRelationTripleTopologyEvaluator` 分析关系三元组构成的图结构：
 
-**输入数据示例**：
+- 输入：`triple`
+- 输出：`lcc_ratio`、`structure_avg_degree`、`fragmentation_score`、`num_components`、`node_count`、`edge_count`
 
-```json
-[
-    {
-        "raw_chunk": "Marie Curie discovered polonium and radium during her pioneering research on radioactivity.",
-        "triple": [
-            ["Marie Curie", "discovered", "polonium"],
-            ["Marie Curie", "discovered", "radium"],
-            ["Marie Curie", "researched", "radioactivity"]
-        ]
-    }
-]
-```
+这些指标用于描述图谱是否形成较大的连通区域、平均连接程度以及碎片化程度。
 
-### 3.2 **知识图谱评测与可视化流水线（KGEvaluationVisualizationPipeline）**
+### 3.3 子图规模评测
 
-该流程的核心是 **KGEvaluationVisualizationPipeline**，它串联了 6 个评测与可视化算子，其中前 3 个结构评测算子无需大模型，第 4、5 步依赖 LLM，第 6 步生成最终的图谱可视化结果。
+第二步使用 `KGSubgraphScaleEvaluator` 统计图谱规模：
 
-#### 步骤 1：拓扑结构评测（KGRelationTripleTopologyEvaluator）
+- 输入：`triple`
+- 输出：`num_nodes`、`num_edges`、`density`
 
-**功能：**
+该步骤用于快速判断当前图谱的节点规模、边规模和稠密程度。
 
-- 分析图谱的基础拓扑结构
-- 输出最大连通分量占比、平均度、碎片化程度、连通分量数量等指标
+### 3.4 子图连通性评测
 
-**输入**：`triple`  
-**输出**：拓扑评测结果字段，如 `lcc_ratio`、`structure_avg_degree`、`fragmentation_score`
+第三步使用 `KGSubgraphConnectivityEvaluator` 评估图谱连通性：
 
-**算子初始化**：
+- 输入：`triple`
+- 输出：`vertex_connectivity`、`edge_connectivity`、`global_efficiency`
 
-```python
-self.topology_eval = KGRelationTripleTopologyEvaluator()
-```
+这些指标可以辅助判断图谱是否过于稀疏、是否存在明显断裂结构，以及节点之间的信息传播效率。
 
-**算子运行**：
+### 3.5 三元组逻辑一致性评测
 
-```python
-self.topology_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
+第四步使用 `KGRelationTripleConsistencyEvaluator` 基于大模型判断三元组是否具有基本逻辑一致性：
 
-#### 步骤 2：子图规模评测（KGSubgraphScaleEvaluator）
+- 输入：`triple`
+- 输出：`logical_consistency_score`
+- 关键参数：`sample_rate=1.0`、`max_samples=10`
 
-**功能：**
+该步骤适合发现明显的语义冲突、关系异常或抽取错误。由于该算子需要调用大模型，请确保已配置 `DF_API_KEY` 和可用的 `api_url`。
 
-- 统计图谱规模特征
-- 输出节点数、边数和图密度等指标
+### 3.6 三元组语义强度评分
 
-**输入**：`triple`  
-**输出**：规模评测结果字段，如 `num_nodes`、`num_edges`、`density`
+第五步使用 `KGRelationStrengthScoring` 结合原始文本上下文和三元组内容，对关系表达强度进行评分：
 
-**算子初始化**：
+- 输入：`raw_chunk`
+- 元信息输入：`triple`
+- 输出：`triple_strength_score`
 
-```python
-self.scale_eval = KGSubgraphScaleEvaluator()
-```
+该步骤用于判断某条关系是否被原始文本充分支持，适合图谱清洗和质量筛选场景。
 
-**算子运行**：
+### 3.7 知识图谱可视化
 
-```python
-self.scale_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
+第六步使用 `KGRelationTripleVisualization` 将三元组渲染为交互式 HTML 图谱：
 
-#### 步骤 3：子图连通性评测（KGSubgraphConnectivityEvaluator）
+- 输入：`triple`
+- 输出：`kg_visualization`
+- HTML 文件：`cache_kg_eval/kg_visualization.html`
 
-**功能：**
+生成的 HTML 文件可以直接用浏览器打开，查看实体节点、关系边和图谱整体结构。
 
-- 评估图谱的连通性特征
-- 输出点连通度、边连通度和全局效率等指标
+### 3.8 输出数据
 
-**输入**：`triple`  
-**输出**：连通性评测结果字段，如 `vertex_connectivity`、`edge_connectivity`、`global_efficiency`
-
-**算子初始化**：
-
-```python
-self.connectivity_eval = KGSubgraphConnectivityEvaluator()
-```
-
-**算子运行**：
-
-```python
-self.connectivity_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
-
-#### 步骤 4：三元组逻辑一致性评测（KGRelationTripleConsistencyEvaluator）
-
-**功能：**
-
-- 基于大模型判断三元组是否具有基本逻辑一致性
-- 适合用于发现明显的语义冲突、关系异常或抽取错误
-
-**输入**：`triple`  
-**输出**：逻辑一致性评分结果，如 `logical_consistency_score`
-
-**算子初始化**：
-
-```python
-self.consistency_eval = KGRelationTripleConsistencyEvaluator(
-    llm_serving=self.llm_serving,
-    sample_rate=1.0,
-    max_samples=10,
-    lang=lang,
-)
-```
-
-**算子运行**：
-
-```python
-self.consistency_eval.run(
-    storage=self.storage.step(),
-    input_key="triple",
-)
-```
-
-#### 步骤 5：三元组语义强度评分（KGRelationStrengthScoring）
-
-**功能：**
-
-- 结合原始文本上下文和三元组内容，对关系表达强度进行评分
-- 可用于判断某条关系是否被文本充分支持
-
-**输入**：`raw_chunk`、`triple`  
-**输出**：语义强度评分字段 `triple_strength_score`
-
-**算子初始化**：
-
-```python
-self.strength_eval = KGRelationStrengthScoring(
-    llm_serving=self.llm_serving,
-    lang=lang,
-)
-```
-
-**算子运行**：
-
-```python
-self.strength_eval.run(
-    storage=self.storage.step(),
-    input_key="raw_chunk",
-    input_key_meta="triple",
-    output_key="triple_strength_score",
-)
-```
-
-#### 步骤 6：知识图谱可视化（KGRelationTripleVisualization）
-
-**功能：**
-
-- 将三元组渲染为可交互的图谱可视化结果
-- 导出 HTML 文件，便于浏览器直接查看
-
-**输入**：`triple`  
-**输出**：可视化结果字段 `kg_visualization` 和 HTML 文件 `kg_visualization.html`
-
-**算子初始化**：
-
-```python
-self.visualization = KGRelationTripleVisualization(lang=lang)
-```
-
-**算子运行**：
-
-```python
-visual_html = os.path.join(self.storage.cache_path, "kg_visualization.html")
-self.visualization.run(
-    storage=self.storage.step(),
-    input_key="triple",
-    output_key="kg_visualization",
-    output_html=visual_html,
-)
-```
-
-### 3.3 **输出数据**
-
-最终，流水线输出的数据通常将包含以下内容：
+最终输出通常包含以下字段：
 
 - **triple**：原始知识图谱三元组
 - **lcc_ratio / structure_avg_degree / fragmentation_score / num_components**：拓扑结构指标
@@ -292,40 +224,32 @@ self.visualization.run(
 - **vertex_connectivity / edge_connectivity / global_efficiency**：连通性评测指标
 - **logical_consistency_score**：三元组逻辑一致性评分
 - **triple_strength_score**：三元组语义强度评分
-- **kg_visualization**：可视化结果字段
+- **kg_visualization**：可视化 HTML 文件路径
 
-此外，缓存目录下还会生成交互式 HTML 文件：
-
-- **kg_visualization.html**：知识图谱可视化页面
-
-**输出结果示例**：
+输出结果示例：
 
 ```json
 {
-    "triple": [
-        ["Marie Curie", "discovered", "polonium"],
-        ["Marie Curie", "discovered", "radium"]
-    ],
-    "lcc_ratio": 1.0,
-    "structure_avg_degree": 1.33,
-    "fragmentation_score": 0.0,
-    "num_nodes": 3,
-    "num_edges": 2,
-    "density": 0.3333,
-    "vertex_connectivity": 1,
-    "edge_connectivity": 1,
-    "global_efficiency": 0.8333,
-    "logical_consistency_score": 0.95,
-    "triple_strength_score": [0.91, 0.93],
-    "kg_visualization": "./cache_kg_eval/kg_visualization.html"
+  "triple": [
+    "<subj> Henry <obj> Canada <rel> comes_from",
+    "<subj> Henry <obj> The Maple Leaves <rel> formed"
+  ],
+  "lcc_ratio": 1.0,
+  "structure_avg_degree": 1.33,
+  "fragmentation_score": 0.0,
+  "num_nodes": 3,
+  "num_edges": 2,
+  "density": 0.3333,
+  "vertex_connectivity": 1,
+  "edge_connectivity": 1,
+  "global_efficiency": 0.8333,
+  "logical_consistency_score": 0.95,
+  "triple_strength_score": [0.91, 0.93],
+  "kg_visualization": "./cache_kg_eval/kg_visualization.html"
 }
 ```
 
----
-
-## 4. 流水线示例
-
-以下是完整的`KGEvaluationVisualizationPipeline`代码实现。
+## 4. 流水线实例
 
 ```python
 import os
@@ -346,15 +270,22 @@ class KGEvaluationVisualizationPipeline:
         self,
         input_file: str = "",
         cache_path: str = "./cache_kg_eval",
-        api_url: str = "http://172.96.141.132:3001/v1/chat/completions",
+        api_url: str = "https://api.openai.com/v1/chat/completions",
         model_name: str = "gpt-4o-mini",
         api_key_env: str = "DF_API_KEY",
         max_workers: int = 10,
         lang: str = "en",
     ):
         if not input_file:
-            repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
-            input_file = os.path.join(repo_root, "dataflow", "data_for_operator_testing", "knowledge_extraction.json")
+            pipeline_dir = os.path.dirname(os.path.abspath(__file__))
+            input_file = os.path.abspath(
+                os.path.join(
+                    pipeline_dir,
+                    "..",
+                    "example_data",
+                    "kg_evaluation_visualization_pipeline/input.json",
+                )
+            )
 
         self.storage = FileStorage(
             first_entry_file_name=input_file,
