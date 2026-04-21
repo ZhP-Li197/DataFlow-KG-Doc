@@ -38,17 +38,18 @@ mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 步骤 2：准备脚本
+### 步骤 2：初始化流水线代码和默认数据
 
-将下方“流水线实例”中的代码保存为 `graph_rag_pipeline.py`。
-
-该脚本默认读取仓库中的测试文件：
-
-```python
-dataflow/data_for_operator_testing/graphrag.json
+```bash
+dfkg init
 ```
 
-### 步骤 3：配置 API Key 与模型服务
+初始化后会生成：
+
+- 流水线脚本：`api_pipelines/graph_rag_pipeline.py`
+- 默认数据：`example_data/GraphRAGPipeline/input.json`
+
+### 步骤 3：配置 API Key 与可选模型参数
 
 运行前先配置大模型 API Key：
 
@@ -56,30 +57,12 @@ dataflow/data_for_operator_testing/graphrag.json
 export DF_API_KEY=sk-xxxx
 ```
 
-如果需要修改模型地址、模型名、缓存路径或跳数，可以调整以下参数：
-
-```python
-llm_serving = APILLMServing_request(
-    api_url="https://api.openai.com/v1/chat/completions",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="gpt-4o-mini",
-    max_workers=8,
-    temperature=0.0,
-)
-
-pipeline = GraphRAGPipeline(
-    first_entry_file_name="dataflow/data_for_operator_testing/graphrag.json",
-    llm_serving=llm_serving,
-    cache_path="./cache_graph_rag",
-    hop=1,
-    lang="en",
-)
-```
+默认使用 `gpt-4o-mini`。如需覆盖默认配置，可设置 `DF_API_URL`、`DF_LLM_MODEL` 或 `DF_GRAPHRAG_INPUT_FILE`。
 
 ### 步骤 4：一键运行
 
 ```bash
-python graph_rag_pipeline.py
+python api_pipelines/graph_rag_pipeline.py
 ```
 
 运行完成后，缓存目录中会依次保存查询语义、子图提示词、答案、难度标签、合理性得分和过滤后的答案结果。
@@ -274,7 +257,7 @@ self.answer_generation_step3.run(
 
 ## 4. 流水线实例
 
-以下是完整的 `GraphRAGPipeline` 代码实现。
+以下为 `dfkg init` 生成的 `GraphRAGPipeline` 代码结构参考，实际运行请使用初始化后生成的 `api_pipelines/graph_rag_pipeline.py`。
 
 ```python
 import os
@@ -379,20 +362,26 @@ class GraphRAGPipeline(PipelineABC):
 
 
 if __name__ == "__main__":
-    repo_root = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "..", "..", "..")
-    )
-    input_file = os.path.join(
-        repo_root,
-        "dataflow",
-        "data_for_operator_testing",
-        "graphrag.json",
+    input_file = os.environ.get(
+        "DF_GRAPHRAG_INPUT_FILE",
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "..",
+                "example_data",
+                "GraphRAGPipeline",
+                "input.json",
+            )
+        ),
     )
 
     llm_serving = APILLMServing_request(
-        api_url="https://api.openai.com/v1/chat/completions",
+        api_url=os.environ.get(
+            "DF_API_URL",
+            "https://api.openai.com/v1/chat/completions",
+        ),
         key_name_of_api_key="DF_API_KEY",
-        model_name="gpt-4o-mini",
+        model_name=os.environ.get("DF_LLM_MODEL", "gpt-4o-mini"),
         max_workers=8,
         temperature=0.0,
     )

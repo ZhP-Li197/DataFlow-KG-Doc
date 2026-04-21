@@ -36,48 +36,29 @@ mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 步骤 2：准备脚本
+### 步骤 2：初始化流水线代码和默认数据
 
-将下方“流水线实例”中的代码保存为 `graph_reasoning_pipeline.py`。
-
-脚本默认读取仓库中的测试文件：
-
-```python
-dataflow/data_for_operator_testing/graphreasoning.json
+```bash
+dfkg init
 ```
 
-### 步骤 3：配置 API Key 与模型服务
+初始化后会生成：
+
+- 流水线脚本：`api_pipelines/graph_reasoning_pipeline.py`
+- 默认数据：`example_data/GraphReasoningPipeline/input.json`
+
+### 步骤 3：配置 API Key 与可选模型参数
 
 ```bash
 export DF_API_KEY=sk-xxxx
 ```
 
-如果需要修改最大跳数、路径长度过滤区间或模型参数，可以调整：
-
-```python
-llm_serving = APILLMServing_request(
-    api_url="https://api.openai.com/v1/chat/completions",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="gpt-4o-mini",
-    max_workers=8,
-    temperature=0.0,
-)
-
-pipeline = GraphReasoningPipeline(
-    first_entry_file_name="dataflow/data_for_operator_testing/graphreasoning.json",
-    llm_serving=llm_serving,
-    cache_path="./cache_graph_reasoning",
-    max_hop=4,
-    min_length=2,
-    max_length=3,
-    lang="en",
-)
-```
+默认使用 `gpt-4o-mini`。如需覆盖默认配置，可设置 `DF_API_URL`、`DF_LLM_MODEL` 或 `DF_GRAPH_REASONING_INPUT_FILE`。
 
 ### 步骤 4：一键运行
 
 ```bash
-python graph_reasoning_pipeline.py
+python api_pipelines/graph_reasoning_pipeline.py
 ```
 
 ---
@@ -232,7 +213,7 @@ self.path_search_step1.run(
 
 ## 4. 流水线实例
 
-以下是完整的 `GraphReasoningPipeline` 代码实现。
+以下为 `dfkg init` 生成的 `GraphReasoningPipeline` 代码结构参考，实际运行请使用初始化后生成的 `api_pipelines/graph_reasoning_pipeline.py`。
 
 ```python
 import os
@@ -314,20 +295,26 @@ class GraphReasoningPipeline(PipelineABC):
 
 
 if __name__ == "__main__":
-    repo_root = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "..", "..", "..")
-    )
-    input_file = os.path.join(
-        repo_root,
-        "dataflow",
-        "data_for_operator_testing",
-        "graphreasoning.json",
+    input_file = os.environ.get(
+        "DF_GRAPH_REASONING_INPUT_FILE",
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "..",
+                "example_data",
+                "GraphReasoningPipeline",
+                "input.json",
+            )
+        ),
     )
 
     llm_serving = APILLMServing_request(
-        api_url="https://api.openai.com/v1/chat/completions",
+        api_url=os.environ.get(
+            "DF_API_URL",
+            "https://api.openai.com/v1/chat/completions",
+        ),
         key_name_of_api_key="DF_API_KEY",
-        model_name="gpt-4o-mini",
+        model_name=os.environ.get("DF_LLM_MODEL", "gpt-4o-mini"),
         max_workers=8,
         temperature=0.0,
     )

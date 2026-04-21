@@ -37,55 +37,31 @@ mkdir run_dataflow_kg
 cd run_dataflow_kg
 ```
 
-### 步骤 2：准备输入文件
+### 步骤 2：初始化流水线代码和默认数据
 
-将下述示例保存为 `mmkg_demo.json`。其中 `img_dict` 的 value 需要是本地可访问的图片路径。
-
-```json
-[
-  {
-    "raw_chunk": "Tesla unveiled the Cybertruck at a product event. Elon Musk appeared on stage and the presentation slide showed the vehicle design.",
-    "img_dict": {
-      "img_0": "./images/cybertruck.jpg",
-      "img_1": "./images/elon_musk.jpg"
-    }
-  }
-]
+```bash
+dfkg init
 ```
 
-### 步骤 3：保存脚本并配置环境变量
+初始化后会生成：
 
-将下方“流水线实例”中的代码保存为 `multimodal_kg_pipeline.py`，并配置：
+- 流水线脚本：`api_pipelines/multimodal_kg_pipeline.py`
+- 默认数据：`example_data/MultimodalKGPipeline/input.json`
+
+真实图文场景中，`img_dict` 的 value 需要是本地可访问的图片路径；默认数据使用 JSON 格式，可直接作为结构示例。
+
+### 步骤 3：配置 API Key 与可选模型参数
 
 ```bash
 export DF_API_KEY=sk-xxxx
-export DF_MMKG_INPUT_FILE=./mmkg_demo.json
 ```
 
-如果需要调整文本模型、视觉模型或采样 hop，可以修改以下参数：
-
-```python
-llm_serving = APILLMServing_request(
-    api_url="https://api.openai.com/v1/chat/completions",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="gpt-4o-mini",
-    max_workers=6,
-    temperature=0.0,
-)
-
-vlm_serving = APIVLMServing_openai(
-    api_url="https://api.openai.com/v1",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="o4-mini",
-    max_workers=4,
-    temperature=0.0,
-)
-```
+默认文本模型为 `gpt-4o-mini`，默认视觉模型为 `o4-mini`。如需覆盖默认配置，可设置 `DF_API_URL`、`DF_LLM_MODEL`、`DF_VLM_API_URL`、`DF_VLM_MODEL` 或 `DF_MMKG_INPUT_FILE`。
 
 ### 步骤 4：运行脚本
 
 ```bash
-python multimodal_kg_pipeline.py
+python api_pipelines/multimodal_kg_pipeline.py
 ```
 
 ---
@@ -212,7 +188,7 @@ python multimodal_kg_pipeline.py
 
 ## 4. 流水线实例
 
-以下是完整的 `MultimodalKGPipeline` 代码实现。
+以下为 `dfkg init` 生成的 `MultimodalKGPipeline` 代码结构参考，实际运行请使用初始化后生成的 `api_pipelines/multimodal_kg_pipeline.py`。
 
 ```python
 import os
@@ -324,23 +300,33 @@ class MultimodalKGPipeline(PipelineABC):
 
 
 if __name__ == "__main__":
-    input_file = os.environ.get("DF_MMKG_INPUT_FILE", "")
-    if not input_file:
-        raise ValueError(
-            "Set DF_MMKG_INPUT_FILE to a JSON file containing `raw_chunk` and `img_dict`."
-        )
+    input_file = os.environ.get(
+        "DF_MMKG_INPUT_FILE",
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "..",
+                "example_data",
+                "MultimodalKGPipeline",
+                "input.json",
+            )
+        ),
+    )
 
     llm_serving = APILLMServing_request(
-        api_url="https://api.openai.com/v1/chat/completions",
+        api_url=os.environ.get(
+            "DF_API_URL",
+            "https://api.openai.com/v1/chat/completions",
+        ),
         key_name_of_api_key="DF_API_KEY",
-        model_name="gpt-4o-mini",
+        model_name=os.environ.get("DF_LLM_MODEL", "gpt-4o-mini"),
         max_workers=6,
         temperature=0.0,
     )
     vlm_serving = APIVLMServing_openai(
-        api_url="https://api.openai.com/v1",
+        api_url=os.environ.get("DF_VLM_API_URL", "https://api.openai.com/v1"),
         key_name_of_api_key="DF_API_KEY",
-        model_name="o4-mini",
+        model_name=os.environ.get("DF_VLM_MODEL", "o4-mini"),
         max_workers=4,
         temperature=0.0,
     )
