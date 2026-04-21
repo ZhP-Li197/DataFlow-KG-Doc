@@ -43,7 +43,7 @@ cd run_medkg_pipeline
 ### Step 3: Initialize DataFlow
 
 ```bash
-dataflow init
+dfkg init
 ```
 
 You will see:
@@ -178,16 +178,13 @@ The final output usually contains the following fields:
 ## 4. Pipeline Example
 
 ```python
-from dataflow.serving import APILLMServing_request
+from dataflow.serving.api_llm_serving_request import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.domain_kg.utils.medkg_get_drug_therapy_ontology import (
     MedKGGetDrugTherapyOntology,
 )
 from dataflow.operators.domain_kg.medical_kg.generate.medkg_triple_extractor import (
     MedKGTripleExtraction,
-)
-from dataflow.operators.domain_kg.utils.medkg_triple_ontology_filtering import (
-    MedKGTripleFilter,
 )
 from dataflow.operators.domain_kg.medical_kg.generate.medkg_triple_drug_action_mechanism_discovery import (
     MedKGTripleDrugActionMechanismDiscovery,
@@ -197,7 +194,7 @@ from dataflow.operators.domain_kg.medical_kg.generate.medkg_triple_drug_action_m
 class MedicalKGPipeline:
     def __init__(self):
         self.storage = FileStorage(
-            first_entry_file_name="./input/medical_kg_input.jsonl",
+            first_entry_file_name="../example_data/medkg_pipeline_input.json",
             cache_path="./cache_medkg",
             file_name_prefix="medical_kg_pipeline",
             cache_type="jsonl",
@@ -220,8 +217,7 @@ class MedicalKGPipeline:
             llm_serving=self.llm_serving,
             lang="en",
         )
-        self.triple_filter_step3 = MedKGTripleFilter()
-        self.mechanism_discovery_step4 = MedKGTripleDrugActionMechanismDiscovery(
+        self.mechanism_discovery_step3 = MedKGTripleDrugActionMechanismDiscovery(
             llm_serving=self.llm_serving,
             lang="en",
             max_hop=3,
@@ -241,19 +237,11 @@ class MedicalKGPipeline:
             output_key_meta="entity_class",
         )
 
-        self.triple_filter_step3.run(
-            storage=self.storage.step(),
-            input_key_triple="triple",
-            input_key_class="entity_class",
-            input_key_meta="drug_therapy_ontology",
-            target_ontology="treats",
-            output_key="filtered_triple",
-        )
 
-        self.mechanism_discovery_step4.run(
+        self.mechanism_discovery_step3.run(
             storage=self.storage.step(),
             input_key_query="query",
-            input_key_triple="filtered_triple",
+            input_key_triple="triple",
             output_key_path="mechanism_path",
             output_key_answer="mechanism_answer",
         )
@@ -262,4 +250,5 @@ class MedicalKGPipeline:
 if __name__ == "__main__":
     pipeline = MedicalKGPipeline()
     pipeline.forward()
+
 ```

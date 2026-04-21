@@ -43,7 +43,7 @@ cd run_schokg_pipeline
 ### 步骤 3：初始化 DataFlow
 
 ```bash
-dataflow init
+dfkg init
 ```
 
 你会看到：
@@ -178,16 +178,13 @@ self.storage = FileStorage(
 ## 4. 流水线实例
 
 ```python
-from dataflow.serving import APILLMServing_request
+from dataflow.serving.api_llm_serving_request import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.domain_kg.utils.schokg_get_ontology import (
     SchoKGGetOntology,
 )
 from dataflow.operators.domain_kg.scholar_kg.generate.schokg_triple_extractor import (
     SchoKGTripleExtraction,
-)
-from dataflow.operators.domain_kg.utils.schokg_triple_ontology_filtering import (
-    SchoKGTripleFilter,
 )
 from dataflow.operators.domain_kg.scholar_kg.generate.schokg_query_reasoning import (
     SchoKGQueryReasoningOperator,
@@ -197,7 +194,7 @@ from dataflow.operators.domain_kg.scholar_kg.generate.schokg_query_reasoning imp
 class ScholarKGPipeline:
     def __init__(self):
         self.storage = FileStorage(
-            first_entry_file_name="./input/scholar_kg_input.jsonl",
+            first_entry_file_name="../example_data/schokg_pipeline_input.json",
             cache_path="./cache_schokg",
             file_name_prefix="scholar_kg_pipeline",
             cache_type="jsonl",
@@ -220,8 +217,7 @@ class ScholarKGPipeline:
             llm_serving=self.llm_serving,
             lang="en",
         )
-        self.triple_filter_step3 = SchoKGTripleFilter()
-        self.query_reasoning_step4 = SchoKGQueryReasoningOperator(
+        self.query_reasoning_step3 = SchoKGQueryReasoningOperator(
             llm_serving=self.llm_serving,
             lang="en",
             max_hop=3,
@@ -241,22 +237,14 @@ class ScholarKGPipeline:
             output_key_meta="entity_class",
         )
 
-        self.triple_filter_step3.run(
-            storage=self.storage.step(),
-            input_key_triple="triple",
-            input_key_class="entity_class",
-            input_key_meta="ontology",
-            target_ontology="author_of",
-            output_key="filtered_triple",
-        )
-
-        self.query_reasoning_step4.run(
+        self.query_reasoning_step3.run(
             storage=self.storage.step(),
             input_key_query="query",
-            input_key_triple="filtered_triple",
+            input_key_triple="triple",
             output_key_path="reasoning_path",
             output_key_answer="reasoning_answer",
         )
+
 
 
 if __name__ == "__main__":

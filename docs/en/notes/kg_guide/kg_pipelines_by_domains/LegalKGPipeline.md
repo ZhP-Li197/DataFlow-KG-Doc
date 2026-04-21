@@ -46,7 +46,7 @@ cd run_legalkg_pipeline
 ### Step 3: Initialize DataFlow
 
 ```bash
-dataflow init
+dfkg init
 ```
 
 You will see:
@@ -196,7 +196,7 @@ The final output usually contains the following fields:
 ## 4. Pipeline Example
 
 ```python
-from dataflow.serving import APILLMServing_request
+from dataflow.serving.api_llm_serving_request import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.domain_kg.utils.legalkg_get_ontology import (
     LegalKGGetBasicOntology,
@@ -204,9 +204,7 @@ from dataflow.operators.domain_kg.utils.legalkg_get_ontology import (
 from dataflow.operators.domain_kg.legal_kg.generate.legalkg_triple_extractor import (
     LegalKGTupleExtraction,
 )
-from dataflow.operators.domain_kg.utils.legalkg_triple_ontology_filtering import (
-    LegalKGTripleFilter,
-)
+
 from dataflow.operators.domain_kg.legal_kg.eval.legalkg_case_similarity_eval import (
     LegalKGCaseSummarySimilarity,
 )
@@ -221,7 +219,7 @@ from dataflow.operators.domain_kg.legal_kg.generate.legalkg_case_judgement_gener
 class LegalKGPipeline:
     def __init__(self):
         self.storage = FileStorage(
-            first_entry_file_name="./input/legal_kg_input.jsonl",
+            first_entry_file_name="../example_data/legalkg_pipeline_input.json",
             cache_path="./cache_legalkg",
             file_name_prefix="legal_kg_pipeline",
             cache_type="jsonl",
@@ -245,13 +243,12 @@ class LegalKGPipeline:
             triple_type="relation",
             lang="en",
         )
-        self.triple_filter_step3 = LegalKGTripleFilter()
-        self.case_similarity_eval_step4 = LegalKGCaseSummarySimilarity(
+        self.case_similarity_eval_step3 = LegalKGCaseSummarySimilarity(
             llm_serving=self.llm_serving,
             lang="en",
         )
-        self.case_similarity_filter_step5 = LegalKGCaseSimilarityFilter()
-        self.judgement_prediction_step6 = LegalKGJudgementPrediction(
+        self.case_similarity_filter_step4 = LegalKGCaseSimilarityFilter()
+        self.judgement_prediction_step5 = LegalKGJudgementPrediction(
             llm_serving=self.llm_serving,
             lang="en",
         )
@@ -270,33 +267,24 @@ class LegalKGPipeline:
             output_key_meta2="case_summary",
         )
 
-        self.triple_filter_step3.run(
-            storage=self.storage.step(),
-            input_key="triple",
-            input_key_class="entity_class",
-            input_key_meta="legal_ontology",
-            target_ontology="NaturalPerson",
-            output_key="filtered_triple",
-        )
-
-        self.case_similarity_eval_step4.run(
+        self.case_similarity_eval_step3.run(
             storage=self.storage.step(),
             input_key="case_summary",
-            input_key_meta=["theft case"],
+            input_key_meta=["theft case", "theft case"],
             output_key="similarity_score",
         )
 
-        self.case_similarity_filter_step5.run(
+        self.case_similarity_filter_step4.run(
             storage=self.storage.step(),
-            input_key="filtered_triple",
+            input_key="triple",
             output_key="similarity_score",
             min_score=0.6,
             max_score=1.0,
         )
 
-        self.judgement_prediction_step6.run(
+        self.judgement_prediction_step5.run(
             storage=self.storage.step(),
-            input_key="filtered_triple",
+            input_key="triple",
             input_key_meta=["Zhang San stole an iPhone worth RMB 6000"],
             output_key_judgement="judgement",
             output_key_reason="reason",
