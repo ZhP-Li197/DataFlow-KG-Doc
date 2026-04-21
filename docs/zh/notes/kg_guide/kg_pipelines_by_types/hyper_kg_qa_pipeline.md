@@ -1,15 +1,15 @@
 ---
-title: 超关系知识图谱问答流水线 (Hyper KG QA Pipeline)
+title: 超关系知识图谱流水线
 createTime: 2026/04/21 16:21:21
 permalink: /zh/kg_guide/hyper_kg_qa_pipeline/
-icon: solar:document-text-outline
+icon: mdi:book-multiple-outline
 ---
 
-# 超关系知识图谱问答流水线
+# 超关系知识图谱流水线
 
 ## 1. 概述
 
-**超关系知识图谱问答流水线 (HyperKGQA APIPipeline)** 面向“给定自然语言文本，提取超关系图谱（Hyper-Relational KG）三元组，过滤特定属性子图，并据此生成及评估问答对”的场景。该流水线能够处理比传统三元组更复杂的图谱结构（例如带有时间、地点等修饰属性的超关系三元组），并以此为基础自动生成高质量的图谱问答（KG-QA）数据集。
+**超关系知识图谱流水线** 面向“给定自然语言文本，提取超关系图谱（Hyper-Relational KG）三元组，过滤特定属性子图，并据此生成及评估问答对”的场景。该流水线能够处理比传统三元组更复杂的图谱结构（例如带有时间、地点等修饰属性的超关系三元组），并以此为基础自动生成高质量的图谱问答（KG-QA）数据集。
 
 该流水线适合以下任务：
 

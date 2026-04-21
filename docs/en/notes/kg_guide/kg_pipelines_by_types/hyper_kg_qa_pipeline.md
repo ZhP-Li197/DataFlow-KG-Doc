@@ -1,15 +1,15 @@
 ---
-title: Hyper-Relational Knowledge Graph QA Pipeline
+title: Hyper-Relational Knowledge Graph Pipeline
 createTime: 2026/04/21 16:21:21
 permalink: /en/kg_guide/hyper_kg_qa_pipeline/
-icon: solar:document-text-outline
+icon: mdi:book-multiple-outline
 ---
 
-# Hyper-Relational Knowledge Graph QA Pipeline
+# Hyper-Relational Knowledge Graph Pipeline
 
 ## 1. Overview
 
-The **Hyper-Relational Knowledge Graph QA Pipeline (`HyperKGQA_APIPipeline`)** targets scenarios where natural language text is used to extract hyper-relational knowledge graph triples, filter attribute-specific subgraphs, and then generate and evaluate QA pairs from them. Compared with traditional triples, this pipeline can handle more complex graph structures, such as hyper-relational triples augmented with qualifiers like time and location, and it uses that richer structure to automatically build high-quality KG-QA datasets.
+The **Hyper-Relational Knowledge Graph Pipeline** targets scenarios where natural language text is used to extract hyper-relational knowledge graph triples, filter attribute-specific subgraphs, and then generate and evaluate QA pairs from them. Compared with traditional triples, this pipeline can handle more complex graph structures, such as hyper-relational triples augmented with qualifiers like time and location, and it uses that richer structure to automatically build high-quality KG-QA datasets.
 
 This pipeline is suitable for the following tasks:
 

@@ -1,14 +1,15 @@
 ---
-title: Temporal Knowledge Graph QA Pipeline
+title: Temporal Knowledge Graph QA Generation Pipeline
 createTime: 2026/04/21 17:14:00
 permalink: /en/kg_guide/tkg_qa_pipeline/
+icon: mdi:alarm-clock 
 ---
 
 # Temporal Knowledge Graph QA Pipeline
 
 ## 1. Overview
 
-The **Temporal Knowledge Graph QA Pipeline (`TKGQA_APIPipeline`)** is designed for scenarios where time-aware knowledge structures need to be extracted from natural language text and then used to generate temporal QA pairs based on specific time ranges and relational paths. Unlike a standard knowledge graph, a Temporal Knowledge Graph (TKG) emphasizes the valid time or occurrence time of facts. This pipeline can automatically extract temporal facts, filter them by time windows, build multi-hop relation paths, and finally generate and evaluate high-quality time-point QA pairs.
+The **Temporal Knowledge Graph QA Generation Pipeline** is designed for scenarios where time-aware knowledge structures need to be extracted from natural language text and then used to generate temporal QA pairs based on specific time ranges and relational paths. Unlike a standard knowledge graph, a Temporal Knowledge Graph (TKG) emphasizes the valid time or occurrence time of facts. This pipeline can automatically extract temporal facts, filter them by time windows, build multi-hop relation paths, and finally generate and evaluate high-quality time-point QA pairs.
 
 This pipeline is suitable for the following tasks:
 

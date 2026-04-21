@@ -34,12 +34,12 @@ export const KGGuide: ThemeNote = defineNoteConfig({
             items: [
                 'KGExtractionPipeline',
                 'kg_qa_pipeline',
-                'tkg_qa_pipeline',
-                'hyper_kg_qa_pipeline',
                 'kg_evaluation_visualization_pipeline',
                 'graph_rag_pipeline',
                 'graph_reasoning_pipeline',
                 'multimodal_kg_pipeline',
+                'tkg_qa_pipeline',
+                'hyper_kg_qa_pipeline',
             ],
         },
         {

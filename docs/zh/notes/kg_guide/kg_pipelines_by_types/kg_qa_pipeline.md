@@ -1,5 +1,5 @@
 ---
-title: 知识图谱问答流水线 (KG QA Pipeline)
+title: 知识图谱问答生成流水线
 createTime: 2026/04/21 17:05:00
 permalink: /zh/kg_guide/kg_qa_pipeline/
 icon: solar:document-text-outline

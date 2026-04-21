@@ -1,15 +1,15 @@
 ---
-title: Knowledge Graph QA Pipeline
+title: Knowledge Graph QA Generation Pipeline
 createTime: 2026/04/21 17:05:00
 permalink: /en/kg_guide/kg_qa_pipeline/
 icon: solar:document-text-outline
 ---
 
-# Knowledge Graph QA Pipeline
+# Knowledge Graph QA Generation Pipeline
 
 ## 1. Overview
 
-The **Knowledge Graph QA Pipeline (`KGQA_APIPipeline`)** targets end-to-end scenarios where the system starts from plain natural language text, automatically builds a knowledge graph, and then generates and evaluates high-quality question-answer pairs. Starting from unstructured text, it performs entity recognition, relation triple extraction, graph construction and denoising, followed by subgraph sampling and density-based filtering to retain high-quality knowledge subgraphs. Finally, it generates QA pairs from those subgraphs and evaluates their naturalness.
+The **Knowledge Graph QA Generation Pipeline ** targets end-to-end scenarios where the system starts from plain natural language text, automatically builds a knowledge graph, and then generates and evaluates high-quality question-answer pairs. Starting from unstructured text, it performs entity recognition, relation triple extraction, graph construction and denoising, followed by subgraph sampling and density-based filtering to retain high-quality knowledge subgraphs. Finally, it generates QA pairs from those subgraphs and evaluates their naturalness.
 
 This pipeline is suitable for the following tasks:
 
