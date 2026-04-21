@@ -52,15 +52,15 @@ export const KGGuide: ThemeNote = defineNoteConfig({
                 'finkg_risk_pipeline'
             ],
         },
-        {
-            text: 'Chatbot Based on KG',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'chatbot_kg',
-            items: [
-                'install_image_video_generation',
-                'image_generation',
-            ],
-        },
+        // {
+        //     text: 'Chatbot Based on KG',
+        //     collapsed: false,
+        //     icon: 'carbon:idea',
+        //     prefix: 'chatbot_kg',
+        //     items: [
+        //         'install_image_video_generation',
+        //         'image_generation',
+        //     ],
+        // },
     ]
 })

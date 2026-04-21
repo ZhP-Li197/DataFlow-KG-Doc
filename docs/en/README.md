@@ -18,7 +18,7 @@ config:
         -
           theme: brand
           text: Quick Start
-          link: /en/notes/kg_guide/basicinfo/quickstart.md
+          link: /en/notes/kg_guide/kg_quickstart/quickstart.md
         -
           theme: alt
           text: Github →

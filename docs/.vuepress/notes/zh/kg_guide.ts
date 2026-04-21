@@ -52,16 +52,16 @@ export const KGGuide: ThemeNote = defineNoteConfig({
                 'finkg_risk_pipeline'
             ],
         },
-        {
-            text: '基于图谱的智能问答',
-            collapsed: false,
-            icon: 'carbon:idea',
-            prefix: 'image_video_generation',
-            items: [
-                'install_image_video_generation',
-                'image_generation',
-                'image_editing',
-            ],
-        },
+        // {
+        //     text: '基于图谱的智能问答',
+        //     collapsed: false,
+        //     icon: 'carbon:idea',
+        //     prefix: 'image_video_generation',
+        //     items: [
+        //         'install_image_video_generation',
+        //         'image_generation',
+        //         'image_editing',
+        //     ],
+        // },
     ]
 })
