@@ -34,8 +34,8 @@ The main stages of the pipeline include:
 ### Step 1: Create a new DataFlow working directory
 
 ```bash
-mkdir run_dataflow_kg
-cd run_dataflow_kg
+mkdir dataflow_temporal_kg
+cd dataflow_temporal_kg
 ```
 
 ### Step 2: Initialize the pipeline code and default data
