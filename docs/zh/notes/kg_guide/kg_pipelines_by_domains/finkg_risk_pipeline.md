@@ -28,9 +28,25 @@ icon: ic:baseline-attach-money
 
 ## 2. 快速开始
 
-### 步骤 1：准备输入数据
+### 步骤 1：创建新的 DataFlow 工作目录
 
-该流水线要求输入文件至少包含：
+```bash
+mkdir run_dataflow_kg
+cd run_dataflow_kg
+```
+
+### 步骤 2：初始化流水线代码和默认数据
+
+```bash
+dfkg init
+```
+
+初始化后会生成：
+
+- 流水线脚本：`api_pipelines/finkg_risk_pipeline.py`
+- 默认数据：`example_data/FinKGRiskPipeline/input.json`
+
+默认数据至少包含：
 
 - `raw_chunk`
 - `target_entity`
@@ -46,34 +62,18 @@ icon: ic:baseline-attach-money
 ]
 ```
 
-### 步骤 2：配置 API Key
+### 步骤 3：配置 API Key 与可选模型参数
 
 ```bash
 export DF_API_KEY=sk-xxxx
 ```
 
-### 步骤 3：初始化模型服务并运行流水线
+默认使用 `gpt-4o-mini`。如需覆盖默认配置，可设置 `DF_API_URL`、`DF_LLM_MODEL` 或 `DF_FINKG_INPUT_FILE`。
 
-```python
-from dataflow.serving import APILLMServing_request
-from dataflow.statics.pipelines.api_pipelines.finkg_risk_pipeline import FinKGRiskPipeline
+### 步骤 4：一键运行
 
-llm_serving = APILLMServing_request(
-    api_url="https://api.openai.com/v1/chat/completions",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="gpt-4o-mini",
-    max_workers=8,
-    temperature=0.0,
-)
-
-pipeline = FinKGRiskPipeline(
-    first_entry_file_name="./finkg_risk_demo.json",
-    llm_serving=llm_serving,
-    cache_path="./cache_finkg_risk",
-    lang="en",
-    target_ontology="Corporation",
-)
-pipeline.forward()
+```bash
+python api_pipelines/finkg_risk_pipeline.py
 ```
 
 ---
@@ -163,7 +163,7 @@ pipeline.forward()
 
 ## 4. 流水线实例
 
-以下是 `FinKGRiskPipeline` 的完整实现。
+以下为 `dfkg init` 生成的 `FinKGRiskPipeline` 代码结构参考，实际运行请使用初始化后生成的 `api_pipelines/finkg_risk_pipeline.py`。
 
 ```python
 from dataflow.core import LLMServingABC
@@ -265,7 +265,7 @@ llm_serving = APILLMServing_request(
 )
 
 pipeline = FinKGRiskPipeline(
-    first_entry_file_name="./finkg_risk_demo.json",
+    first_entry_file_name="example_data/FinKGRiskPipeline/input.json",
     llm_serving=llm_serving,
     cache_path="./cache_finkg_risk",
     lang="en",

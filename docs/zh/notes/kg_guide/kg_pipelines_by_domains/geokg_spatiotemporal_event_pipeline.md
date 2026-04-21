@@ -30,46 +30,36 @@ icon: solar:station-minimalistic-line-duotone
 
 ## 2. 快速开始
 
-### 步骤 1：准备脚本
+### 步骤 1：创建新的 DataFlow 工作目录
 
-将下方“流水线实例”中的代码保存为 `geokg_spatiotemporal_event_pipeline.py`。
-
-该流水线可直接读取仓库中的示例输入：
-
-```python
-dataflow/data_for_operator_testing/geokg_rel.json
+```bash
+mkdir run_dataflow_kg
+cd run_dataflow_kg
 ```
 
-### 步骤 2：配置 API Key
+### 步骤 2：初始化流水线代码和默认数据
+
+```bash
+dfkg init
+```
+
+初始化后会生成：
+
+- 流水线脚本：`api_pipelines/geokg_spatiotemporal_event_pipeline.py`
+- 默认数据：`example_data/GeoKGSpatiotemporalEventPipeline/input.json`
+
+### 步骤 3：配置 API Key 与可选模型参数
 
 ```bash
 export DF_API_KEY=sk-xxxx
 ```
 
-### 步骤 3：初始化模型服务并运行
+默认使用 `gpt-4o-mini`。如需覆盖默认配置，可设置 `DF_API_URL`、`DF_LLM_MODEL` 或 `DF_GEOKG_INPUT_FILE`。
 
-```python
-from dataflow.serving import APILLMServing_request
-from dataflow.statics.pipelines.api_pipelines.geokg_spatiotemporal_event_pipeline import GeoKGSpatiotemporalEventPipeline
+### 步骤 4：一键运行
 
-llm_serving = APILLMServing_request(
-    api_url="https://api.openai.com/v1/chat/completions",
-    key_name_of_api_key="DF_API_KEY",
-    model_name="gpt-4o-mini",
-    max_workers=8,
-    temperature=0.0,
-)
-
-pipeline = GeoKGSpatiotemporalEventPipeline(
-    first_entry_file_name="dataflow/data_for_operator_testing/geokg_rel.json",
-    llm_serving=llm_serving,
-    cache_path="./cache_geokg_event",
-    query_time_start="2024-01-01",
-    query_time_end="2024-12-31",
-    location_name="China",
-    lang="en",
-)
-pipeline.forward()
+```bash
+python api_pipelines/geokg_spatiotemporal_event_pipeline.py
 ```
 
 ---
@@ -179,7 +169,7 @@ pipeline.forward()
 
 ## 4. 流水线实例
 
-以下是 `GeoKGSpatiotemporalEventPipeline` 的完整实现。
+以下为 `dfkg init` 生成的 `GeoKGSpatiotemporalEventPipeline` 代码结构参考，实际运行请使用初始化后生成的 `api_pipelines/geokg_spatiotemporal_event_pipeline.py`。
 
 ```python
 from dataflow.core import LLMServingABC
@@ -318,7 +308,7 @@ llm_serving = APILLMServing_request(
 )
 
 pipeline = GeoKGSpatiotemporalEventPipeline(
-    first_entry_file_name="dataflow/data_for_operator_testing/geokg_rel.json",
+    first_entry_file_name="example_data/GeoKGSpatiotemporalEventPipeline/input.json",
     llm_serving=llm_serving,
     cache_path="./cache_geokg_event",
     query_time_start="2024-01-01",
