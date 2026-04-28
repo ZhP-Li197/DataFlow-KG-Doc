@@ -52,10 +52,10 @@ dfkg init
 
 ```shell
 api_pipelines/kg_evaluation_visualization_pipeline.py
-example_data/kg_evaluation_visualization_pipeline/input.json
+example_data/KGEvaluationPipeline/input.json
 ```
 
-其中，`api_pipelines/kg_evaluation_visualization_pipeline.py` 是可直接运行的流水线代码，`example_data/kg_evaluation_visualization_pipeline/input.json` 是默认输入数据。用户不需要从文档中复制代码或手动新建流水线脚本。
+其中，`api_pipelines/kg_evaluation_visualization_pipeline.py` 是可直接运行的流水线代码，`example_data/KGEvaluationPipeline/input.json` 是默认输入数据。用户不需要从文档中复制代码或手动新建流水线脚本。
 
 ### 步骤 4：配置 API Key 和 API URL
 
@@ -102,7 +102,7 @@ pipeline = KGEvaluationVisualizationPipeline(
 初始化后的默认输入文件为：
 
 ```shell
-example_data/kg_evaluation_visualization_pipeline/input.json
+example_data/KGEvaluationPipeline/input.json
 ```
 
 该文件至少包含以下字段：
@@ -146,7 +146,7 @@ cache_kg_eval/kg_visualization.html
 - **raw_chunk**：原始文本片段，可以来自通用语料、网页文本、文档段落或上游知识图谱抽取结果。
 - **triple**：关系三元组字符串列表，格式为 `"<subj> 主体 <obj> 客体 <rel> 关系"`。
 
-输入数据通过 `FileStorage` 读取。初始化后，默认路径会指向 `example_data/kg_evaluation_visualization_pipeline/input.json`：
+输入数据通过 `FileStorage` 读取。初始化后，默认路径会指向 `example_data/KGEvaluationPipeline/input.json`：
 
 ```python
 self.storage = FileStorage(
@@ -189,10 +189,10 @@ self.storage = FileStorage(
 第四步使用 `KGRelationTripleConsistencyEvaluator` 基于大模型判断三元组是否具有基本逻辑一致性：
 
 - 输入：`triple`
-- 输出：`logical_consistency_score`
+- 输出：`logical_consistency_score`、`evaluated_sample_indices`
 - 关键参数：`sample_rate=1.0`、`max_samples=10`
 
-该步骤适合发现明显的语义冲突、关系异常或抽取错误。由于该算子需要调用大模型，请确保已配置 `DF_API_KEY` 和可用的 `api_url`。
+该步骤适合发现明显的语义冲突、关系异常或抽取错误。`evaluated_sample_indices` 会记录本次评测采样到的三元组索引。由于该算子需要调用大模型，请确保已配置 `DF_API_KEY` 和可用的 `api_url`。
 
 ### 3.6 三元组语义强度评分
 
@@ -219,10 +219,11 @@ self.storage = FileStorage(
 最终输出通常包含以下字段：
 
 - **triple**：原始知识图谱三元组
-- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components**：拓扑结构指标
+- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components / node_count / edge_count**：拓扑结构指标
 - **num_nodes / num_edges / density**：规模评测指标
 - **vertex_connectivity / edge_connectivity / global_efficiency**：连通性评测指标
 - **logical_consistency_score**：三元组逻辑一致性评分
+- **evaluated_sample_indices**：一致性评测采样到的三元组索引
 - **triple_strength_score**：三元组语义强度评分
 - **kg_visualization**：可视化 HTML 文件路径
 
@@ -237,6 +238,9 @@ self.storage = FileStorage(
   "lcc_ratio": 1.0,
   "structure_avg_degree": 1.33,
   "fragmentation_score": 0.0,
+  "num_components": 1,
+  "node_count": 3,
+  "edge_count": 2,
   "num_nodes": 3,
   "num_edges": 2,
   "density": 0.3333,
@@ -244,6 +248,7 @@ self.storage = FileStorage(
   "edge_connectivity": 1,
   "global_efficiency": 0.8333,
   "logical_consistency_score": 0.95,
+  "evaluated_sample_indices": [0, 1],
   "triple_strength_score": [0.91, 0.93],
   "kg_visualization": "./cache_kg_eval/kg_visualization.html"
 }
@@ -283,10 +288,12 @@ class KGEvaluationVisualizationPipeline:
                     pipeline_dir,
                     "..",
                     "example_data",
-                    "kg_evaluation_visualization_pipeline/input.json",
+                    "KGEvaluationPipeline",
+                    "input.json",
                 )
             )
 
+        # -------- Storage --------
         self.storage = FileStorage(
             first_entry_file_name=input_file,
             cache_path=cache_path,
@@ -294,6 +301,7 @@ class KGEvaluationVisualizationPipeline:
             cache_type="json",
         )
 
+        # -------- LLM Serving --------
         self.llm_serving = APILLMServing_request(
             api_url=api_url,
             key_name_of_api_key=api_key_env,
@@ -302,10 +310,12 @@ class KGEvaluationVisualizationPipeline:
             temperature=0.0,
         )
 
+        # -------- 无需 LLM 的评测算子 --------
         self.topology_eval = KGRelationTripleTopologyEvaluator()
         self.scale_eval = KGSubgraphScaleEvaluator()
         self.connectivity_eval = KGSubgraphConnectivityEvaluator()
 
+        # -------- 需要 LLM 的评测算子 --------
         self.consistency_eval = KGRelationTripleConsistencyEvaluator(
             llm_serving=self.llm_serving,
             sample_rate=1.0,
@@ -317,9 +327,12 @@ class KGEvaluationVisualizationPipeline:
             lang=lang,
         )
 
+        # -------- 可视化算子 --------
         self.visualization = KGRelationTripleVisualization(lang=lang)
 
     def forward(self):
+        """依次执行所有评测算子和可视化算子"""
+
         print("=" * 60)
         print("Step 1/6: 拓扑结构评测 (Topology Evaluation)")
         print("=" * 60)
@@ -373,9 +386,11 @@ class KGEvaluationVisualizationPipeline:
             output_html=visual_html,
         )
 
+        # -------- 打印结果摘要 --------
         self._print_summary()
 
     def _print_summary(self):
+        """读取最终结果并打印评测摘要"""
         step6_file = os.path.join(self.storage.cache_path, "kg_eval_step6.json")
         try:
             if os.path.exists(step6_file):
@@ -390,6 +405,7 @@ class KGEvaluationVisualizationPipeline:
         print("评测结果摘要 (Evaluation Summary)")
         print("=" * 60)
 
+        # 拓扑指标
         topo_keys = ["lcc_ratio", "structure_avg_degree", "fragmentation_score",
                      "num_components", "node_count", "edge_count"]
         print("\n[拓扑结构指标]")
@@ -397,18 +413,21 @@ class KGEvaluationVisualizationPipeline:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
+        # 规模指标
         scale_keys = ["num_nodes", "num_edges", "density"]
         print("\n[子图规模指标]")
         for key in scale_keys:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
+        # 连通性指标
         conn_keys = ["vertex_connectivity", "edge_connectivity", "global_efficiency"]
         print("\n[子图连通性指标]")
         for key in conn_keys:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
+        # LLM 评测指标
         print("\n[LLM 评测指标]")
         if "logical_consistency_score" in df.columns:
             print(f"  logical_consistency_score: {df['logical_consistency_score'].tolist()}")
