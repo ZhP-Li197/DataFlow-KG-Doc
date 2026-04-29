@@ -61,12 +61,14 @@ def build_system_prompt(self):
         - Questions should be natural and fluent
 
         Output format (STRICT JSON):
-        {
-          "QA_pairs": [
-            "Question: ... Answer: ...",
-            "Question: ... Answer: ..."
-          ]
-        }
+            {
+            "QA_pairs": [
+                {
+                "question": "...",
+                "answer": "..."
+                }
+            ]
+            }
     """)
 
 def build_prompt(self, tuples: str):
@@ -100,12 +102,14 @@ def build_system_prompt(self):
         5. Do not modify entity names, relation meaning, or attribute values.
 
         Output format (STRICT JSON):
-        {
-          "QA_pairs": [
-            "Question: ... Answer: ...",
-            "Question: ... Answer: ..."
-          ]
-        }
+            {
+            "QA_pairs": [
+                {
+                "question": "...",
+                "answer": "..."
+                }
+            ]
+            }
     """)
 ```
 
@@ -179,9 +183,9 @@ generator.run(
 ```json
 {
   "tuple": [
-    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <Time> Third quarter of 2025 <Location> European market",
-    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <Value> 600 kilometers",
-    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <Value> 49,990 euros"
+    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <time> Third quarter of 2025 <location> European market",
+    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <value> 600 kilometers",
+    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <value> 49,990 euros"
   ]
 }
 ```
@@ -192,9 +196,18 @@ generator.run(
 {
   "tuple": ["..."],
   "QA_pairs": [
-    "Question: When will Tesla Model Y adopt the 4680 battery in the European market? Answer: Third quarter of 2025",
-    "Question: What is the cruising range of Tesla Model Y after adopting the 4680 battery? Answer: 600 kilometers",
-    "Question: What is the price of Tesla Model Y? Answer: 49,990 euros"
+    {
+      "question": "When will Tesla Model Y adopt the 4680 battery in the European market?",
+      "answer": "Third quarter of 2025"
+    },
+    {
+      "question": "What is the cruising range of Tesla Model Y after adopting the 4680 battery?",
+      "answer": "600 kilometers"
+    },
+    {
+      "question": "What is the price of Tesla Model Y?",
+      "answer": "49,990 euros"
+    }
   ]
 }
 ```
@@ -204,8 +217,8 @@ generator.run(
 ```json
 {
   "2_hop_paths": [
-    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <Time> May 15, 2025 <Location> Tesla Gigafactory, Berlin, Germany",
-    "<subj> Tesla Gigafactory, Berlin, Germany <obj> Tesla Model Y <rel> ProducedAt <Time> Third quarter of 2025"
+    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <time> May 15, 2025 <location> Tesla Gigafactory, Berlin, Germany",
+    "<subj> Tesla Gigafactory, Berlin, Germany <obj> Tesla Model Y <rel> ProducedAt <time> Third quarter of 2025"
   ]
 }
 ```
@@ -216,8 +229,14 @@ generator.run(
 {
   "2_hop_paths": ["..."],
   "QA_pairs": [
-    "Question: Where did Elon Musk announce the Tesla Model Y that will be produced in the third quarter of 2025? Answer: Tesla Gigafactory, Berlin, Germany",
-    "Question: When will the Tesla Model Y, whose announcement was made at the Tesla Gigafactory in Berlin, be produced? Answer: Third quarter of 2025"
+    {
+      "question": "Where did Elon Musk announce the Tesla Model Y that will be produced in the third quarter of 2025?",
+      "answer": "Tesla Gigafactory, Berlin, Germany"
+    },
+    {
+      "question": "When will the Tesla Model Y, whose announcement was made at the Tesla Gigafactory in Berlin, be produced?",
+      "answer": "Third quarter of 2025"
+    }
   ]
 }
 ```

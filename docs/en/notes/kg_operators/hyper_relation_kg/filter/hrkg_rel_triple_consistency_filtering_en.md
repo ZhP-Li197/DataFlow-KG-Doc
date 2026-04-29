@@ -75,10 +75,10 @@ filter_op.run(
 ```json
 {
   "tuple": [
-    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <Time> May 15, 2025 <Location> Tesla Gigafactory, Berlin, Germany",
-    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <Time> Third quarter of 2025 <Location> European market",
-    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <Value> 600 kilometers",
-    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <Value> 49,990 euros"
+    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <time> May 15, 2025 <location> Tesla Gigafactory, Berlin, Germany",
+    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <time> Third quarter of 2025 <location> European market",
+    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <value> 600 kilometers",
+    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <value> 49,990 euros"
   ],
   "consistency_scores": [1.0, 0.9, 1.0, 0.95]
 }
@@ -91,9 +91,9 @@ filter_op.run(
   "tuple": ["...(same as above)"],
   "consistency_scores": [1.0, 0.9, 1.0, 0.95],
   "filtered_tuple": [
-    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <Time> May 15, 2025 <Location> Tesla Gigafactory, Berlin, Germany",
-    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <Value> 600 kilometers",
-    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <Value> 49,990 euros"
+    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <time> May 15, 2025 <location> Tesla Gigafactory, Berlin, Germany",
+    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <value> 600 kilometers",
+    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <value> 49,990 euros"
   ]
 }
 ```

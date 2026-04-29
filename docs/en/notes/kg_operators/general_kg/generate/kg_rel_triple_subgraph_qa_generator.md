@@ -101,11 +101,11 @@ Example output:
     ],
     "QA_pairs": [
       {
-        "Question": "Who works at the company located in D?",
+        "question": "Who works at the company located in D?",
         "answer": "A, C"
       },
       {
-        "Question": "Which company is worked at by A and C?",
+        "question": "Which company is worked at by A and C?",
         "answer": "B"
       }
     ]

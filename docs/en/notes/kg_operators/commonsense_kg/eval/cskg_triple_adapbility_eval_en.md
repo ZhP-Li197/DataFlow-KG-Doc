@@ -94,8 +94,8 @@ operator.run(
 [
   {
     "triple": [
-      "<subj> bird <rel> CapableOf <obj> fly",
-      "<subj> Tom <rel> visited <obj> museum yesterday"
+      "<subj> bird <obj> fly <rel> CapableOf",
+      "<subj> Tom <obj> museum <rel> visited"
     ]
   }
 ]
@@ -106,8 +106,8 @@ operator.run(
 [
   {
     "triple": [
-      "<subj> bird <rel> CapableOf <obj> fly",
-      "<subj> Tom <rel> visited <obj> museum yesterday"
+      "<subj> bird <obj> fly <rel> CapableOf",
+      "<subj> Tom <obj> museum <rel> visited"
     ],
     "adaptability_scores": [0.96, 0.18]
   }

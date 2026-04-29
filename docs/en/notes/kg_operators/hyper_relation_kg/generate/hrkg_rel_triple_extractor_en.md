@@ -173,12 +173,12 @@ extractor.run(
 {
   "raw_chunk": "On May 15, 2025...",
   "tuple": [
-    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <Time> May 15, 2025 <Location> Tesla Gigafactory, Berlin, Germany",
-    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <Time> Third quarter of 2025 <Location> European market",
-    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <Value> 600 kilometers",
-    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <Value> 49,990 euros",
-    "<subj> 4680 Battery <obj> Tesla Gigafactory, Nevada, United States <rel> ProducedAt <Material> Silicon-carbon anode <EnergyDensity> 15% higher",
-    "<subj> Berlin Gigafactory <obj> Production <rel> Started <Time> March 2022 <Capacity> 500,000 vehicles <Market> European Union, United Kingdom, Norway"
+    "<subj> Elon Musk <obj> Announcement <rel> MadeAt <time> May 15, 2025 <location> Tesla Gigafactory, Berlin, Germany",
+    "<subj> Tesla Model Y <obj> 4680 Battery <rel> WillAdopt <time> Third quarter of 2025 <location> European market",
+    "<subj> Tesla Model Y <obj> Cruising Range <rel> IncreasedTo <value> 600 kilometers",
+    "<subj> Tesla Model Y <obj> Price <rel> RemainsUnchanged <value> 49,990 euros",
+    "<subj> 4680 Battery <obj> Tesla Gigafactory, Nevada, United States <rel> ProducedAt <material> Silicon-carbon anode <energydensity> 15% higher",
+    "<subj> Berlin Gigafactory <obj> Production <rel> Started <time> March 2022 <capacity> 500,000 vehicles <market> European Union, United Kingdom, Norway"
   ]
 }
 ```

@@ -15,7 +15,7 @@ permalink: /zh/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 }
 ```
 
-算子随后只保留 JSON 里命中候选实体列表的实体，并把它们转换成 `<subj> 实体 <rel> depicted_in <obj> 图片ID` 写回 `vis_triple`。如果模型返回的 JSON 解析失败，或者 `quality_score` 小于 `quality_threshold`，该图片不会产出三元组。
+算子随后只保留 JSON 里命中候选实体列表的实体，并把它们转换成 `<subj> 实体 <obj> 图片ID <rel> depicted_in` 写回 `vis_triple`。如果模型返回的 JSON 解析失败，或者 `quality_score` 小于 `quality_threshold`，该图片不会产出三元组。
 
 ## ✒️ `__init__` 函数
 
@@ -109,8 +109,8 @@ op.run(
 ```json
 {
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein",
-    "<subj> Paris <rel> depicted_in <obj> img_paris"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in",
+    "<subj> Paris <obj> img_paris <rel> depicted_in"
   ]
 }
 ```

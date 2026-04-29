@@ -73,7 +73,7 @@ op.run(
 {
   "2_hop_paths": "<subj> Albert Einstein <obj> Nobel Prize in Physics <rel> won || <subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in",
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in"
   ],
   "vis_url": [
     "./images/einstein.jpg"

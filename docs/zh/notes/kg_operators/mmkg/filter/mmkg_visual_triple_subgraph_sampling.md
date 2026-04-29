@@ -87,7 +87,7 @@ op.run(storage=storage, sampling_type="hop", hop=1)
     "<subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in"
   ],
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in"
   ],
   "img_dict": {
     "img_einstein": "./images/einstein.jpg"
@@ -104,7 +104,7 @@ op.run(storage=storage, sampling_type="hop", hop=1)
     "<subj> Albert Einstein <obj> Ulm <rel> born_in"
   ],
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in"
   ],
   "vis_url": [
     "./images/einstein.jpg"

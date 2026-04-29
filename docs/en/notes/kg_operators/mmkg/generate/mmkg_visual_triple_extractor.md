@@ -15,7 +15,7 @@ permalink: /en/kg_operators/mmkg/generate/mmkg_visual_triple_extractor/
 }
 ```
 
-The operator then keeps only entities that both appear in that JSON and belong to the candidate list, and converts them into normalized triples in the form `<subj> entity <rel> depicted_in <obj> image_id`. If the model response cannot be parsed as JSON, or if `quality_score` is lower than `quality_threshold`, that image produces no triple.
+The operator then keeps only entities that both appear in that JSON and belong to the candidate list, and converts them into normalized triples in the form `<subj> entity <obj> image_id <rel> depicted_in`. If the model response cannot be parsed as JSON, or if `quality_score` is lower than `quality_threshold`, that image produces no triple.
 
 ## ✒️ `__init__` Function
 
@@ -109,8 +109,8 @@ Example output written back by the operator:
 ```json
 {
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein",
-    "<subj> Paris <rel> depicted_in <obj> img_paris"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in",
+    "<subj> Paris <obj> img_paris <rel> depicted_in"
   ]
 }
 ```

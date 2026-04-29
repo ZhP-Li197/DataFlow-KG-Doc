@@ -6,15 +6,15 @@ permalink: /en/kg_operators/graph_rag/generate/graphrag_prompt_generator/
 
 ## 📚 Overview
 `KGGraphRAGSubgraphRetrieval` is a generate-category operator for Graph RAG subgraph retrieval and prompt construction.
-It uses the question list, extracted entities, and knowledge graph triplets to build one answer prompt per question, so that downstream answer generation operators can directly consume the retrieved graph context.
+It uses the question list, extracted entities, and knowledge graph triples to build one answer prompt per question, so that downstream answer generation operators can directly consume the retrieved graph context.
 
 Key characteristics of this operator:
 
 - It does not rely on an LLM and instead performs rule-based subgraph retrieval and prompt assembly
 - It is mainly designed for the input format where one row contains multiple questions
-- It builds a graph from the `triplet` column and performs `k`-hop BFS as an undirected graph
+- It builds a graph from the `triple` column and performs `k`-hop BFS as an undirected graph
 - It writes to `subgraph_prompt` by default
-- In the current implementation, it actually reads `question`, `entities`, and `triplet`, and does not depend on `relations`
+- In the current implementation, it actually reads `question`, `entities`, and `triple`, and does not depend on `relations`
 
 ---
 
@@ -27,7 +27,7 @@ def __init__(self, hop: int = 1):
 #### `__init__` Parameters
 | Parameter | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `hop` | `int` | `1` | Number of hops for subgraph retrieval. The operator performs `k`-hop BFS around seed entities and writes the collected triplets into the prompt. |
+| `hop` | `int` | `1` | Number of hops for subgraph retrieval. The operator performs `k`-hop BFS around seed entities and writes the collected triples into the prompt. |
 
 ---
 
@@ -41,9 +41,9 @@ def run(
     ...
 ```
 
-`run` first reads a DataFrame from `storage`, validates the required columns, and then processes the data row by row. For each row, it takes the question list, entity list, and triplet list, aligns question and entity counts, and then performs `k`-hop subgraph retrieval from the `triplet` data for each question-specific entity set. The retrieved facts are then assembled into English prompts, and the resulting prompt list is written back to the output column.
+`run` first reads a DataFrame from `storage`, validates the required columns, and then processes the data row by row. For each row, it takes the question list, entity list, and triple list, aligns question and entity counts, and then performs `k`-hop subgraph retrieval from the `triple` data for each question-specific entity set. The retrieved facts are then assembled into English prompts, and the resulting prompt list is written back to the output column.
 
-Internally, the operator parses triplets in the `<subj> ... <obj> ... <rel> ...` format, builds an entity catalog and adjacency structure, and then selects seed entities. Seed entities are taken from the intersection between extracted entities and graph entities. If no extracted entity matches but the graph still contains entities, the operator falls back to the first entity in the catalog and continues prompt construction.
+Internally, the operator parses triples in the `<subj> ... <obj> ... <rel> ...` format, builds an entity catalog and adjacency structure, and then selects seed entities. Seed entities are taken from the intersection between extracted entities and graph entities. If no extracted entity matches but the graph still contains entities, the operator falls back to the first entity in the catalog and continues prompt construction.
 
 #### `run` Parameters
 | Parameter | Type | Default | Description |
@@ -76,7 +76,7 @@ operator.run(
 | :-- | :-- | :-- |
 | `question` | `List[str]` | Multiple questions within one row. The current implementation mainly processes this format. |
 | `entities` | `List[List[str]]` | Entity lists aligned with each question. Each question corresponds to one entity sub-list. |
-| `triplet` | `List[str]` | Raw knowledge graph triplet list. Each item should follow a format close to `<subj> ... <obj> ... <rel> ...`. |
+| `triple` | `List[str]` | Raw knowledge graph triple list. Each item should follow a format close to `<subj> ... <obj> ... <rel> ...`. |
 | `subgraph_prompt` | `List[str]` | Prompt list generated for each question. |
 
 ---
@@ -87,7 +87,7 @@ operator.run(
   {
     "question": ["Which institution is Alice Smith affiliated with?"],
     "entities": [["Alice Smith"]],
-    "triplet": [
+    "triple": [
       "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
       "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ]
@@ -101,7 +101,7 @@ operator.run(
   {
     "question": ["Which institution is Alice Smith affiliated with?"],
     "entities": [["Alice Smith"]],
-    "triplet": [
+    "triple": [
       "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
       "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ],

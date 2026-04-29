@@ -90,7 +90,7 @@ operator.run(
 
 #### Raw Model Output Format
 ```json
-["Albert Einstein", "Paris", "deep learning"]
+"..."
 ```
 
 ---
@@ -107,7 +107,7 @@ operator.run(
 [
   {
     "entity": "Albert Einstein, Paris, xkqz123, deep learning",
-    "valid": ["Albert Einstein", "Paris", "deep learning"]
+    "valid": "Albert Einstein, Paris, deep learning"
   }
 ]
 ```

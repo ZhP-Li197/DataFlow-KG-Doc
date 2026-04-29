@@ -70,7 +70,7 @@ op.run(storage=storage, input_key="vis_url", input_key_meta="subgraph", output_k
     "<subj> Nobel Prize in Physics <obj> 1921 <rel> awarded_in"
   ],
   "vis_triple": [
-    "<subj> Albert Einstein <rel> depicted_in <obj> img_einstein"
+    "<subj> Albert Einstein <obj> img_einstein <rel> depicted_in"
   ],
   "vis_url": [
     "./images/einstein.jpg"

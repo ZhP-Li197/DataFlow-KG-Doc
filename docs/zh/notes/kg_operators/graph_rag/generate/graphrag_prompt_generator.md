@@ -12,9 +12,9 @@ permalink: /zh/kg_operators/graph_rag/generate/graphrag_prompt_generator/
 
 - 不依赖 LLM，而是基于规则完成子图检索和 Prompt 组装
 - 主要面向“一行包含多个问题”的输入格式
-- 从 `triplet` 列构建图结构，并以无向图方式做 `k` 跳 BFS 检索
+- 从 `triple` 列构建图结构，并以无向图方式做 `k` 跳 BFS 检索
 - 默认输出列为 `subgraph_prompt`
-- 当前实现实际读取 `question`、`entities`、`triplet` 三列，不依赖 `relations` 列
+- 当前实现实际读取 `question`、`entities`、`triple` 三列，不依赖 `relations` 列
 
 ---
 
@@ -41,7 +41,7 @@ def run(
     ...
 ```
 
-`run` 会先从 `storage` 中读取 DataFrame，校验必需列是否存在，然后逐行处理数据。对于每一行，算子会取出问题列表、实体列表和三元组列表，按问题和实体的数量做对齐；随后围绕每个问题对应的实体集合，从 `triplet` 中做 `k` 跳子图检索，并把检索到的事实组装成英文 Prompt。最后，算子将每行生成的 Prompt 列表写回到输出列。
+`run` 会先从 `storage` 中读取 DataFrame，校验必需列是否存在，然后逐行处理数据。对于每一行，算子会取出问题列表、实体列表和三元组列表，按问题和实体的数量做对齐；随后围绕每个问题对应的实体集合，从 `triple` 中做 `k` 跳子图检索，并把检索到的事实组装成英文 Prompt。最后，算子将每行生成的 Prompt 列表写回到输出列。
 
 在内部流程上，算子会先把三元组解析为 `<subj> ... <obj> ... <rel> ...` 结构，再构建实体目录与邻接表。种子实体优先来自抽取结果中与知识图谱实体目录相交的部分；若完全没有匹配实体，但图中存在实体，则会退化为取目录中的第一个实体继续构造 Prompt。
 
@@ -76,7 +76,7 @@ operator.run(
 | :-- | :-- | :-- |
 | `question` | `List[str]` | 一行内的多个问题。当前实现主要按这种格式处理。 |
 | `entities` | `List[List[str]]` | 与每个问题对齐的实体列表。每个问题对应一个实体子列表。 |
-| `triplet` | `List[str]` | 原始知识图谱三元组列表，格式应接近 `<subj> ... <obj> ... <rel> ...`。 |
+| `triple` | `List[str]` | 原始知识图谱三元组列表，格式应接近 `<subj> ... <obj> ... <rel> ...`。 |
 | `subgraph_prompt` | `List[str]` | 为每个问题生成的 Prompt 列表。 |
 
 ---
@@ -87,7 +87,7 @@ operator.run(
   {
     "question": ["Which institution is Alice Smith affiliated with?"],
     "entities": [["Alice Smith"]],
-    "triplet": [
+    "triple": [
       "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
       "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ]
@@ -101,7 +101,7 @@ operator.run(
   {
     "question": ["Which institution is Alice Smith affiliated with?"],
     "entities": [["Alice Smith"]],
-    "triplet": [
+    "triple": [
       "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
       "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
     ],

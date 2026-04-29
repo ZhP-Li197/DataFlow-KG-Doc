@@ -94,8 +94,8 @@ operator.run(
 [
   {
     "triple": [
-      "<subj> bird <rel> CapableOf <obj> fly",
-      "<subj> fish <rel> CapableOf <obj> ride bicycle"
+      "<subj> bird <obj> fly <rel> CapableOf",
+      "<subj> fish <obj> ride bicycle <rel> CapableOf"
     ]
   }
 ]
@@ -106,8 +106,8 @@ operator.run(
 [
   {
     "triple": [
-      "<subj> bird <rel> CapableOf <obj> fly",
-      "<subj> fish <rel> CapableOf <obj> ride bicycle"
+      "<subj> bird <obj> fly <rel> CapableOf",
+      "<subj> fish <obj> ride bicycle <rel> CapableOf"
     ],
     "rationale_scores": [0.97, 0.08]
   }
