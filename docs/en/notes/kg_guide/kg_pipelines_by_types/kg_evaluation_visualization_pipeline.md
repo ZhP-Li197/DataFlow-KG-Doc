@@ -52,10 +52,10 @@ After initialization, the pipeline script and default sample data will be genera
 
 ```shell
 api_pipelines/kg_evaluation_visualization_pipeline.py
-example_data/kg_evaluation_visualization_pipeline/input.json
+example_data/KGEvaluationPipeline/input.json
 ```
 
-`api_pipelines/kg_evaluation_visualization_pipeline.py` is the runnable pipeline script, and `example_data/kg_evaluation_visualization_pipeline/input.json` is the default input data. Users do not need to copy code from this document or manually create the pipeline script.
+`api_pipelines/kg_evaluation_visualization_pipeline.py` is the runnable pipeline script, and `example_data/KGEvaluationPipeline/input.json` is the default input data. Users do not need to copy code from this document or manually create the pipeline script.
 
 ### Step 4: Configure the API Key and API URL
 
@@ -102,7 +102,7 @@ pipeline = KGEvaluationVisualizationPipeline(
 The default input file after initialization is:
 
 ```shell
-example_data/kg_evaluation_visualization_pipeline/input.json
+example_data/KGEvaluationPipeline/input.json
 ```
 
 This file contains at least the following fields:
@@ -146,7 +146,7 @@ The pipeline input mainly contains the following fields:
 - **raw_chunk**: the original text chunk, which can come from general corpora, web text, document passages, or upstream KG extraction results.
 - **triple**: a list of relation-triple strings in the format `"<subj> subject <obj> object <rel> relation"`.
 
-The input data is loaded through `FileStorage`. After initialization, the default path points to `example_data/kg_evaluation_visualization_pipeline/input.json`:
+The input data is loaded through `FileStorage`. After initialization, the default path points to `example_data/KGEvaluationPipeline/input.json`:
 
 ```python
 self.storage = FileStorage(
@@ -189,10 +189,10 @@ These metrics help identify sparse graphs, disconnected structures, and informat
 The fourth step uses `KGRelationTripleConsistencyEvaluator` to determine whether triples are logically consistent based on an LLM:
 
 - Input: `triple`
-- Output: `logical_consistency_score`
+- Output: `logical_consistency_score`, `evaluated_sample_indices`
 - Key parameters: `sample_rate=1.0`, `max_samples=10`
 
-This step is useful for discovering obvious semantic conflicts, abnormal relations, or extraction errors. Because this operator calls an LLM, make sure `DF_API_KEY` and a valid `api_url` are configured.
+This step is useful for discovering obvious semantic conflicts, abnormal relations, or extraction errors. `evaluated_sample_indices` records the sampled triple indices used for evaluation. Because this operator calls an LLM, make sure `DF_API_KEY` and a valid `api_url` are configured.
 
 ### 3.6 Triple Semantic Strength Scoring
 
@@ -219,10 +219,11 @@ The generated HTML file can be opened directly in a browser to inspect entity no
 The final output usually contains the following fields:
 
 - **triple**: original knowledge graph triples
-- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components**: topology metrics
+- **lcc_ratio / structure_avg_degree / fragmentation_score / num_components / node_count / edge_count**: topology metrics
 - **num_nodes / num_edges / density**: scale evaluation metrics
 - **vertex_connectivity / edge_connectivity / global_efficiency**: connectivity evaluation metrics
 - **logical_consistency_score**: triple logical consistency score
+- **evaluated_sample_indices**: sampled triple indices used by the consistency evaluator
 - **triple_strength_score**: triple semantic strength score
 - **kg_visualization**: visualization HTML file path
 
@@ -237,6 +238,9 @@ Output example:
   "lcc_ratio": 1.0,
   "structure_avg_degree": 1.33,
   "fragmentation_score": 0.0,
+  "num_components": 1,
+  "node_count": 3,
+  "edge_count": 2,
   "num_nodes": 3,
   "num_edges": 2,
   "density": 0.3333,
@@ -244,6 +248,7 @@ Output example:
   "edge_connectivity": 1,
   "global_efficiency": 0.8333,
   "logical_consistency_score": 0.95,
+  "evaluated_sample_indices": [0, 1],
   "triple_strength_score": [0.91, 0.93],
   "kg_visualization": "./cache_kg_eval/kg_visualization.html"
 }
@@ -264,7 +269,7 @@ from dataflow.serving import APILLMServing_request
 
 
 class KGEvaluationVisualizationPipeline:
-    """General knowledge graph evaluation and visualization pipeline."""
+    """通用知识图谱评测与可视化流水线"""
 
     def __init__(
         self,
@@ -283,10 +288,12 @@ class KGEvaluationVisualizationPipeline:
                     pipeline_dir,
                     "..",
                     "example_data",
-                    "kg_evaluation_visualization_pipeline/input.json",
+                    "KGEvaluationPipeline",
+                    "input.json",
                 )
             )
 
+        # -------- Storage --------
         self.storage = FileStorage(
             first_entry_file_name=input_file,
             cache_path=cache_path,
@@ -294,6 +301,7 @@ class KGEvaluationVisualizationPipeline:
             cache_type="json",
         )
 
+        # -------- LLM Serving --------
         self.llm_serving = APILLMServing_request(
             api_url=api_url,
             key_name_of_api_key=api_key_env,
@@ -302,10 +310,12 @@ class KGEvaluationVisualizationPipeline:
             temperature=0.0,
         )
 
+        # -------- 无需 LLM 的评测算子 --------
         self.topology_eval = KGRelationTripleTopologyEvaluator()
         self.scale_eval = KGSubgraphScaleEvaluator()
         self.connectivity_eval = KGSubgraphConnectivityEvaluator()
 
+        # -------- 需要 LLM 的评测算子 --------
         self.consistency_eval = KGRelationTripleConsistencyEvaluator(
             llm_serving=self.llm_serving,
             sample_rate=1.0,
@@ -317,11 +327,14 @@ class KGEvaluationVisualizationPipeline:
             lang=lang,
         )
 
+        # -------- 可视化算子 --------
         self.visualization = KGRelationTripleVisualization(lang=lang)
 
     def forward(self):
+        """依次执行所有评测算子和可视化算子"""
+
         print("=" * 60)
-        print("Step 1/6: Topology Evaluation")
+        print("Step 1/6: 拓扑结构评测 (Topology Evaluation)")
         print("=" * 60)
         self.topology_eval.run(
             storage=self.storage.step(),
@@ -329,7 +342,7 @@ class KGEvaluationVisualizationPipeline:
         )
 
         print("\n" + "=" * 60)
-        print("Step 2/6: Subgraph Scale Evaluation")
+        print("Step 2/6: 子图规模评测 (Subgraph Scale Evaluation)")
         print("=" * 60)
         self.scale_eval.run(
             storage=self.storage.step(),
@@ -337,7 +350,7 @@ class KGEvaluationVisualizationPipeline:
         )
 
         print("\n" + "=" * 60)
-        print("Step 3/6: Subgraph Connectivity Evaluation")
+        print("Step 3/6: 子图连通性评测 (Subgraph Connectivity Evaluation)")
         print("=" * 60)
         self.connectivity_eval.run(
             storage=self.storage.step(),
@@ -345,7 +358,7 @@ class KGEvaluationVisualizationPipeline:
         )
 
         print("\n" + "=" * 60)
-        print("Step 4/6: Triple Logical Consistency Evaluation [LLM]")
+        print("Step 4/6: 三元组逻辑一致性评测 (Consistency Evaluation) [LLM]")
         print("=" * 60)
         self.consistency_eval.run(
             storage=self.storage.step(),
@@ -353,7 +366,7 @@ class KGEvaluationVisualizationPipeline:
         )
 
         print("\n" + "=" * 60)
-        print("Step 5/6: Triple Semantic Strength Scoring [LLM]")
+        print("Step 5/6: 三元组语义强度评分 (Strength Scoring) [LLM]")
         print("=" * 60)
         self.strength_eval.run(
             storage=self.storage.step(),
@@ -363,7 +376,7 @@ class KGEvaluationVisualizationPipeline:
         )
 
         print("\n" + "=" * 60)
-        print("Step 6/6: Knowledge Graph Visualization")
+        print("Step 6/6: 知识图谱可视化 (KG Visualization)")
         print("=" * 60)
         visual_html = os.path.join(self.storage.cache_path, "kg_visualization.html")
         self.visualization.run(
@@ -373,9 +386,11 @@ class KGEvaluationVisualizationPipeline:
             output_html=visual_html,
         )
 
+        # -------- 打印结果摘要 --------
         self._print_summary()
 
     def _print_summary(self):
+        """读取最终结果并打印评测摘要"""
         step6_file = os.path.join(self.storage.cache_path, "kg_eval_step6.json")
         try:
             if os.path.exists(step6_file):
@@ -383,33 +398,37 @@ class KGEvaluationVisualizationPipeline:
             else:
                 df = self.storage.read("dataframe")
         except Exception as e:
-            print(f"\n[Warning] Failed to read the final result: {e}")
+            print(f"\n[Warning] 无法读取最终结果: {e}")
             return
 
         print("\n" + "=" * 60)
-        print("Evaluation Summary")
+        print("评测结果摘要 (Evaluation Summary)")
         print("=" * 60)
 
+        # 拓扑指标
         topo_keys = ["lcc_ratio", "structure_avg_degree", "fragmentation_score",
                      "num_components", "node_count", "edge_count"]
-        print("\n[Topology Metrics]")
+        print("\n[拓扑结构指标]")
         for key in topo_keys:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
+        # 规模指标
         scale_keys = ["num_nodes", "num_edges", "density"]
-        print("\n[Subgraph Scale Metrics]")
+        print("\n[子图规模指标]")
         for key in scale_keys:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
+        # 连通性指标
         conn_keys = ["vertex_connectivity", "edge_connectivity", "global_efficiency"]
-        print("\n[Subgraph Connectivity Metrics]")
+        print("\n[子图连通性指标]")
         for key in conn_keys:
             if key in df.columns:
                 print(f"  {key}: {df[key].tolist()}")
 
-        print("\n[LLM Evaluation Metrics]")
+        # LLM 评测指标
+        print("\n[LLM 评测指标]")
         if "logical_consistency_score" in df.columns:
             print(f"  logical_consistency_score: {df['logical_consistency_score'].tolist()}")
         if "triple_strength_score" in df.columns:
@@ -418,7 +437,7 @@ class KGEvaluationVisualizationPipeline:
             print(f"  kg_visualization: {df['kg_visualization'].iloc[0]}")
 
         print("\n" + "=" * 60)
-        print(f"Cache directory: {self.storage.cache_path}")
+        print(f"缓存文件目录: {self.storage.cache_path}")
         print("=" * 60)
 
 
