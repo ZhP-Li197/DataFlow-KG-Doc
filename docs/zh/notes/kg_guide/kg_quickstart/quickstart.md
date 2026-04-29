@@ -24,22 +24,15 @@ dfkg init
 $ tree -L 1
 .
 |-- api_pipelines
-|-- core_text
-|-- cpu_pipelines
 |-- example_data
-|-- gpu_pipelines
-|-- playground
-`-- simple_text_pipelines
+`-- gpu_pipelines
 ```
 
 **各目录用途：**
-* `cpu_pipelines`：仅使用 CPU 的 Pipeline
-* `core_text`：DataFlow-KG 最基础的几个算子的样例
 * `api_pipelines`：使用在线大模型 API（推荐新手）
 * `gpu_pipelines`：使用本地 GPU 模型
 * `example_data`：所有示例 Pipeline 的默认输入数据
-* `playground`：轻量示例，不构成完整 Pipeline
-* `simple_text_pipelines`：基础文本处理相关示例
+
 
 ## 2. Pipeline 分类说明（选一个就好）
 
@@ -47,7 +40,6 @@ $ tree -L 1
 
 | 目录 | 依赖资源 |
 | :--- | :--- |
-| `cpu_pipelines` | 仅 CPU |
 | `api_pipelines` | CPU + 大模型 API |
 | `gpu_pipelines` | CPU + API + 本地 GPU |
 

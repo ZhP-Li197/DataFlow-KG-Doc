@@ -24,22 +24,14 @@ This will generate the following folders in your current working directory:
 $ tree -L 1
 .
 |-- api_pipelines
-|-- core_text
-|-- cpu_pipelines
 |-- example_data
-|-- gpu_pipelines
-|-- playground
-`-- simple_text_pipelines
+`-- gpu_pipelines
 ```
 
 **Directory Purposes:**
-* `cpu_pipelines`: Pipelines that only use CPU
-* `core_text`: Examples of the most basic operators in DataFlow-KG
 * `api_pipelines`: Uses online LLM APIs (Recommended for beginners)
 * `gpu_pipelines`: Uses local GPU models
 * `example_data`: Default input data for all example Pipelines
-* `playground`: Lightweight examples, not constituting a complete Pipeline
-* `simple_text_pipelines`: Examples related to basic text processing
 
 ## 2. Pipeline Classification (Choose one)
 
@@ -47,7 +39,6 @@ Pipelines with the same name in different directories have an inclusive relation
 
 | Directory | Dependent Resources |
 | :--- | :--- |
-| `cpu_pipelines` | CPU only |
 | `api_pipelines` | CPU + LLM API |
 | `gpu_pipelines` | CPU + API + Local GPU |
 
