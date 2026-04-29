@@ -96,8 +96,14 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez",
-    "truth": "Maria Rodriguez"
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ],
+    "truth":[
+      "August 12, 2020.",
+      "Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -106,9 +112,7 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez",
-    "truth": "Maria Rodriguez",
-    "is_correct": true
+    "is_correct": [true, true]
   }
 ]
 ```

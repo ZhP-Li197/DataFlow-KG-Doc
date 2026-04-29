@@ -101,7 +101,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ]
   }
 ]
 ```
@@ -110,8 +113,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "question_difficulty": "easy"
+    "question_difficulty":[
+      "medium",
+      "medium"
+    ]
   }
 ]
 ```
@@ -122,5 +127,4 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_question_difficulty_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-
 

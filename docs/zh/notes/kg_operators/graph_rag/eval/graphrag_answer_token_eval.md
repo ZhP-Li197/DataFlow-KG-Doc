@@ -87,7 +87,10 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez"
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -96,21 +99,12 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez",
-    "answer_token_count": 2
+    "answer_token_count": [8, 6]
   }
 ]
 ```
 
 ---
-
-#### 可选补充
-#### 注意事项
-- 输入 DataFrame 中必须存在 `answer_key` 指定的列，否则会抛出 `ValueError`。
-- 如果 `output_key` 已存在，算子会直接报错，避免覆盖已有结果。
-- 当前实现仅支持 `str` 和 `List[str]` 两种输入形态，其他类型会触发 `ValueError`。
-- token 统计依赖 `tiktoken` 对指定模型的编码规则，因此不同 `model_name` 下的统计结果可能不同。
-- 若传入的模型名不被 `tiktoken.encoding_for_model` 支持，初始化阶段就可能失败。
 
 #### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_token_eval.py`

@@ -103,7 +103,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ],
   }
 ]
 ```
@@ -112,9 +115,22 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "entities": ["Henry"],
-    "relations": ["trained_by"]
+    "entities":[
+      [
+        "Polar Lights"
+      ],
+      [
+        "Henry"
+      ]
+    ],
+    "relations":[
+      [
+        "release_date"
+      ],
+      [
+        "trained_by"
+      ]
+    ]
   }
 ]
 ```
@@ -124,5 +140,4 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_query_extractor.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-
 

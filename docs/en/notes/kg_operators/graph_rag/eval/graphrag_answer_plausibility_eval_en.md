@@ -105,8 +105,14 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "answer": "Maria Rodriguez"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ],
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -115,9 +121,7 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "answer": "Maria Rodriguez",
-    "question_plausibility_score": 0.98
+    "question_plausibility_score": [0.98, 0.99]
   }
 ]
 ```
@@ -128,5 +132,4 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_plausibility_eval.py`
 - Default prompt: `DataFlow-KG/dataflow/prompts/application_kg/graph_rag.py`
 - Downstream filtering operator: `DataFlow-KG/dataflow/operators/graph_rag/filter/graphrag_answer_plausibility_filtering.py`
-
 

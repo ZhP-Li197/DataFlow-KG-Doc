@@ -85,11 +85,31 @@ operator.run(
 ```json
 [
   {
-    "question": ["Which institution is Alice Smith affiliated with?"],
-    "entities": [["Alice Smith"]],
-    "triple": [
-      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
-      "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ],
+    "entities":[
+      [
+        "Polar Lights"
+      ],
+      [
+        "Henry"
+      ]
+    ],
+    "relations":[
+      [
+        "release_date"
+      ],
+      [
+        "trained_by"
+      ]
+    ],
+    "triple":[
+      "<subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
+      "<subj> Henry <obj> The Maple Leaves <rel> forms",
+      "<subj> The Maple Leaves <obj> Polar Lights <rel> releases",
+      "<subj> Polar Lights <obj> August 12 2020 <rel> is_released_on"
     ]
   }
 ]
@@ -99,14 +119,9 @@ operator.run(
 ```json
 [
   {
-    "question": ["Which institution is Alice Smith affiliated with?"],
-    "entities": [["Alice Smith"]],
-    "triple": [
-      "<subj> Alice Smith <obj> Peking University <rel> affiliated_with",
-      "<subj> Bob Lee <obj> Tsinghua University <rel> affiliated_with"
-    ],
-    "subgraph_prompt": [
-      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nWhich institution is Alice Smith affiliated with?\n\nSubgraph centered at [Alice Smith]:\n- <subj> Alice Smith <obj> Peking University <rel> affiliated_with\n\nAnswer the question based on the above knowledge graph subgraphs."
+    "subgraph_prompt":[
+      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nOn which date was Polar Lights released?\n\nSubgraph centered at [Polar Lights]:\n- <subj> Polar Lights <obj> August 12 2020 <rel> is_released_on\n- <subj> The Maple Leaves <obj> Polar Lights <rel> releases\n\nAnswer the question based on the above knowledge graph subgraphs.",
+      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nWho trained Henry?\n\nSubgraph centered at [Henry]:\n- <subj> Henry <obj> Maria Rodriguez <rel> is_trained_by\n- <subj> Henry <obj> The Maple Leaves <rel> forms\n\nAnswer the question based on the above knowledge graph subgraphs."
     ]
   }
 ]

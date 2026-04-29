@@ -101,7 +101,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ]
   }
 ]
 ```
@@ -110,8 +113,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "question_difficulty": "easy"
+    "question_difficulty":[
+      "medium",
+      "medium"
+    ]
   }
 ]
 ```

@@ -96,8 +96,14 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "subgraph_prompt": "You are given a question and relevant knowledge graph facts. Use ONLY the provided facts to answer the question. Question: Who trained Henry? Subgraph centered at [Henry]: - <subj> Henry <obj> Maria Rodriguez <rel> is_trained_by"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ]
+    "subgraph_prompt":[
+      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nOn which date was Polar Lights released?\n\nSubgraph centered at [Polar Lights]:\n- <subj> Polar Lights <obj> August 12 2020 <rel> is_released_on\n- <subj> The Maple Leaves <obj> Polar Lights <rel> releases\n\nAnswer the question based on the above knowledge graph subgraphs.",
+      "You are given a question and relevant knowledge graph facts.\nUse ONLY the provided facts to answer the question.\n\nQuestion:\nWho trained Henry?\n\nSubgraph centered at [Henry]:\n- <subj> Henry <obj> Maria Rodriguez <rel> is_trained_by\n- <subj> Henry <obj> The Maple Leaves <rel> forms\n\nAnswer the question based on the above knowledge graph subgraphs."
+    ]
   }
 ]
 ```
@@ -106,9 +112,10 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "subgraph_prompt": "You are given a question and relevant knowledge graph facts. Use ONLY the provided facts to answer the question. Question: Who trained Henry? Subgraph centered at [Henry]: - <subj> Henry <obj> Maria Rodriguez <rel> is_trained_by",
-    "answer": "Maria Rodriguez"
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -119,5 +126,4 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_get_answer.py`
 - Upstream subgraph prompt operator: `DataFlow-KG/dataflow/operators/graph_rag/generate/graphrag_prompt_generator.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-
 

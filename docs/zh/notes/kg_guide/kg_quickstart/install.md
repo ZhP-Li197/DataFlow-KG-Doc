@@ -38,13 +38,13 @@ uv pip install dataflow-kg[vllm]
 dfkg -v
 ```
 
-如果安装正常，且DataFlow是最新的Release版，则会看到:
+如果安装正常，则会看到:
 ```log
-open-dataflow-kg codebase version: 0.0.2
+open-dataflow-kg codebase version: ***
         Checking for updates...
-        Local version:  0.0.2
-        PyPI newest version:  0.0.2
-You are using the latest version: 0.0.2.
+        Local version:  ***
+        PyPI newest version:  ***
+You are using the latest version: ***.
 ```
 
 此外还有`dfkg env`指令用于查看当前硬件软件环境，用于报告Bug使用。
@@ -78,13 +78,13 @@ pip install -e .[vllm]
 dfkg -v
 ```
 
-如果安装正常，且DataFlow-KG是最新的Release版，则会看到:
+如果安装正常，则会看到:
 ```log
-open-dataflow-kg codebase version: 0.0.2
+open-dataflow-kg codebase version: ***
         Checking for updates...
-        Local version:  0.0.2
-        PyPI newest version:  0.0.2
-You are using the latest version: 0.0.2.
+        Local version:  ***
+        PyPI newest version:  ***
+You are using the latest version: ***.
 ```
 
 此外还有`dfkg env`指令用于查看当前硬件软件环境，用于报告Bug使用。

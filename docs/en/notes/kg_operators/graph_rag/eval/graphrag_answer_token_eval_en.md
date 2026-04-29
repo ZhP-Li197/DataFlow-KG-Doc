@@ -87,7 +87,10 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez"
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -96,8 +99,7 @@ operator.run(
 ```json
 [
   {
-    "answer": "Maria Rodriguez",
-    "answer_token_count": 2
+    "answer_token_count": [8, 6]
   }
 ]
 ```
@@ -109,4 +111,3 @@ operator.run(
 - Operator implementation: `DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_token_eval.py`
 - Related filtering operator: `DataFlow-KG/dataflow/operators/graph_rag/filter/graphrag_answer_token_filtering.py`
 - Storage implementation: `DataFlow-KG/dataflow/utils/storage.py`
-

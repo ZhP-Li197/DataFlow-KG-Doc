@@ -106,8 +106,14 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "answer": "Maria Rodriguez"
+    "question":[
+      "On which date was Polar Lights released?",
+      "Who trained Henry?"
+    ],
+    "answer":[
+      "Polar Lights was released on August 12, 2020.",
+      "Henry was trained by Maria Rodriguez."
+    ]
   }
 ]
 ```
@@ -116,22 +122,12 @@ operator.run(
 ```json
 [
   {
-    "question": "Who trained Henry?",
-    "answer": "Maria Rodriguez",
-    "question_plausibility_score": 0.98
+    "question_plausibility_score": [0.98, 0.99]
   }
 ]
 ```
 
 ---
-
-#### 注意事项
-- 输入 DataFrame 中必须存在 `question_key` 和 `answer_key` 指定的列，否则会抛出 `ValueError`。
-- 如果 `output_key` 已存在，算子会直接报错。
-- 当前实现支持两种输入组合：`str + str` 和 `List[str] + List[str]`，其他类型组合会抛出 `ValueError`。
-- 批量评估分支内部使用 `zip(q, a)` 配对，因此当问题列表和答案列表长度不一致时，只会处理到较短一侧，多出的尾部元素会被忽略。
-- LLM 输出需要能被解析为 JSON，并包含 `question_plausibility_score` 字段；如果解析失败，该条结果会回退为 `0.0`。
-- 虽然构造函数包含 `seed`，但当前实现没有在评估逻辑中使用随机采样。
 
 #### 相关链接
 - 算子实现：`DataFlow-KG/dataflow/operators/graph_rag/eval/graphrag_answer_plausibility_eval.py`

@@ -39,13 +39,13 @@ You can use the following command to verify if the installation is correct:
 dfkg -v
 ```
 
-If the installation is successful and DataFlow is the latest Release version, you will see:
+If the installation is successful, you will see:
 ```log
-open-dataflow-kg codebase version: 0.0.2
+open-dataflow-kg codebase version: ***
         Checking for updates...
-        Local version:  0.0.2
-        PyPI newest version:  0.0.2
-You are using the latest version: 0.0.2.
+        Local version:  ***
+        PyPI newest version:  ***
+You are using the latest version: ***.
 ```
 
 Additionally, there is the `dfkg env` command to view the current hardware and software environment, which is useful for bug reporting.
@@ -79,13 +79,13 @@ You can use the following command to verify if the installation is correct:
 dfkg -v
 ```
 
-If the installation is successful and DataFlow-KG is the latest Release version, you will see:
+If the installation is successful, you will see:
 ```log
-open-dataflow-kg codebase version: 0.0.2
+open-dataflow-kg codebase version: ***
         Checking for updates...
-        Local version:  0.0.2
-        PyPI newest version:  0.0.2
-You are using the latest version: 0.0.2.
+        Local version:  ***
+        PyPI newest version:  ***
+You are using the latest version: ***.
 ```
 
 Additionally, there is the `dfkg env` command to view the current hardware and software environment, which is useful for bug reporting.
