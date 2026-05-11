@@ -47,8 +47,9 @@ The initialization creates:
 
 - Pipeline script: `api_pipelines/multimodal_kg_pipeline.py`
 - Default data: `example_data/MultimodalKGPipeline/input.json`
+- Sample images: `example_data/MultimodalKGPipeline/images/cyber.jpg`, `example_data/MultimodalKGPipeline/images/musk.jpg`
 
-For real image-text workloads, values in `img_dict` must be valid local image paths. The default JSON file is provided as a runnable input structure.
+Values in `img_dict` are the actual paths the VLM serving layer opens. Only **local paths** are supported today: the serving layer calls `open(path, "rb")` and base64-encodes the bytes into the request, and it does not fetch remote URLs. The default data ships with runnable example images, and the paths are written relative to the `api_pipelines/` directory (the CWD when you run `python multimodal_kg_pipeline.py`).
 
 ### Step 3: Configure the API key and optional model settings
 
@@ -73,18 +74,23 @@ python api_pipelines/multimodal_kg_pipeline.py
 This pipeline requires at least the following fields:
 
 - **raw_chunk**: source text for entity and textual triple extraction
-- **img_dict**: an image dictionary where keys are image IDs and values are local image paths
+- **img_dict**: an image dictionary where keys are image IDs (free-form strings that appear in `vis_triple`) and values are local image paths
+- **vis_url**: a list of image paths the VLM opens during step 5 QA generation. Its order must match the order in which image IDs first appear in `img_dict`.
 
 A sample input is:
 
 ```json
 [
   {
-    "raw_chunk": "Tesla unveiled the Cybertruck at a product event. Elon Musk appeared on stage and the presentation slide showed the vehicle design.",
+    "raw_chunk": "Tesla unveiled the Cybertruck at a product event. Elon Musk appeared on stage during the launch presentation. The presentation focused on electric vehicle design and manufacturing.",
     "img_dict": {
-      "img_0": "./images/cybertruck.jpg",
-      "img_1": "./images/elon_musk.jpg"
-    }
+      "img_cybertruck": "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+      "img_musk_stage": "../example_data/MultimodalKGPipeline/images/musk.jpg"
+    },
+    "vis_url": [
+      "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+      "../example_data/MultimodalKGPipeline/images/musk.jpg"
+    ]
   }
 ]
 ```
@@ -118,7 +124,7 @@ One implementation detail is worth noting: the current `MMKGEntityBasedSubgraphS
 **Functionality:**
 
 - combine images and candidate entities to extract visual facts
-- typically output triples in the form `"<subj> entity <rel> depicted_in <obj> image_id"`
+- output triples in the form `"<subj> entity <obj> image_id <rel> depicted_in "`
 
 **Input**: `img_dict`, `entity`  
 **Output**: `vis_triple`
@@ -159,26 +165,32 @@ An example output is:
 
 ```json
 {
-  "entity": "Tesla, Cybertruck, Elon Musk",
+  "entity": "Tesla, Cybertruck, Elon Musk, electric vehicle design, manufacturing",
   "triple": [
-    "<subj> Tesla <obj> Cybertruck <rel> unveils",
-    "<subj> Elon Musk <obj> Tesla <rel> presents_for"
+    "<subj> Tesla <obj> Cybertruck <rel> unveiled",
+    "<subj> Elon Musk <obj> Cybertruck <rel> appeared_on_stage"
   ],
   "vis_triple": [
-    "<subj> Cybertruck <rel> depicted_in <obj> img_0",
-    "<subj> Elon Musk <rel> depicted_in <obj> img_1"
+    "<subj> Cybertruck <obj> img_cybertruck <rel> depicted_in ",
+    "<subj> Elon Musk <obj> img_musk_stage <rel> depicted_in ",
+    "<subj> Cybertruck <obj> img_musk_stage <rel> depicted_in "
   ],
   "subgraph": [
-    "<subj> Tesla <obj> Cybertruck <rel> unveils",
-    "<subj> Elon Musk <obj> Tesla <rel> presents_for"
+    "<subj> Tesla <obj> Cybertruck <rel> unveiled",
+    "<subj> Elon Musk <obj> Cybertruck <rel> appeared_on_stage"
   ],
   "vis_url": [
-    "./images/cybertruck.jpg"
+    "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+    "../example_data/MultimodalKGPipeline/images/musk.jpg"
   ],
   "QA_pairs": [
     {
-      "question": "What vehicle is shown in the event image?",
-      "answer": "Cybertruck."
+      "question": "Based on the image img_cybertruck, who unveiled the Cybertruck?",
+      "answer": "The image img_cybertruck shows the Cybertruck, which was unveiled by Tesla."
+    },
+    {
+      "question": "In the image img_musk_stage, who is associated with the Cybertruck's appearance?",
+      "answer": "The image img_musk_stage shows Elon Musk, who appeared on stage with the Cybertruck as per the subgraph."
     }
   ]
 }

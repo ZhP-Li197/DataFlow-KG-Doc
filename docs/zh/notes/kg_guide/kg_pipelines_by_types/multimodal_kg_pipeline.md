@@ -47,8 +47,9 @@ dfkg init
 
 - 流水线脚本：`api_pipelines/multimodal_kg_pipeline.py`
 - 默认数据：`example_data/MultimodalKGPipeline/input.json`
+- 示例图片：`example_data/MultimodalKGPipeline/images/cyber.jpg`、`example_data/MultimodalKGPipeline/images/musk.jpg`
 
-真实图文场景中，`img_dict` 的 value 需要是本地可访问的图片路径；默认数据使用 JSON 格式，可直接作为结构示例。
+`img_dict` 的 value 是 VLM 实际打开的图片路径，目前仅支持**本地路径**（serving 层用 `open(path, "rb")` 读字节再 base64 编码内联到请求里，不会自动下载远程 URL）。默认数据已随包附带可直接运行的示例图，路径按 `python multimodal_kg_pipeline.py` 在 `api_pipelines/` 目录下的相对位置给出。
 
 ### 步骤 3：配置 API Key 与可选模型参数
 
@@ -73,18 +74,23 @@ python api_pipelines/multimodal_kg_pipeline.py
 该流水线至少需要以下字段：
 
 - **raw_chunk**：原始文本，用于实体和文本三元组抽取。
-- **img_dict**：图片字典，key 为图片 ID，value 为本地图片路径。
+- **img_dict**：图片字典，key 为图片 ID（自定义字符串，会出现在 `vis_triple` 中），value 为本地图片路径。
+- **vis_url**：图片路径列表，供 step5 QA 生成时打开图片传给 VLM。元素顺序需要与 `img_dict` 中图片首次出现的顺序一致。
 
 输入示例如下：
 
 ```json
 [
   {
-    "raw_chunk": "Tesla unveiled the Cybertruck at a product event. Elon Musk appeared on stage and the presentation slide showed the vehicle design.",
+    "raw_chunk": "Tesla unveiled the Cybertruck at a product event. Elon Musk appeared on stage during the launch presentation. The presentation focused on electric vehicle design and manufacturing.",
     "img_dict": {
-      "img_0": "./images/cybertruck.jpg",
-      "img_1": "./images/elon_musk.jpg"
-    }
+      "img_cybertruck": "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+      "img_musk_stage": "../example_data/MultimodalKGPipeline/images/musk.jpg"
+    },
+    "vis_url": [
+      "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+      "../example_data/MultimodalKGPipeline/images/musk.jpg"
+    ]
   }
 ]
 ```
@@ -118,7 +124,7 @@ python api_pipelines/multimodal_kg_pipeline.py
 **功能：**
 
 - 结合图片与候选实体抽取视觉事实
-- 输出格式通常为 `"<subj> 实体 <rel> depicted_in <obj> 图片ID"`
+- 输出格式为 `"<subj> 实体 <obj> 图片ID <rel> depicted_in "`
 
 **输入**：`img_dict`、`entity`  
 **输出**：`vis_triple`
@@ -159,26 +165,32 @@ python api_pipelines/multimodal_kg_pipeline.py
 
 ```json
 {
-  "entity": "Tesla, Cybertruck, Elon Musk",
+  "entity": "Tesla, Cybertruck, Elon Musk, electric vehicle design, manufacturing",
   "triple": [
-    "<subj> Tesla <obj> Cybertruck <rel> unveils",
-    "<subj> Elon Musk <obj> Tesla <rel> presents_for"
+    "<subj> Tesla <obj> Cybertruck <rel> unveiled",
+    "<subj> Elon Musk <obj> Cybertruck <rel> appeared_on_stage"
   ],
   "vis_triple": [
-    "<subj> Cybertruck <rel> depicted_in <obj> img_0",
-    "<subj> Elon Musk <rel> depicted_in <obj> img_1"
+    "<subj> Cybertruck <obj> img_cybertruck <rel> depicted_in ",
+    "<subj> Elon Musk <obj> img_musk_stage <rel> depicted_in ",
+    "<subj> Cybertruck <obj> img_musk_stage <rel> depicted_in "
   ],
   "subgraph": [
-    "<subj> Tesla <obj> Cybertruck <rel> unveils",
-    "<subj> Elon Musk <obj> Tesla <rel> presents_for"
+    "<subj> Tesla <obj> Cybertruck <rel> unveiled",
+    "<subj> Elon Musk <obj> Cybertruck <rel> appeared_on_stage"
   ],
   "vis_url": [
-    "./images/cybertruck.jpg"
+    "../example_data/MultimodalKGPipeline/images/cyber.jpg",
+    "../example_data/MultimodalKGPipeline/images/musk.jpg"
   ],
   "QA_pairs": [
     {
-      "question": "What vehicle is shown in the event image?",
-      "answer": "Cybertruck."
+      "question": "Based on the image img_cybertruck, who unveiled the Cybertruck?",
+      "answer": "The image img_cybertruck shows the Cybertruck, which was unveiled by Tesla."
+    },
+    {
+      "question": "In the image img_musk_stage, who is associated with the Cybertruck's appearance?",
+      "answer": "The image img_musk_stage shows Elon Musk, who appeared on stage with the Cybertruck as per the subgraph."
     }
   ]
 }
